@@ -21,7 +21,7 @@ type Props = {
 export default function CartScreen({ navigation }: Props) {
   return (
     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <Text>Carrito</Text>
+      <h2>CARRITO</h2>
       <Button
         title="Ir a Buscar"
         onPress={() => navigation.navigate('Buscar')}
