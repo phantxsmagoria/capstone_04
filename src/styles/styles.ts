@@ -33,7 +33,6 @@ export default StyleSheet.create({
     borderRadius: 10,
     marginTop: 10,
   },
-
   forgotPassword: {
     marginTop: 10,
   },
@@ -58,45 +57,61 @@ export default StyleSheet.create({
     alignSelf: 'flex-start',
     width: '80%',
     marginLeft: 40,
-    marginBottom:10,
+    marginBottom: 10,
     color: '#333',
   },
-
   buttonContainer: {
-    marginTop: 100,
-    flexDirection: "row",
+    marginTop: 400,
+    flexDirection: 'row',
     borderWidth: 2,
     borderColor: '#ff5722',
-    width: "80%",
+    width: '80%',
     height: 60,
     borderRadius: 100,
-    marginLeft:40,
+    backgroundColor: '#fff',
   },
   loginButtonWrapper: {
-    justifyContent: "center",
-    alignItems: "center",
-    width: "60%",
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: '60%',
     borderRadius: 98,
     backgroundColor: '#ff5722',
   },
   loginButtonText: {
     color: '#ffff',
     fontSize: 18,
+    fontWeight: 'bold',
   },
-    registerButtonText: {
+  registerButtonText: {
     fontSize: 18,
-    marginRight:40,
-
-
+    marginRight: 30,
+    fontWeight: 'bold',
   },
   registerButtonWrapper: {
-    justifyContent: "center",
-    alignItems: "center",
-    width: "50%",
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: '40%',
     borderRadius: 98,
   },
-
-
-
-  
+  backgroundImage: {
+    flex: 1,
+    width: '100%',
+    height: '100%',
+    justifyContent: 'center',
+  },
+  gradient: {
+    flex: 1,
+    justifyContent: 'center',
+  },
+  overlay: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  logo: {
+    width: 280,
+    height: 280,
+    marginTop:0,
+    resizeMode: 'contain',
+  },
 });
