@@ -66,7 +66,7 @@ export default function RegisterScreen({ navigation }: Props) {
       <TextInput placeholder="Contraseña" secureTextEntry style={styles.input} placeholderTextColor="#aaa" />
       <TextInput placeholder="Confirmar contraseña" secureTextEntry style={styles.input} placeholderTextColor="#aaa" />
       <TouchableOpacity style={styles.button} onPress={() => navigation?.navigate('Home')}>
-        <Text style={styles.buttonText}>Registrar</Text>
+        <Text>Registrar</Text>
       </TouchableOpacity>
     </View>
   );

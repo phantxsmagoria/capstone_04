@@ -33,11 +33,7 @@ export default StyleSheet.create({
     borderRadius: 10,
     marginTop: 10,
   },
-  buttonText: {
-    color: '#fff',
-    fontSize: 18,
-    fontWeight: 'bold',
-  },
+
   forgotPassword: {
     marginTop: 10,
   },
@@ -65,45 +61,39 @@ export default StyleSheet.create({
     marginBottom:10,
     color: '#333',
   },
-  buttonContainer:{
+
+  buttonContainer: {
+    marginTop: 100,
     flexDirection: "row",
-    marginTop:700,
-    borderWidth:2,
-    width:"80%",
-    height:60,
-    borderRadius:100,
+    borderWidth: 2,
     borderColor: '#ff5722',
-    alignItems:"center",
-    marginLeft:30,
-
+    width: "80%",
+    height: 60,
+    borderRadius: 100,
+    marginLeft:40,
   },
-  loginButtonWrapper:{
-    justifyContent:"center",
-    alignItems:"center",
-    width:"90%",
-    backgroundColor: '#ff5722',
+  loginButtonWrapper: {
+    justifyContent: "center",
+    alignItems: "center",
+    width: "60%",
     borderRadius: 98,
-    height:"100%",
-
+    backgroundColor: '#ff5722',
   },
-
   loginButtonText: {
-    color: '#000',
-    fontSize: 18,
-    marginLeft:60,
-    
-  },
-  
-  registerButtonText: {
-    color: '#white',
+    color: '#ffff',
     fontSize: 18,
   },
-  registerButtonWrapper:{
-    justifyContent:"center",
-    alignItems:"center",
-    backgroundColor: '#ff5722',
-    borderRadius: 98,
+    registerButtonText: {
+    fontSize: 18,
+    marginRight:40,
 
+
+  },
+  registerButtonWrapper: {
+    justifyContent: "center",
+    alignItems: "center",
+    width: "50%",
+    borderRadius: 98,
   },
 
 

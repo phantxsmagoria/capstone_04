@@ -10,8 +10,6 @@ import UserScreen from './src/screens/UserScreen';
 import RegisterScreen from './src/screens/RegisterScreen';
 import LoginScreen from './src/screens/LoginScreen';
 
-
-// Define the types for navigation
 type RootStackParamList = {
   MainTabs: undefined;
   Home: undefined;
@@ -28,7 +26,6 @@ const Stack = createStackNavigator<RootStackParamList>();
 function MainTabs() {
   return (
     <Tab.Navigator>
-      <Tab.Screen name="Home" component={HomeScreen} />
       <Tab.Screen name="Buscar" component={SearchScreen} />
       <Tab.Screen name="Carrito" component={CartScreen} />
       <Tab.Screen name="Usuario" component={UserScreen} />
@@ -40,6 +37,7 @@ export default function App() {
   return (
     <NavigationContainer>
       <Stack.Navigator>
+        <Stack.Screen name="Home" component={HomeScreen} options={{ headerShown: false }} />
         <Stack.Screen name="MainTabs" component={MainTabs} options={{ headerShown: false }} />
         <Stack.Screen name="Registro" component={RegisterScreen} />
         <Stack.Screen name="Login" component={LoginScreen} />

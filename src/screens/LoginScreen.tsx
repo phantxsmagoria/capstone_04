@@ -24,7 +24,7 @@ export default function LoginScreen({ navigation }: Props) {
       <TextInput placeholder="Nombre de usuario" style={styles.input} />
       <TextInput placeholder="Contraseña" secureTextEntry style={styles.input} />
       <TouchableOpacity style={styles.button} onPress={() => navigation?.navigate('Home')}>
-        <Text style={styles.buttonText}>Iniciar sesión</Text>
+        <Text>Iniciar sesión</Text>
       </TouchableOpacity>
       <TouchableOpacity style={styles.forgotPassword}>
         <Text style={styles.forgotPasswordText}>¿Olvidaste tu contraseña?</Text>
