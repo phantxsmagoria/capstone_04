@@ -26,6 +26,7 @@ export default function HomeScreen({ navigation }: Props) {
       <TouchableOpacity style={styles.loginButtonWrapper} onPress={() => navigation.navigate('Login')}>
         <Text style={[styles.loginButtonText, {backgroundColor: '#ff5722',}]}>Inicia sesión</Text>
       </TouchableOpacity>
+      
       <TouchableOpacity style={styles.registerButtonWrapper} onPress={() => navigation.navigate('Registro')}>
         <Text style={[styles.registerButtonText, {backgroundColor: '#fff'}]}>Regístrate</Text>
       </TouchableOpacity>
