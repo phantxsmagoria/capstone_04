@@ -1,23 +1,48 @@
+// styles/styles.ts
 import { StyleSheet } from 'react-native';
 
-const styles = StyleSheet.create({
+export default StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+    backgroundColor: '#f5f5f5',
+  },
+  title: {
+    fontSize: 24,
+    marginBottom: 20,
+    fontWeight: 'bold',
+    color: '#333',
   },
   input: {
-    width: 200,
+    width: '80%',
     height: 40,
-    borderColor: 'gray',
+    borderColor: '#ccc',
     borderWidth: 1,
-    marginBottom: 10,
+    borderRadius: 5,
     paddingHorizontal: 10,
+    marginBottom: 15,
+    backgroundColor: '#fff',
   },
   button: {
-    margin: 10,
+    width: '80%',
+    height: 40,
+    backgroundColor: '#ff5722',
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: 5,
+    marginBottom: 15,
   },
-  // Aquí se agrega el css después 
+  buttonText: {
+    color: '#fff',
+    fontSize: 16,
+    fontWeight: 'bold',
+  },
+  forgotPassword: {
+    marginTop: 10,
+  },
+  forgotPasswordText: {
+    color: '#ff5722',
+    textDecorationLine: 'underline',
+  },
 });
-
-export default styles;
