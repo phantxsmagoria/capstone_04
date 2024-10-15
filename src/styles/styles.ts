@@ -1,4 +1,3 @@
-// styles/styles.ts
 import { StyleSheet } from 'react-native';
 
 export default StyleSheet.create({
@@ -7,35 +6,36 @@ export default StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: '#f5f5f5',
+    padding: 20,
   },
   title: {
-    fontSize: 24,
+    fontSize: 28,
     marginBottom: 20,
     fontWeight: 'bold',
     color: '#333',
   },
   input: {
     width: '80%',
-    height: 40,
+    height: 50,
     borderColor: '#ccc',
     borderWidth: 1,
-    borderRadius: 5,
-    paddingHorizontal: 10,
+    borderRadius: 10,
+    paddingHorizontal: 15,
     marginBottom: 15,
     backgroundColor: '#fff',
   },
   button: {
     width: '80%',
-    height: 40,
+    height: 50,
     backgroundColor: '#ff5722',
     justifyContent: 'center',
     alignItems: 'center',
-    borderRadius: 5,
-    marginBottom: 15,
+    borderRadius: 10,
+    marginTop: 10,
   },
   buttonText: {
     color: '#fff',
-    fontSize: 16,
+    fontSize: 18,
     fontWeight: 'bold',
   },
   forgotPassword: {
@@ -45,4 +45,25 @@ export default StyleSheet.create({
     color: '#ff5722',
     textDecorationLine: 'underline',
   },
+  datePickerContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    width: '80%',
+    marginBottom: 15,
+  },
+  picker: {
+    flex: 1,
+    height: 50,
+    backgroundColor: '#fff',
+    borderRadius: 10,
+    marginHorizontal: 5,
+  },
+  labelFecha: {
+    alignSelf: 'flex-start',
+    width: '80%',
+    marginLeft: 40,
+    marginBottom:10,
+    color: '#333',
+  },
+  
 });
