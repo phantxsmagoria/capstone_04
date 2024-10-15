@@ -10,6 +10,7 @@ import UserScreen from './src/screens/UserScreen';
 import RegisterScreen from './src/screens/RegisterScreen';
 import LoginScreen from './src/screens/LoginScreen';
 
+
 // Define the types for navigation
 type RootStackParamList = {
   MainTabs: undefined;
