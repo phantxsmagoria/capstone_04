@@ -65,5 +65,48 @@ export default StyleSheet.create({
     marginBottom:10,
     color: '#333',
   },
+  buttonContainer:{
+    flexDirection: "row",
+    marginTop:700,
+    borderWidth:2,
+    width:"80%",
+    height:60,
+    borderRadius:100,
+    borderColor: '#ff5722',
+    alignItems:"center",
+    marginLeft:30,
+
+  },
+  loginButtonWrapper:{
+    justifyContent:"center",
+    alignItems:"center",
+    width:"90%",
+    backgroundColor: '#ff5722',
+    borderRadius: 98,
+    height:"100%",
+
+  },
+
+  loginButtonText: {
+    color: '#000',
+    fontSize: 18,
+    marginLeft:60,
+    
+  },
+  
+  registerButtonText: {
+    color: '#white',
+    fontSize: 18,
+  },
+  registerButtonWrapper:{
+    justifyContent:"center",
+    alignItems:"center",
+    backgroundColor: '#ff5722',
+    borderRadius: 98,
+
+  },
+
+
+
   
 });
