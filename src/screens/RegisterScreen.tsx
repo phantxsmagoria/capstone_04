@@ -26,12 +26,16 @@ export default function RegisterScreen({ navigation }: Props) {
 
   return (
     <View style={styles.container}>
+
       <TouchableOpacity style={styles.closeButton} onPress={() => navigation?.navigate('Home')}>
       <Icon name="times" size={30} color="#000"/>
       </TouchableOpacity>
+
+      <Text style={styles.titleRegister}>Regístrate</Text>
       <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('RegisterCliente')}>
         <Text style={styles.buttonText}>¿Cliente?</Text>
       </TouchableOpacity>
+      <p> u </p>
 
       <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('RegisterOptica')}>
         <Text style={styles.buttonText}>¿Óptica?</Text>

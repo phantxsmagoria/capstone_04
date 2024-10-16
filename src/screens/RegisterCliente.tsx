@@ -4,6 +4,7 @@ import { StackNavigationProp } from '@react-navigation/stack';
 import { RouteProp } from '@react-navigation/native';
 import { Picker } from '@react-native-picker/picker';
 import styles from '../styles/styles';
+import Icon from 'react-native-vector-icons/FontAwesome';
 
 type RootStackParamList = {
   Register: undefined;
@@ -29,10 +30,14 @@ export default function RegisterScreen({ navigation }: Props) {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>RegistrarCliente</Text>
-      <TextInput placeholder="Nombre" style={styles.inputRegister} placeholderTextColor="#aaa" />
-      <TextInput placeholder="Correo" style={styles.inputRegister} keyboardType="email-address" placeholderTextColor="#aaa" />
-      <TextInput placeholder="RUT" style={styles.inputRegister} placeholderTextColor="#aaa" />
+      <TouchableOpacity style={styles.closeButton} onPress={() => navigation?.navigate('Home')}>
+      <Icon name="times" size={30} color="#000"/>
+      </TouchableOpacity>
+      <Text style={styles.titleRegisterCliente}>Regístrate</Text>
+      <Text style={styles.pCliente}> Como cliente</Text>
+      <TextInput placeholder="Nombre" style={styles.inputLine} placeholderTextColor="#aaa" />
+      <TextInput placeholder="Correo" style={styles.inputLine} keyboardType="email-address" placeholderTextColor="#aaa" />
+      <TextInput placeholder="RUT" style={styles.inputLine} placeholderTextColor="#aaa" />
       <Text style={styles.labelFecha}>Fecha de Nacimiento</Text>
       <View style={styles.datePickerContainer}>
         <Picker
@@ -63,10 +68,10 @@ export default function RegisterScreen({ navigation }: Props) {
           ))}
         </Picker>
       </View>
-      <TextInput placeholder="Contraseña" secureTextEntry style={styles.inputRegister} placeholderTextColor="#aaa" />
-      <TextInput placeholder="Confirmar contraseña" secureTextEntry style={styles.inputRegister} placeholderTextColor="#aaa" />
+      <TextInput placeholder="Contraseña" secureTextEntry style={styles.inputLine} placeholderTextColor="#aaa" />
+      <TextInput placeholder="Confirmar contraseña" secureTextEntry style={styles.inputLine} placeholderTextColor="#aaa" />
       <TouchableOpacity style={styles.button} onPress={() => navigation?.navigate('Home')}>
-        <Text>Registrar</Text>
+        <Text style={styles.buttonText}>Registrar</Text>
       </TouchableOpacity>
     </View>
   );

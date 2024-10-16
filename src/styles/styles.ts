@@ -5,7 +5,7 @@ export default StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#f5f5f5',
+    backgroundColor: '#ffffff',
   },
   title: {
     fontSize: 28,
@@ -22,12 +22,33 @@ export default StyleSheet.create({
     marginBottom: 100,
      // Ajustamos el margen para que esté más arriba
   },
+
+  titleRegister: {
+    fontSize: 50,
+    fontWeight: 'bold',
+    color: '#000',
+    marginTop: -200,
+    marginLeft: -86,
+    marginBottom: 80,
+     // Ajustamos el margen para que esté más arriba
+  },
+
+  titleRegisterCliente: {
+    fontSize: 50,
+    fontWeight: 'bold',
+    color: '#000',
+    marginTop: -100,
+    marginLeft: -120,
+    marginBottom: 80,
+     // Ajustamos el margen para que esté más arriba
+  },
+
   inputRegister: {
     width: '80%',
     height: 50,
     marginBottom: 15,
     elevation: 1,
-    shadowColor: '#000',
+    shadowColor: '#fff',
     shadowOffset: { width: 0, height: 1 },
     shadowOpacity: 0.2,
     shadowRadius: 1,
@@ -152,4 +173,9 @@ export default StyleSheet.create({
     right: 10,
     zIndex: 1,
   },
+  pCliente: {
+    marginTop: -80,
+    marginRight: 275,
+    marginBottom: 30,
+  }
 });
