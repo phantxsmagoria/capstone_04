@@ -8,12 +8,16 @@ import SearchScreen from './src/screens/SearchScreen';
 import CartScreen from './src/screens/CartScreen';
 import UserScreen from './src/screens/UserScreen';
 import RegisterScreen from './src/screens/RegisterScreen';
+import RegisterCliente from './src/screens/RegisterCliente';
+import RegisterOptica from './src/screens/RegisterOptica';
 import LoginScreen from './src/screens/LoginScreen';
 
 type RootStackParamList = {
   MainTabs: undefined;
   Home: undefined;
-  Registro: undefined;
+  Register: undefined;
+  RegisterCliente: undefined;
+  RegisterOptica: undefined;
   Login: undefined;
   Buscar: undefined;
   Carrito: undefined;
@@ -39,7 +43,9 @@ export default function App() {
       <Stack.Navigator>
         <Stack.Screen name="Home" component={HomeScreen} options={{ headerShown: false }} />
         <Stack.Screen name="MainTabs" component={MainTabs} options={{ headerShown: false }} />
-        <Stack.Screen name="Registro" component={RegisterScreen} options={{ headerShown: false }} />
+        <Stack.Screen name="Register" component={RegisterScreen} options={{ headerShown: false }} />
+        <Stack.Screen name="RegisterCliente" component={RegisterCliente} options={{ headerShown: false }} />
+        <Stack.Screen name="RegisterOptica" component={RegisterOptica} options={{ headerShown: false }} />
         <Stack.Screen name="Login" component={LoginScreen} options={{ headerShown: false }} />
       </Stack.Navigator>
     </NavigationContainer>

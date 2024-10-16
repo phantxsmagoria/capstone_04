@@ -7,7 +7,7 @@ import styles from '../styles/styles';
 
 type RootStackParamList = {
   Home: undefined;
-  Registro: undefined;
+  Register: undefined; // Asegúrate de que este nombre sea correcto
   Login: undefined;
 };
 
@@ -35,7 +35,7 @@ export default function HomeScreen({ navigation }: Props) {
             <TouchableOpacity style={styles.loginButtonWrapper} onPress={() => navigation.navigate('Login')}>
               <Text style={styles.loginButtonText}>Inicia sesión</Text>
             </TouchableOpacity>
-            <TouchableOpacity style={styles.registerButtonWrapper} onPress={() => navigation.navigate('Registro')}>
+            <TouchableOpacity style={styles.registerButtonWrapper} onPress={() => navigation.navigate('Register')}>
               <Text style={styles.registerButtonText}>Regístrate</Text>
             </TouchableOpacity>
           </View>
@@ -44,6 +44,5 @@ export default function HomeScreen({ navigation }: Props) {
     </ImageBackground>
   );
 }
-
 
 

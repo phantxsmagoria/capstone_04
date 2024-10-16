@@ -70,7 +70,6 @@ export default StyleSheet.create({
   },
   forgotPasswordText: {
     color: '#000',
-    textDecorationLine: 'underline',
     fontSize: 12,
   },
   logo: {

@@ -26,7 +26,7 @@ export default function LoginScreen({ navigation }: Props) {
     <View style={styles.container}>
       <StatusBar hidden />
       <TouchableOpacity style={styles.closeButton} onPress={() => navigation?.navigate('Home')}>
-        <Icon name="times" size={30} color="#999"/>
+        <Icon name="times" size={30} color="#000"/>
       </TouchableOpacity>
       <Text style={styles.titleLogin}>Inicia sesión</Text>
       <TextInput
