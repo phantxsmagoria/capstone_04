@@ -38,20 +38,9 @@ export default StyleSheet.create({
     fontWeight: 'bold',
     color: '#000',
     marginTop: -100,
-    marginLeft: -120,
+    marginRight: 170,
     marginBottom: 80,
-     // Ajustamos el margen para que esté más arriba
-  },
-
-  inputRegister: {
-    width: '80%',
-    height: 50,
-    marginBottom: 15,
-    elevation: 1,
-    shadowColor: '#fff',
-    shadowOffset: { width: 0, height: 1 },
-    shadowOpacity: 0.2,
-    shadowRadius: 1,
+     // Ajuste de los márgenes
   },
 
   inputLine: {
@@ -81,24 +70,29 @@ export default StyleSheet.create({
     borderRadius: 4,
     marginTop: 10,
   },
+
   buttonText: {
     color: '#fff',
     fontSize: 14,
     fontWeight: 'bold',
   },
+
   forgotPassword: {
     marginTop: 12,
   },
+
   forgotPasswordText: {
     color: '#000',
     fontSize: 12,
   },
+
   logo: {
     width: 280,
     height: 280,
     marginTop: 0,
     resizeMode: 'contain',
   },
+
   datePickerContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
@@ -175,7 +169,7 @@ export default StyleSheet.create({
   },
   pCliente: {
     marginTop: -80,
-    marginRight: 275,
+    marginRight: 300,
     marginBottom: 30,
   }
 });

@@ -11,6 +11,7 @@ import RegisterScreen from './src/screens/RegisterScreen';
 import RegisterCliente from './src/screens/RegisterCliente';
 import RegisterOptica from './src/screens/RegisterOptica';
 import LoginScreen from './src/screens/LoginScreen';
+import RegistroOpticaDocumento from './src/screens/RegistroOpticaDocumento';
 
 type RootStackParamList = {
   MainTabs: undefined;
@@ -22,6 +23,7 @@ type RootStackParamList = {
   Buscar: undefined;
   Carrito: undefined;
   Usuario: undefined;
+  RegisterOpticaDocumento: undefined;
 };
 
 const Tab = createBottomTabNavigator<RootStackParamList>();
@@ -47,6 +49,7 @@ export default function App() {
         <Stack.Screen name="RegisterCliente" component={RegisterCliente} options={{ headerShown: false }} />
         <Stack.Screen name="RegisterOptica" component={RegisterOptica} options={{ headerShown: false }} />
         <Stack.Screen name="Login" component={LoginScreen} options={{ headerShown: false }} />
+        <Stack.Screen name="RegisterOpticaDocumento" component={RegistroOpticaDocumento} options={{ headerShown: false }} />
       </Stack.Navigator>
     </NavigationContainer>
   );
