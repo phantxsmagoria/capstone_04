@@ -30,9 +30,9 @@ export default function RegisterScreen({ navigation }: Props) {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Registrar</Text>
-      <TextInput placeholder="Nombre" style={styles.input} placeholderTextColor="#aaa" />
-      <TextInput placeholder="Correo" style={styles.input} keyboardType="email-address" placeholderTextColor="#aaa" />
-      <TextInput placeholder="RUT" style={styles.input} placeholderTextColor="#aaa" />
+      <TextInput placeholder="Nombre" style={styles.inputRegister} placeholderTextColor="#aaa" />
+      <TextInput placeholder="Correo" style={styles.inputRegister} keyboardType="email-address" placeholderTextColor="#aaa" />
+      <TextInput placeholder="RUT" style={styles.inputRegister} placeholderTextColor="#aaa" />
       <Text style={styles.labelFecha}>Fecha de Nacimiento</Text>
       <View style={styles.datePickerContainer}>
         <Picker
@@ -63,8 +63,8 @@ export default function RegisterScreen({ navigation }: Props) {
           ))}
         </Picker>
       </View>
-      <TextInput placeholder="Contraseña" secureTextEntry style={styles.input} placeholderTextColor="#aaa" />
-      <TextInput placeholder="Confirmar contraseña" secureTextEntry style={styles.input} placeholderTextColor="#aaa" />
+      <TextInput placeholder="Contraseña" secureTextEntry style={styles.inputRegister} placeholderTextColor="#aaa" />
+      <TextInput placeholder="Confirmar contraseña" secureTextEntry style={styles.inputRegister} placeholderTextColor="#aaa" />
       <TouchableOpacity style={styles.button} onPress={() => navigation?.navigate('Home')}>
         <Text>Registrar</Text>
       </TouchableOpacity>

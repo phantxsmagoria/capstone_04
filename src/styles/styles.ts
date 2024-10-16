@@ -6,39 +6,78 @@ export default StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: '#f5f5f5',
-    padding: 20,
   },
   title: {
     fontSize: 28,
-    marginBottom: 20,
     fontWeight: 'bold',
     color: '#333',
+
   },
-  input: {
+  titleLogin: {
+    fontSize: 50,
+    fontWeight: 'bold',
+    color: '#000',
+    marginTop: -190,
+    marginLeft: -64,
+    marginBottom: 100,
+     // Ajustamos el margen para que esté más arriba
+  },
+  inputRegister: {
     width: '80%',
     height: 50,
-    borderColor: '#ccc',
-    borderWidth: 1,
-    borderRadius: 10,
-    paddingHorizontal: 15,
     marginBottom: 15,
-    backgroundColor: '#fff',
+    elevation: 1,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.2,
+    shadowRadius: 1,
   },
+
+  inputLine: {
+    width: '85%',
+    height: 30,
+    borderBottomColor: '#FA7929',
+    borderBottomWidth: 1,
+    marginBottom: 30,
+    backgroundColor: 'transparent',
+    fontSize: 12,
+
+  },
+  separator: {
+    marginBottom: 20,
+  },
+
+  inputLineFocus: {
+    borderWidth: 0, // Aseguramos que no haya borde cuando está enfocado
+  },
+
   button: {
-    width: '80%',
-    height: 50,
-    backgroundColor: '#ff5722',
+    width: '63%',
+    height: 40,
+    backgroundColor: '#FA7929',
     justifyContent: 'center',
     alignItems: 'center',
-    borderRadius: 10,
+    borderRadius: 4,
     marginTop: 10,
+  },
+  buttonText: {
+    color: '#fff',
+    fontSize: 14,
+    fontWeight: 'bold',
   },
   forgotPassword: {
-    marginTop: 10,
+    marginTop: 12,
   },
   forgotPasswordText: {
-    color: '#ff5722',
+    color: '#000',
     textDecorationLine: 'underline',
+    fontSize: 12,
+  },
+  logo: {
+    width: 280,
+    height: 280,
+    marginTop: 0,
+    resizeMode: 'contain',
   },
   datePickerContainer: {
     flexDirection: 'row',
@@ -64,7 +103,7 @@ export default StyleSheet.create({
     marginTop: 400,
     flexDirection: 'row',
     borderWidth: 2,
-    borderColor: '#ff5722',
+    borderColor: '#FA7929',
     width: '80%',
     height: 60,
     borderRadius: 100,
@@ -75,7 +114,7 @@ export default StyleSheet.create({
     alignItems: 'center',
     width: '60%',
     borderRadius: 98,
-    backgroundColor: '#ff5722',
+    backgroundColor: '#FA7929',
   },
   loginButtonText: {
     color: '#ffff',
@@ -108,10 +147,10 @@ export default StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
-  logo: {
-    width: 280,
-    height: 280,
-    marginTop:0,
-    resizeMode: 'contain',
+  closeButton: {
+    position: 'absolute',
+    top: 10,
+    right: 10,
+    zIndex: 1,
   },
 });
