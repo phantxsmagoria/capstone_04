@@ -69,8 +69,8 @@ const RegisterCliente: React.FC<Props> = ({ navigation }) => {
       <TouchableOpacity style={styles.closeButton} onPress={() => navigation?.navigate('Home')}>
         <Icon name="times" size={30} color="#000"/>
       </TouchableOpacity>
-      <Text style={styles.titleRegisterCliente}>Regístrate</Text>
-      <Text style={styles.pCliente}>Como cliente</Text>
+      <Text style={styles.titleRegisterClienteNatural}>Regístrate</Text>
+      <Text style={styles.pClienteNatural}>Como cliente</Text>
       <TextInput
         placeholder="Nombre"
         style={styles.inputLine}

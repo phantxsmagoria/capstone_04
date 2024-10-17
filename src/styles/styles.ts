@@ -43,6 +43,15 @@ export default StyleSheet.create({
      // Ajuste de los márgenes
   },
 
+  titleRegisterClienteNatural: {
+    fontSize: 50,
+    fontWeight: 'bold',
+    color: '#000',
+    marginTop: -100,
+    marginRight: 120,
+    marginBottom: 80,
+  },
+
   inputLine: {
     width: '85%',
     height: 30,
@@ -171,5 +180,11 @@ export default StyleSheet.create({
     marginTop: -80,
     marginRight: 300,
     marginBottom: 30,
-  }
+  },
+
+  pClienteNatural: {
+    marginTop: -80,
+    marginRight: 270,
+    marginBottom: 30,
+  },
 });
