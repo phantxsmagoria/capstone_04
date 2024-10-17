@@ -1,3 +1,4 @@
+import './src/firebaseConfig'; // Asegúrate de que este archivo se importe al inicio
 import 'react-native-gesture-handler';
 import * as React from 'react';
 import { NavigationContainer } from '@react-navigation/native';

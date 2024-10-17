@@ -5,7 +5,8 @@ import { RouteProp } from '@react-navigation/native';
 import { Picker } from '@react-native-picker/picker';
 import styles from '../styles/styles';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import { db } from '../firebaseConfig'; // Importa tu configuración de Firebase
+import { auth, db } from '../firebaseConfig'; // Importa auth y db desde firebaseConfig
+import { createUserWithEmailAndPassword } from 'firebase/auth';
 import { collection, addDoc } from 'firebase/firestore';
 
 type RootStackParamList = {
@@ -40,9 +41,11 @@ const RegisterCliente: React.FC<Props> = ({ navigation }) => {
       alert('Las contraseñas no coinciden');
       return;
     }
-  
+
     try {
+      const userCredential = await createUserWithEmailAndPassword(auth, email, password);
       await addDoc(collection(db, 'users'), {
+        uid: userCredential.user.uid,
         name,
         email,
         rut,
@@ -60,7 +63,7 @@ const RegisterCliente: React.FC<Props> = ({ navigation }) => {
       }
     }
   };
-  
+
   return (
     <View style={styles.container}>
       <TouchableOpacity style={styles.closeButton} onPress={() => navigation?.navigate('Home')}>
@@ -144,3 +147,4 @@ const RegisterCliente: React.FC<Props> = ({ navigation }) => {
 };
 
 export default RegisterCliente;
+
