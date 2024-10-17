@@ -58,7 +58,7 @@ const RegisterCliente: React.FC<Props> = ({ navigation }) => {
         console.error('Error al registrar: ', error.message); // Muestra el mensaje del error específico
         alert(`Error al registrar: ${error.message}`);
       } else {
-        console.error('Error al registrar: ', error);
+        console.error('Error con registrar: ', error);
         alert('Error desconocido al registrar');
       }
     }
