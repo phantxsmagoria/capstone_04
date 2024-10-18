@@ -44,5 +44,3 @@ export default function HomeScreen({ navigation }: Props) {
     </ImageBackground>
   );
 }
-
-

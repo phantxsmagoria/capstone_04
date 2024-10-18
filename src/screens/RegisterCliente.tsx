@@ -35,7 +35,7 @@ const RegisterCliente: React.FC<Props> = ({ navigation }) => {
   };
 
   const validatePassword = (password: string) => {
-    const regex = /^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{12,}$/;
+    const regex = /^(?=.*[A-Z])(?=.*\d)(?=.*[.,_*])[A-Za-z\d.,_*]{12,}$/
     return regex.test(password);
   };
 
