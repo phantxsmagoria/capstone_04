@@ -9,7 +9,7 @@ import { auth, db } from '../firebaseConfig'; // Importa auth y db desde firebas
 import { createUserWithEmailAndPassword } from 'firebase/auth';
 import { collection, addDoc, query, where, getDocs } from 'firebase/firestore';
 
-type RootStackParamList = { Register: undefined; Home: undefined; };
+type RootStackParamList = { Register: undefined; Home: undefined; Login: undefined; };
 type RegisterScreenNavigationProp = StackNavigationProp<RootStackParamList, 'Register'>;
 type RegisterScreenRouteProp = RouteProp<RootStackParamList, 'Register'>;
 type Props = { navigation?: RegisterScreenNavigationProp; route?: RegisterScreenRouteProp; };
@@ -104,7 +104,7 @@ const RegisterCliente: React.FC<Props> = ({ navigation }) => {
         birthdate: `${selectedYear}-${selectedMonth}-${selectedDay}`,
       });
       alert('Registro exitoso');
-      navigation?.navigate('Home');
+      navigation?.navigate('Login');
     } catch (error) {
       if (error instanceof Error) {
         console.error('Error al registrar: ', error.message);
