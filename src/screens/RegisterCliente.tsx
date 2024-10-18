@@ -34,9 +34,9 @@ const RegisterCliente: React.FC<Props> = ({ navigation }) => {
     return querySnapshot.empty;
   };
 
-  const validatePassword = (password: string) => {
-    const regex = /^(?=.*[A-Z])(?=.*\d)(?=.*[.,_*])[A-Za-z\d.,_*]{12,}$/
-    return regex.test(password);
+  const validatePassword = (password: string) => {    
+    const regex = /^(?=.*[A-Z])(?=.*\d)(?=.*[.,_*])[A-Za-z\d.,_*]{12,}$/;    
+    return regex.test(password);  
   };
 
   const validateAge = (selectedDay: string, selectedMonth: string, selectedYear: string) => {
@@ -51,24 +51,20 @@ const RegisterCliente: React.FC<Props> = ({ navigation }) => {
     return age >= 18;
   };
 
-  const validateRUT = (rut: string) => {
-    // Aquí va la validación del RUT chileno con puntos y guion
-    const rutRegex = /^[0-9]+-[0-9kK]{1}$/;
-    if (!rutRegex.test(rut)) return false;
-
-    const [number, verifier] = rut.split('-');
-    let sum = 0;
-    let multiplier = 2;
-
-    for (let i = number.length - 1; i >= 0; i--) {
-      sum += parseInt(number[i], 10) * multiplier;
-      multiplier = (multiplier === 7) ? 2 : multiplier + 1;
-    }
-
-    const calculatedVerifier = 11 - (sum % 11);
-    const verifierDigit = (calculatedVerifier === 11) ? '0' : (calculatedVerifier === 10) ? 'k' : calculatedVerifier.toString();
-
-    return verifier.toLowerCase() === verifierDigit;
+  const validateRUT = (rut: string) => {    
+    // Validación del RUT chileno sin puntos y guion, aceptando entre 8 y 9 caracteres    
+    const rutRegex = /^[0-9]{7,8}[0-9kK]$/;    
+    if (!rutRegex.test(rut)) return false;    
+    const [number, verifier] = [rut.slice(0, -1), rut.slice(-1)];    
+    let sum = 0;    
+    let multiplier = 2;    
+    for (let i = number.length - 1; i >= 0; i--) {      
+      sum += parseInt(number[i], 10) * multiplier;      
+      multiplier = (multiplier === 7) ? 2 : multiplier + 1;    
+    }    
+    const calculatedVerifier = 11 - (sum % 11);    
+    const verifierDigit = (calculatedVerifier === 11) ? '0' : (calculatedVerifier === 10) ? 'k' : calculatedVerifier.toString();    
+    return verifier.toLowerCase() === verifierDigit;  
   };
 
   const handleRegister = async () => {
