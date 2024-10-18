@@ -47,8 +47,8 @@ export default StyleSheet.create({
     fontSize: 50,
     fontWeight: 'bold',
     color: '#000',
-    marginTop: -100,
-    marginRight: 120,
+    marginTop: 0,
+    marginRight: 150,
     marginBottom: 80,
   },
 
@@ -172,10 +172,12 @@ export default StyleSheet.create({
   },
   closeButton: {
     position: 'absolute',
-    top: 10,
-    right: 10,
+    top: 50, 
+    right: 20, 
     zIndex: 1,
   },
+  
+
   pCliente: {
     marginTop: -80,
     marginRight: 300,
@@ -184,7 +186,7 @@ export default StyleSheet.create({
 
   pClienteNatural: {
     marginTop: -80,
-    marginRight: 270,
+    marginRight: 265,
     marginBottom: 30,
   },
 });
