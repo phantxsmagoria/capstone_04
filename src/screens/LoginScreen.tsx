@@ -32,18 +32,32 @@ export default function LoginScreen({ navigation }: Props) {
     const handleLogin = async () => {
         try {
             const userCredential = await signInWithEmailAndPassword(auth, email, password);
-            const userQuery = query(collection(db, 'opticas'), where('uid', '==', userCredential.user.uid));
-            const querySnapshot = await getDocs(userQuery);
+            
+            // Verificar si es un usuario natural
+            const userQuery = query(collection(db, 'users'), where('uid', '==', userCredential.user.uid));
+            const userQuerySnapshot = await getDocs(userQuery);
+            
+            if (!userQuerySnapshot.empty) {
+                const userData = userQuerySnapshot.docs[0].data();
+                if (userData.type === 'cliente') {
+                    navigation?.navigate('Usuario'); // Redirigir a UserScreen
+                    return;
+                }
+            }
 
-            if (!querySnapshot.empty) {
-                const userData = querySnapshot.docs[0].data();
-                if (userData.type === 'optica') {
+            // Verificar si es una óptica
+            const opticaQuery = query(collection(db, 'opticas'), where('uid', '==', userCredential.user.uid));
+            const opticaQuerySnapshot = await getDocs(opticaQuery);
+
+            if (!opticaQuerySnapshot.empty) {
+                const opticaData = opticaQuerySnapshot.docs[0].data();
+                if (opticaData.type === 'optica') {
                     navigation?.navigate('OpticaScreen');  // Redirigir a OpticaScreen
                 } else {
-                    navigation?.navigate('Home');  // Redirigir a Home si no es óptica
+                    navigation?.navigate('Usuario');  // Redirigir a Home si no es óptica
                 }
             } else {
-                navigation?.navigate('Home');  // Redirigir a Home si no es óptica
+                navigation?.navigate('Usuario');  // Redirigir a Home si no es óptica
             }
         } catch (error) {
             if (error instanceof Error) {

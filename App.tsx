@@ -1,4 +1,4 @@
-import './src/firebaseConfig'; 
+import './src/firebaseConfig'; // Asegúrate de que este archivo se importe al inicio
 import 'react-native-gesture-handler';
 import * as React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
@@ -54,7 +54,8 @@ export default function App() {
         <Stack.Screen name="RegisterOptica" component={RegisterOptica} options={{ headerShown: false }} />
         <Stack.Screen name="Login" component={LoginScreen} options={{ headerShown: false }} />
         <Stack.Screen name="RegisterOpticaDocumento" component={RegistroOpticaDocumento} options={{ headerShown: false }} />
-        <Stack.Screen name="OpticaScreen" component={OpticaScreen}/>
+        <Stack.Screen name="OpticaScreen" component={OpticaScreen} options={{ headerShown: false }} />
+        <Stack.Screen name="Usuario" component={UserScreen} options={{ headerShown: false }} />
       </Stack.Navigator>
     </NavigationContainer>
   );
