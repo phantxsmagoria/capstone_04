@@ -1,4 +1,4 @@
-import './src/firebaseConfig'; // Asegúrate de que este archivo se importe al inicio
+import './src/firebaseConfig'; 
 import 'react-native-gesture-handler';
 import * as React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
@@ -13,6 +13,7 @@ import RegisterCliente from './src/screens/RegisterCliente';
 import RegisterOptica from './src/screens/RegisterOptica';
 import LoginScreen from './src/screens/LoginScreen';
 import RegistroOpticaDocumento from './src/screens/RegistroOpticaDocumento';
+import OpticaScreen from './src/screens/OpticaScreen';
 
 type RootStackParamList = {
   MainTabs: undefined;
@@ -25,6 +26,8 @@ type RootStackParamList = {
   Carrito: undefined;
   Usuario: undefined;
   RegisterOpticaDocumento: undefined;
+  OpticaHome: undefined;
+  OpticaScreen: undefined;
 };
 
 const Tab = createBottomTabNavigator<RootStackParamList>();
@@ -51,6 +54,7 @@ export default function App() {
         <Stack.Screen name="RegisterOptica" component={RegisterOptica} options={{ headerShown: false }} />
         <Stack.Screen name="Login" component={LoginScreen} options={{ headerShown: false }} />
         <Stack.Screen name="RegisterOpticaDocumento" component={RegistroOpticaDocumento} options={{ headerShown: false }} />
+        <Stack.Screen name="OpticaScreen" component={OpticaScreen}/>
       </Stack.Navigator>
     </NavigationContainer>
   );
