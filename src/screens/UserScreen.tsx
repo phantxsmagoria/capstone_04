@@ -1,36 +1,26 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, Button, Image, TextInput, FlatList } from 'react-native';
+import { View, Text, Image, TextInput, FlatList } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RouteProp } from '@react-navigation/native';
-import styles from '../styles/styles'
+import styles from '../styles/styles';
 import Ionicons from '@expo/vector-icons/Ionicons';
-import { collection, getDocs, query, QuerySnapshot, DocumentData } from 'firebase/firestore';
-import { db } from '../firebaseConfig';
+import { collection, getDocs, query, DocumentData, where } from 'firebase/firestore';
+import { db, auth } from '../firebaseConfig'; 
 
-type RootStackParamList = {
-  Usuario: undefined;
-  Buscar: undefined;
-  Carrito: undefined;
-  Home: undefined;
-};
-
+type RootStackParamList = { Usuario: undefined; Buscar: undefined; Carrito: undefined; Home: undefined; };
 type UserScreenNavigationProp = StackNavigationProp<RootStackParamList, 'Usuario'>;
 type UserScreenRouteProp = RouteProp<RootStackParamList, 'Usuario'>;
+type Props = { navigation: UserScreenNavigationProp; route: UserScreenRouteProp; };
 
-type Props = {
-  navigation: UserScreenNavigationProp;
-  route: UserScreenRouteProp;
-};
-
-interface SliderData {
-  name: string;
-  imageURL: string;
-}
+interface SliderData { name: string; imageURL: string; }
 
 export default function UserScreen({ navigation }: Props) {
-  const [sliderList, setSliderList] = useState<any[]>([]);
+  const [sliderList, setSliderList] = useState<SliderData[]>([]);
+  const [userName, setUserName] = useState<string>('Usuario'); // Esto es para sacar el nombre del usuario de la base de datos. Ojo.
+
   useEffect(() => {
     GetSliderList();
+    fetchUserName();
   }, []);
 
   const GetSliderList = async () => {
@@ -38,23 +28,40 @@ export default function UserScreen({ navigation }: Props) {
     try {
       const q = query(collection(db, 'sliders'));
       const querySnapshot = await getDocs(q);
-      const sliders: any[] = [];
+      const sliders: SliderData[] = [];
       querySnapshot.forEach((doc) => {
         console.log(doc.data());
-        sliders.push(doc.data());
+        sliders.push(doc.data() as SliderData);
       });
       setSliderList(sliders);
     } catch (error) {
       console.error("Error fetching slider data: ", error);
     }
   };
+
+  const fetchUserName = async () => {
+    const user = auth.currentUser;
+    if (user) {
+      try {
+        const q = query(collection(db, 'users'), where('uid', '==', user.uid));
+        const querySnapshot = await getDocs(q);
+        if (!querySnapshot.empty) {
+          const userData = querySnapshot.docs[0].data();
+          setUserName(userData.name);
+        }
+      } catch (error) {
+        console.error("Error fetching user data: ", error);
+      }
+    }
+  };
+
   return (
-<View>
-      <View style={{ padding: 20, marginTop: 20}}>
-        {/* Información del usuario*/}
+    <View>
+      <View style={{ padding: 20, marginTop: 20 }}>
+        {/* Canelitaaa, modifiqué aquí para mostrar el nombre de usuario -Bel */}
         <View>
           <Text style={{ fontSize: 20 }}>Hola,</Text>
-          <Text style={{ fontSize: 20 }}>Usuario</Text>
+          <Text style={{ fontSize: 20 }}>{userName}</Text> 
         </View>
         {/* Buscador */}
         <View style={{
@@ -71,45 +78,27 @@ export default function UserScreen({ navigation }: Props) {
           <Ionicons name="search" size={24} color="white" />
           <TextInput placeholder='Buscador' style={{ color: '#ffff', fontSize: 16 }} />
         </View>
-        {/*Slider*/}
+        {/* Slider */}
         <View>
           <FlatList
             data={sliderList}
             horizontal={true}
-            style={{paddingLeft:20}}
+            style={{ paddingLeft: 20 }}
             renderItem={({ item, index }) =>
-              <Image source={{ uri: item.imageURL }}
+              <Image
+                source={{ uri: item.imageURL }}
                 style={{
                   width: 300,
                   height: 160,
-                  borderRadius:15,
-                  marginRight:20,
-                  marginTop:10,
+                  borderRadius: 15,
+                  marginRight: 20,
+                  marginTop: 10,
                 }}
-              />}
+              />
+            }
           />
         </View>
       </View>
-
-
-
-
     </View>
   );
 }
-{/*
-<View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      
-      <Button
-        title="Ir a Buscar"
-        onPress={() => navigation.navigate('Buscar')}
-      />
-      <Button
-        title="Ir al Carrito"
-        onPress={() => navigation.navigate('Carrito')}
-      />
-      <Button
-        title="Ir al Home"
-        onPress={() => navigation.navigate('Home')}
-      />
-    </View>*/}

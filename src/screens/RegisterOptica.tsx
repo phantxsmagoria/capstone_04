@@ -21,6 +21,7 @@ export default function RegisterOptica({ navigation }: Props) {
     const [contraseña, setPassword] = useState('');
     const [confirmContraseña, setConfirmPassword] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
+    const [successMessage, setSuccessMessage] = useState('');
 
     const validateEmail = async (email: string) => {
         const userQuery = query(collection(db, 'opticas'), where('email', '==', email));
@@ -34,56 +35,58 @@ export default function RegisterOptica({ navigation }: Props) {
     };
 
     const validateRUT = (rut: string) => {
-      // Eliminar puntos y guión
-      const cleanedRUT = rut.replace(/[.\-]/g, '');
-      
-      // Validar que el RUT tenga entre 8 y 9 caracteres
-      const rutRegex = /^[0-9]{7,8}[0-9kK]$/;
-      if (!rutRegex.test(cleanedRUT)) return false;
-      
-      const [number, verifier] = [cleanedRUT.slice(0, -1), cleanedRUT.slice(-1)];
-      let sum = 0;
-      let multiplier = 2;
-      for (let i = number.length - 1; i >= 0; i--) {
-          sum += parseInt(number[i], 10) * multiplier;
-          multiplier = (multiplier === 7) ? 2 : multiplier + 1;
-      }
-      const calculatedVerifier = 11 - (sum % 11);
-      const verifierDigit = (calculatedVerifier === 11) ? '0' : (calculatedVerifier === 10) ? 'k' : calculatedVerifier.toString();
-      return verifier.toLowerCase() === verifierDigit;
-  };
-  
+        const cleanedRUT = rut.replace(/[.\-]/g, '');
+        const rutRegex = /^[0-9]{7,8}[0-9kK]$/;
+        if (!rutRegex.test(cleanedRUT)) return false;
+
+        const [number, verifier] = [cleanedRUT.slice(0, -1), cleanedRUT.slice(-1)];
+        let sum = 0;
+        let multiplier = 2;
+        for (let i = number.length - 1; i >= 0; i--) {
+            sum += parseInt(number[i], 10) * multiplier;
+            multiplier = (multiplier === 7) ? 2 : multiplier + 1;
+        }
+        const calculatedVerifier = 11 - (sum % 11);
+        const verifierDigit = (calculatedVerifier === 11) ? '0' : (calculatedVerifier === 10) ? 'k' : calculatedVerifier.toString();
+        return verifier.toLowerCase() === verifierDigit;
+    };
 
     const handleRegister = async () => {
         setErrorMessage(''); // Resetear mensaje de error
+        setSuccessMessage(''); // Resetear mensaje de éxito
+
         if (contraseña !== confirmContraseña) {
             setErrorMessage('Las contraseñas no coinciden.');
             return;
         }
+
         if (!validatePassword(contraseña)) {
-            setErrorMessage('La contraseña debe tener al menos 12 caracteres, una mayúscula, un número y un símbolo (un asterisco, un guión bajo o un punto).');
+            setErrorMessage('La contraseña debe tener al menos 12 caracteres, de los cuales debe tener un número, una mayúscula y un símbolo ( .,_/ )');
             return;
         }
+
         const emailAvailable = await validateEmail(email);
         if (!emailAvailable) {
             setErrorMessage('El correo electrónico ya está registrado.');
             return;
         }
+
         if (!validateRUT(rut)) {
-            setErrorMessage('El RUT no es válido.');
+            setErrorMessage('El RUT no es válido, ingresa el rut sin puntos y guión.');
             return;
         }
+
         try {
             const userCredential = await createUserWithEmailAndPassword(auth, email, contraseña);
             await addDoc(collection(db, 'opticas'), {
-                uid: userCredential.user.uid,
+                uid: userCredential.user.uid, // codigo de registro que se le asigna al usuario cuando se registra, guardado en firebase. 
                 nombreOptica,
                 email,
                 rut,
                 direccion,
-                type: 'optica',  // Añadimos el tipo de usuario
+                type: 'optica',  // Esto es para que las tablas no se mezclen y haga la separación de credenciales correspondiente!!!! No borrar!!!
             });
-            alert('Éxito Registro completado.');
+            setSuccessMessage('Registro completado exitosamente.');
             navigation?.navigate('RegisterOpticaDocumento');
         } catch (error) {
             if (error instanceof Error) {
@@ -149,6 +152,7 @@ export default function RegisterOptica({ navigation }: Props) {
                 onChangeText={setConfirmPassword}
             />
             {errorMessage ? <Text style={styles.errorText}>{errorMessage}</Text> : null}
+            {successMessage ? <Text style={styles.successText}>{successMessage}</Text> : null}
             <TouchableOpacity style={styles.button} onPress={handleRegister}>
                 <Text style={styles.buttonText}>Registra tu óptica</Text>
             </TouchableOpacity>

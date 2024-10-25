@@ -175,4 +175,12 @@ export default StyleSheet.create({
         marginTop: 10,
         textAlign: 'center',
     },
+    successText: {
+        color: 'green',
+        fontSize: 16,
+        fontWeight: 'bold',
+        textAlign: 'center',
+        marginVertical: 10,
+      },
+      
 });

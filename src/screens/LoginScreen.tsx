@@ -45,19 +45,19 @@ export default function LoginScreen({ navigation }: Props) {
                 }
             }
 
-            // Verificar si es una óptica
+            // Verificar credenciales 
             const opticaQuery = query(collection(db, 'opticas'), where('uid', '==', userCredential.user.uid));
             const opticaQuerySnapshot = await getDocs(opticaQuery);
 
             if (!opticaQuerySnapshot.empty) {
                 const opticaData = opticaQuerySnapshot.docs[0].data();
                 if (opticaData.type === 'optica') {
-                    navigation?.navigate('OpticaScreen');  // Redirigir a OpticaScreen
+                    navigation?.navigate('OpticaScreen');  // Redirigir a Usuario si no es credencial de óptica.
                 } else {
-                    navigation?.navigate('Usuario');  // Redirigir a Home si no es óptica
+                    navigation?.navigate('Usuario');  // Redirigir a Usuario si no es credencial de óptica.
                 }
             } else {
-                navigation?.navigate('Usuario');  // Redirigir a Home si no es óptica
+                navigation?.navigate('Usuario');  // Redirigir a Usuario si no es credencial de óptica.
             }
         } catch (error) {
             if (error instanceof Error) {
