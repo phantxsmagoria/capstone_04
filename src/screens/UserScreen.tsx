@@ -56,13 +56,13 @@ export default function UserScreen({ navigation }: Props) {
   };
 
   return (
-    <View>
+    
       <View style={{ padding: 20, marginTop: 20 }}>
         {/* Canelitaaa, modifiqué aquí para mostrar el nombre de usuario -Bel */}
-        <View>
+        
           <Text style={{ fontSize: 20 }}>Hola,</Text>
           <Text style={{ fontSize: 20 }}>{userName}</Text> 
-        </View>
+        
         {/* Buscador */}
         <View style={{
           display: 'flex',
@@ -99,6 +99,5 @@ export default function UserScreen({ navigation }: Props) {
           />
         </View>
       </View>
-    </View>
   );
 }

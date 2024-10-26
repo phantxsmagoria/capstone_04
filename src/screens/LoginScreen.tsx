@@ -10,7 +10,8 @@ import { collection, getDocs, query, where } from 'firebase/firestore';
 
 type RootStackParamList = { 
     Login: undefined; 
-    Home: undefined; 
+    Home: undefined;
+    MainTabs: undefined; 
     Usuario: undefined; 
     OpticaScreen: undefined; // Añadir OpticaScreen a las rutas
 };
@@ -40,7 +41,7 @@ export default function LoginScreen({ navigation }: Props) {
             if (!userQuerySnapshot.empty) {
                 const userData = userQuerySnapshot.docs[0].data();
                 if (userData.type === 'cliente') {
-                    navigation?.navigate('Usuario'); // Redirigir a UserScreen
+                    navigation?.navigate('Usuario'); // Redirigir a UserScreen ***
                     return;
                 }
             }
@@ -54,10 +55,10 @@ export default function LoginScreen({ navigation }: Props) {
                 if (opticaData.type === 'optica') {
                     navigation?.navigate('OpticaScreen');  // Redirigir a Usuario si no es credencial de óptica.
                 } else {
-                    navigation?.navigate('Usuario');  // Redirigir a Usuario si no es credencial de óptica.
+                    navigation?.navigate('MainTabs');  // Redirigir a Usuario si no es credencial de óptica.
                 }
             } else {
-                navigation?.navigate('Usuario');  // Redirigir a Usuario si no es credencial de óptica.
+                navigation?.navigate('MainTabs');  // Redirigir a Usuario si no es credencial de óptica.
             }
         } catch (error) {
             if (error instanceof Error) {

@@ -1,10 +1,10 @@
-import './src/firebaseConfig'; // Asegúrate de que este archivo se importe al inicio
+import './src/firebaseConfig'; // Nuestra base de datos
 import 'react-native-gesture-handler';
 import * as React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createStackNavigator } from '@react-navigation/stack';
-import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons'; // este es para los iconos
+import Feather from '@expo/vector-icons/Feather'; // este es para los iconos
 import HomeScreen from './src/screens/HomeScreen';
 import SearchScreen from './src/screens/SearchScreen';
 import CartScreen from './src/screens/CartScreen';
@@ -36,13 +36,41 @@ const Stack = createStackNavigator<RootStackParamList>();
 
 function MainTabs() {
   return (
-    <Tab.Navigator screenOptions={{tabBarActiveTintColor: '#FA7929'}}>
-      <Tab.Screen name="Buscar" component={SearchScreen} options={{tabBarIcon: ({color, size}) => (<MaterialCommunityIcons name="home-search" size={24} color={color} />)}} />
-      <Tab.Screen name="Carrito" component={CartScreen} options={{tabBarIcon: ({color, size}) => (<MaterialCommunityIcons name="cart-outline" size={24} color={color} />)}}/>
-      <Tab.Screen name="Usuario" component={UserScreen} options={{tabBarIcon: ({color, size}) => (<MaterialCommunityIcons name="account" size={24} color={color} />)}} />
+    <Tab.Navigator screenOptions={{ tabBarActiveTintColor: '#FA7929' }}>
+      <Tab.Screen 
+        name="Usuario" 
+        component={UserScreen} // este es la pestaña inicial onda tipo home
+        options={{ 
+          tabBarIcon: ({ color, size }) => (
+            <Feather name="home" size={24} color={color} />
+          ), 
+          headerShown: false 
+        }} 
+      />
+      <Tab.Screen 
+        name="Buscar" 
+        component={SearchScreen} 
+        options={{ 
+          tabBarIcon: ({ color, size }) => (
+            <Feather name="search" size={24} color={color}/>
+          ), 
+          headerShown: false 
+        }} 
+      />
+      <Tab.Screen 
+        name="Carrito" 
+        component={CartScreen} 
+        options={{ 
+          tabBarIcon: ({ color, size }) => (
+            <Feather name="shopping-cart" size={24} color={color} />
+          ), 
+          headerShown: false 
+        }} 
+      />
     </Tab.Navigator>
   );
 }
+
 
 export default function App() {
   return (
