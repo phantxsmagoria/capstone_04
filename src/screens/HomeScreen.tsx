@@ -9,6 +9,7 @@ type RootStackParamList = {
   Home: undefined;
   Register: undefined; // Asegúrate de que este nombre sea correcto
   Login: undefined;
+  MainTabs: undefined;
 };
 
 type HomeScreenNavigationProp = StackNavigationProp<RootStackParamList, 'Home'>;
@@ -32,7 +33,7 @@ export default function HomeScreen({ navigation }: Props) {
         <View style={styles.overlay}>
           <Image source={require('../assets/LOGO.png')} style={styles.logo} />
           <View style={styles.buttonContainer}>
-            <TouchableOpacity style={styles.loginButtonWrapper} onPress={() => navigation.navigate('Login')}>
+            <TouchableOpacity style={styles.loginButtonWrapper} onPress={() => navigation.navigate('MainTabs')}>
               <Text style={styles.loginButtonText}>Inicia sesión</Text>
             </TouchableOpacity>
             <TouchableOpacity style={styles.registerButtonWrapper} onPress={() => navigation.navigate('Register')}>

@@ -182,5 +182,58 @@ export default StyleSheet.create({
         textAlign: 'center',
         marginVertical: 10,
       },
+      //
+      cartItem: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        padding: 10,
+        backgroundColor: '#f9f9f9',
+        borderRadius: 10,
+        marginBottom: 20,
+      },
+
+      productImage: {
+        width: 60,
+        height: 60,
+        marginRight: 10 },
+
+
+        // Style CartScreen
+    
+      productTitle: {
+        fontSize: 18,
+        fontWeight: 'bold',
+      },
+      productDescription: {
+        fontSize: 14,
+        color: '#666',
+      },
+      productSubtitle: {
+        fontSize: 12,
+        color: '#aaa',
+      },
+      productPrice: {
+        fontSize: 16,
+        color: '#000',
+        fontWeight: 'bold'},
+        trashButton: {
+            padding: 10,
+            borderRadius: 50,
+            backgroundColor: '#FA7929',
+            justifyContent: 'center',
+            alignItems: 'center',
+          },
+          card: {
+            padding: 15,
+            backgroundColor: '#f9f9f9',
+            borderRadius: 10,
+            marginBottom: 20,
+            alignItems: 'center',
+          },
+          cardTitle: {
+            fontSize: 20,
+            fontWeight: 'bold',
+            marginBottom: 10,
+          },
       
 });
