@@ -235,5 +235,28 @@ export default StyleSheet.create({
             fontWeight: 'bold',
             marginBottom: 10,
           },
+          
+    // Style Perfil de usuario
+    nomProfile: {
+        padding: 20, 
+        marginTop: 20,
+        display: 'flex',
+        flexDirection: 'row',
+        alignItems: 'center',
+        gap: 10
+    },
+    itemProfile: { 
+        fontSize: 10, 
+        backgroundColor: '#f9f9f9', 
+        width: 65, 
+        height: 90, 
+        justifyContent: 'center', 
+        alignItems: 'center', 
+    }, 
+    textProfile: { 
+        fontSize: 10, 
+        textAlign: 'center', 
+        marginTop: 5, 
+    },
       
 });

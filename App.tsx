@@ -15,6 +15,7 @@ import RegisterOptica from './src/screens/RegisterOptica';
 import LoginScreen from './src/screens/LoginScreen';
 import RegistroOpticaDocumento from './src/screens/RegistroOpticaDocumento';
 import OpticaScreen from './src/screens/OpticaScreen';
+import ProfileClienteScreen from './src/screens/ProfileClienteScreen';
 
 type RootStackParamList = {
   MainTabs: undefined;
@@ -29,6 +30,7 @@ type RootStackParamList = {
   RegisterOpticaDocumento: undefined;
   OpticaHome: undefined;
   OpticaScreen: undefined;
+  Perfil: undefined;
 };
 
 const Tab = createBottomTabNavigator<RootStackParamList>();
@@ -67,7 +69,18 @@ function MainTabs() {
           headerShown: false 
         }} 
       />
+      <Tab.Screen 
+        name="Perfil" 
+        component={ProfileClienteScreen} 
+        options={{ 
+          tabBarIcon: ({ color, size }) => (
+            <Feather name="user" size={24} color={color} />
+          ), 
+          headerShown: false 
+        }} 
+      />
     </Tab.Navigator>
+    
   );
 }
 

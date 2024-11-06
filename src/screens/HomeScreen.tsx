@@ -33,7 +33,7 @@ export default function HomeScreen({ navigation }: Props) {
         <View style={styles.overlay}>
           <Image source={require('../assets/LOGO.png')} style={styles.logo} />
           <View style={styles.buttonContainer}>
-            <TouchableOpacity style={styles.loginButtonWrapper} onPress={() => navigation.navigate('MainTabs')}>
+            <TouchableOpacity style={styles.loginButtonWrapper} onPress={() => navigation.navigate('Login')}> {/*Acá va el navigete tiene que decir "Login"*/}
               <Text style={styles.loginButtonText}>Inicia sesión</Text>
             </TouchableOpacity>
             <TouchableOpacity style={styles.registerButtonWrapper} onPress={() => navigation.navigate('Register')}>
