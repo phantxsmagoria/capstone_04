@@ -7,9 +7,20 @@ import FontAwesome5 from '@expo/vector-icons/FontAwesome5';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import Feather from '@expo/vector-icons/Feather';
 import styles from '../styles/styles';
+import { StackNavigationProp } from '@react-navigation/stack';
+import { RouteProp } from '@react-navigation/native';
+
+type RootStackParamList = {
+    Perfil: undefined; 
+    Home: undefined;
+}
+
+type ProfileClienteScreenNavigationProp = StackNavigationProp<RootStackParamList, 'Perfil'>;
+type ProfileClientesScreenRouterProp = RouteProp<RootStackParamList,'Perfil'>;
+type Props = {navigation: ProfileClienteScreenNavigationProp; route:ProfileClientesScreenRouterProp};
 
 
-export default function ProfileClienteScreen() {
+export default function ProfileClienteScreen({navigation}: Props) {
     const [userName, setUserName] = useState<string>('Usuario');
 
     useEffect(() => {
@@ -67,7 +78,7 @@ export default function ProfileClienteScreen() {
                     <Feather name="tool" size={24} color="black" /> 
                     <Text style={styles.textProfile}>Configuración y Soporte</Text> 
                 </TouchableOpacity> 
-                <TouchableOpacity style={styles.itemProfile}> 
+                <TouchableOpacity style={styles.itemProfile} onPress={() => navigation.navigate('Home')}> 
                     <Feather name="log-out"size={24} color="black" /> 
                     <Text style={styles.textProfile}>Cerrar Sesión</Text> 
                 </TouchableOpacity> 

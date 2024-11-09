@@ -252,6 +252,7 @@ export default StyleSheet.create({
         height: 90, 
         justifyContent: 'center', 
         alignItems: 'center', 
+        marginTop: 20,
     }, 
     textProfile: { 
         fontSize: 10, 
