@@ -10,6 +10,7 @@ type RootStackParamList = {
   Register: undefined; // Asegúrate de que este nombre sea correcto
   Login: undefined;
   MainTabs: undefined;
+  OpticaScreen: undefined;
 };
 
 type HomeScreenNavigationProp = StackNavigationProp<RootStackParamList, 'Home'>;
