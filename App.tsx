@@ -16,6 +16,8 @@ import LoginScreen from './src/screens/LoginScreen';
 import RegistroOpticaDocumento from './src/screens/RegistroOpticaDocumento';
 import OpticaScreen from './src/screens/OpticaScreen';
 import ProfileClienteScreen from './src/screens/ProfileClienteScreen';
+import VerProducto from './src/screens/VerProducto';
+import ProductoOptica from './src/screens/ProductoOptica';
 
 type RootStackParamList = {
   MainTabs: undefined;
@@ -31,6 +33,8 @@ type RootStackParamList = {
   OpticaHome: undefined;
   OpticaScreen: undefined;
   Perfil: undefined;
+  ProductoOptica: undefined;
+  VerProducto: undefined;
 };
 
 const Tab = createBottomTabNavigator<RootStackParamList>();
@@ -98,6 +102,8 @@ export default function App() {
         <Stack.Screen name="RegisterOpticaDocumento" component={RegistroOpticaDocumento} options={{ headerShown: false }} />
         <Stack.Screen name="OpticaScreen" component={OpticaScreen} options={{ headerShown: false }} />
         <Stack.Screen name="Usuario" component={UserScreen} options={{ headerShown: false}} />
+        <Stack.Screen name="ProductoOptica" component={ProductoOptica} options={{ headerShown: false}}/>
+        <Stack.Screen name="VerProducto" component={VerProducto} options={{headerShown: false}}/>
       </Stack.Navigator>
     </NavigationContainer>
   );

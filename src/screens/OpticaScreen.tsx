@@ -18,6 +18,7 @@ type RootStackParamList = {
   Carrito: undefined;
   Home: undefined;
   OpticaScreen: undefined;
+  VerProducto: undefined;
 };
 
 type OpticaScreenNavigationProp = StackNavigationProp<RootStackParamList, 'OpticaScreen'>;
@@ -84,7 +85,7 @@ export default function OpticaScreen({ navigation }: Props) {
           <Ionicons name="bag-outline" size={24} color="black" />
           <Text style={styles.textProfile}>Pedidos en cola</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.itemProfile}> {/*onPress={() => navigation.navigate('VerProducto')}*/}
+        <TouchableOpacity style={styles.itemProfile} onPress={() => navigation.navigate('VerProducto')}> 
           <FontAwesome5 name="glasses" size={24} color="black" />
           <Text style={styles.textProfile}>Mi catálogo</Text>
         </TouchableOpacity>
@@ -101,7 +102,6 @@ export default function OpticaScreen({ navigation }: Props) {
           <Text style={styles.textProfile}>Cerrar Sesión</Text>
         </TouchableOpacity>
       </View>
-
     </View>
   );
 }
