@@ -336,5 +336,11 @@ export default StyleSheet.create({
     cargardatosreceta: {
         flex: 1,
     justifyContent: 'center',
-    }
+    },
+    input: { 
+    height: 40, 
+    borderColor: 'gray', 
+    borderWidth: 1, 
+    paddingLeft: 8, 
+    margin: 10, },
 });

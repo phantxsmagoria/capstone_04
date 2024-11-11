@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity, StatusBar } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RouteProp } from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import styles from '../styles/styles';
-import { auth, db } from '../firebaseConfig'; // Importa db además de auth desde firebaseConfig
+import { auth, db } from '../firebaseConfig';
 import { signInWithEmailAndPassword } from 'firebase/auth';
 import { collection, getDocs, query, where } from 'firebase/firestore';
 
@@ -13,7 +13,7 @@ type RootStackParamList = {
     Home: undefined;
     MainTabs: undefined; 
     Usuario: undefined; 
-    OpticaScreen: undefined; // Añadir OpticaScreen a las rutas
+    OpticaScreen: undefined;
 };
 
 type LoginScreenNavigationProp = StackNavigationProp<RootStackParamList, 'Login'>;
@@ -24,7 +24,7 @@ type Props = {
     route?: LoginScreenRouteProp;
 };
 
-export default function LoginScreen({ navigation }: Props) {
+const LoginScreen: React.FC<Props> = ({ navigation }) => {
     const [isFocusedEmail, setIsFocusedEmail] = useState(false);
     const [isFocusedPassword, setIsFocusedPassword] = useState(false);
     const [email, setEmail] = useState('');
@@ -34,31 +34,29 @@ export default function LoginScreen({ navigation }: Props) {
         try {
             const userCredential = await signInWithEmailAndPassword(auth, email, password);
             
-            // Verificar si es un usuario natural
             const userQuery = query(collection(db, 'users'), where('uid', '==', userCredential.user.uid));
             const userQuerySnapshot = await getDocs(userQuery);
             
             if (!userQuerySnapshot.empty) {
                 const userData = userQuerySnapshot.docs[0].data();
                 if (userData.type === 'cliente') {
-                    navigation?.navigate('Usuario'); // Redirigir a UserScreen ***
+                    navigation?.navigate('Usuario');
                     return;
                 }
             }
 
-            // Verificar credenciales 
             const opticaQuery = query(collection(db, 'opticas'), where('uid', '==', userCredential.user.uid));
             const opticaQuerySnapshot = await getDocs(opticaQuery);
 
             if (!opticaQuerySnapshot.empty) {
                 const opticaData = opticaQuerySnapshot.docs[0].data();
                 if (opticaData.type === 'optica') {
-                    navigation?.navigate('OpticaScreen');  // Redirigir a Usuario si no es credencial de óptica.
+                    navigation?.navigate('OpticaScreen');
                 } else {
-                    navigation?.navigate('MainTabs');  // Redirigir a Usuario si no es credencial de óptica.
+                    navigation?.navigate('MainTabs');
                 }
             } else {
-                navigation?.navigate('MainTabs');  // Redirigir a Usuario si no es credencial de óptica.
+                navigation?.navigate('MainTabs');
             }
         } catch (error) {
             if (error instanceof Error) {
@@ -73,7 +71,6 @@ export default function LoginScreen({ navigation }: Props) {
 
     return (
         <View style={styles.container}>
-            <StatusBar hidden />
             <TouchableOpacity style={styles.closeButton} onPress={() => navigation?.navigate('Home')}>
                 <Icon name="times" size={30} color="#000"/>
             </TouchableOpacity>
@@ -105,4 +102,6 @@ export default function LoginScreen({ navigation }: Props) {
             </TouchableOpacity>
         </View>
     );
-}
+};
+
+export default LoginScreen;

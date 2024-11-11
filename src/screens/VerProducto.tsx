@@ -49,12 +49,12 @@ export default function VerProducto({ navigation }: Props) {
 
   return (
     <View>
-      {/*este es para el botón para regresar atrás*/}
+
       <TouchableOpacity style={styles.nomProfile } onPress={() => navigation.navigate('OpticaScreen')}>
-        <MaterialIcons name="arrow-back-ios" size={35} color="#FA7929" /> {/* acá modifique el tamaño por 35*/}
-        <Text style={{ fontSize: 30 }}>Mi Catálogo</Text> {/* acá modifique el tamaño por 30*/}
+        <MaterialIcons name="arrow-back-ios" size={35} color="#FA7929" /> 
+        <Text style={{ fontSize: 30 }}>Mi Catálogo</Text> 
       </TouchableOpacity>
-      {/*este es para el botón para ir a la página de Producto Optica*/}
+
       <TouchableOpacity style={{
         display: 'flex',
         flexDirection: 'row',

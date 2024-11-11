@@ -97,7 +97,7 @@ export default function RegisterOptica({ navigation }: Props) {
                 setErrorMessage('Error desconocido al registrar.');
             }
         }
-    };
+    }; 
 
     return (
         <View style={styles.container}>

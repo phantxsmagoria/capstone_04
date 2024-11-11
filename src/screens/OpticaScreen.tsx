@@ -53,12 +53,11 @@ export default function OpticaScreen({ navigation }: Props) {
 
   return (
     <View>
-      {/* esto es para que muestre el nombre de la optica */}
+
       <View style={styles.nomProfile}>
         <FontAwesome5 name="user-circle" size={40} color="black" />
         <Text style={{ fontSize: 35 }}>{nombreOptica}</Text>
       </View>
-      {/* esto es para que muestre los botones de los pedidos, receta, etc. */}
 
       
       <View style={{ flex: 1, flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'center' }}>

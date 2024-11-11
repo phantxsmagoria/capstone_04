@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, Image, TouchableOpacity, Button } from 'react-native';
+import { View, Text, Image, TouchableOpacity } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RouteProp } from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/FontAwesome';
@@ -20,7 +20,7 @@ type Props = {
   route: CartScreenRouteProp;
 };
 
-export default function CartScreen({ navigation }: Props) {
+const CartScreen: React.FC<Props> = ({ navigation }) => {
   return (
     <View style={{ flex: 1, justifyContent: 'space-between', padding: 20, paddingTop: 40 }}>
       <Text style={[styles.title, { textAlign: 'center', marginTop: 0 }]}>Carrito</Text>
@@ -50,9 +50,9 @@ export default function CartScreen({ navigation }: Props) {
           <Text style={styles.buttonText}>Pagar</Text>
         </TouchableOpacity>
       </View>
-
-      
-
     </View>
   );
-}
+};
+
+export default CartScreen;
+

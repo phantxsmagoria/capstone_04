@@ -58,12 +58,12 @@ export default function UserScreen({ navigation }: Props) {
   return (
     
       <View style={{ padding: 20, marginTop: 20 }}>
-        {/* Canelitaaa, modifiqué aquí para mostrar el nombre de usuario -Bel */}
+
         
           <Text style={{ fontSize: 20 }}>Hola,</Text>
           <Text style={{ fontSize: 20 }}>{userName}</Text> 
         
-        {/* Buscador */}
+
         <View style={{
           display: 'flex',
           flexDirection: 'row',
@@ -78,7 +78,7 @@ export default function UserScreen({ navigation }: Props) {
           <Ionicons name="search" size={24} color="white" />
           <TextInput placeholder='Buscador' style={{ color: '#ffff', fontSize: 16 }} />
         </View>
-        {/* Slider */}
+
         <View>
           <FlatList
             data={sliderList}

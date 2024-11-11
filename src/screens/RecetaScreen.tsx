@@ -113,13 +113,11 @@ export default function RecetaScreen({navigation}: Props) {
   };
   return (
     <View>
-      {/*este es para el botón para regresar atrás*/}
+
       <TouchableOpacity style={styles.nomProfile } onPress={() => navigation.navigate('Perfil')}>
         <MaterialIcons name="arrow-back-ios" size={35} color="#FA7929" /> {/* acá modifique el tamaño por 35*/}
         <Text style={{ fontSize: 30 }}>Mi Receta</Text> {/* acá modifique el tamaño por 30*/}
       </TouchableOpacity>
-
-      {/* Este es del ojo derecho*/}
       <View style={styles.textReceta} >
       <Text style={{marginLeft: 15,fontSize: 18}}>OD: Ojo Derecho</Text>
       <Ionicons  name="information-circle-outline" size={30} color="#FA7929" />
@@ -148,7 +146,6 @@ export default function RecetaScreen({navigation}: Props) {
       />
       </View>
 
-      {/* Este es del ojo izquierdo*/}
       <View style={styles.textReceta}>
       <Text style={{marginLeft:15,fontSize: 18}}>OI: Ojo Izquierdo</Text>
       <Ionicons name="information-circle-outline" size={30} color="#FA7929" />
@@ -177,7 +174,6 @@ export default function RecetaScreen({navigation}: Props) {
       />
 
       </View>
-      {/* Y esto es general*/}
       <Ionicons style={{marginLeft:15, marginTop:10, marginBottom: -8}} name="information-circle-outline" size={30} color="#FA7929" />
       <View style={styles.contendorReceta2}>
       <TextInput style={styles.itemReceta2}
@@ -194,8 +190,8 @@ export default function RecetaScreen({navigation}: Props) {
         onChangeText={(text) => {if (validateDatosReceta(text)) setDistanciaPupilar(text);}}
       />
       </View>
+      
 
-      {/* Este es el botón para crear la receta*/}
       {errorMessage ? <Text style={styles.errorText}>{errorMessage}</Text> : null}
       {successMessage ? <Text style={styles.successText}>{successMessage}</Text> : null}
       <TouchableOpacity style={styles.botonReceta} onPress={handleReceta}>

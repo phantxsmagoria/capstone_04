@@ -62,7 +62,6 @@ export default function ProductoOptica({ navigation }: Props) {
 
   return (
     <View style={styles.container}>
-      {/*este es para el botón para regresar atrás*/}
       <TouchableOpacity style={{
         position: 'absolute',
         top: 21.5,
@@ -74,7 +73,6 @@ export default function ProductoOptica({ navigation }: Props) {
       }} onPress={() => navigation.navigate('VerProducto')}>
         <MaterialIcons name="arrow-back-ios" size={30} color="#FA7929" />
       </TouchableOpacity>
-      {/*esto es para crear el formulario de crear producto*/}
       <Text style={{ 
         fontSize: 40,
         marginBottom: 40,

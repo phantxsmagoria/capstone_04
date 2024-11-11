@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
 import { db, auth } from '../firebaseConfig';
 import { collection, getDocs, query, where } from 'firebase/firestore';
-{/* estos son las importaciones de los iconos */}
 import FontAwesome5 from '@expo/vector-icons/FontAwesome5';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import Feather from '@expo/vector-icons/Feather';
@@ -45,21 +44,14 @@ export default function ProfileClienteScreen({navigation}: Props) {
     };
     return (
         <View>
-            {/* esto es para que muestre el nombre del cliente */}
             <View style={styles.nomProfile}>
                 <FontAwesome5 name="user-circle" size={40} color="black" />
                 <Text style={{ fontSize: 35 }}>{userName}</Text>
-            </View>
-
-            {/* esto es para que muestre los botones de los pedidos, receta, etc. */}
-
-           
+                <Text style={{padding: 20,fontSize: 25, }}>Mis Pedidos</Text>
+            </View>           
             
             <View style={{flex:1, flexDirection:'row', flexWrap:'wrap', justifyContent: 'center'}}> 
-            <Text style={{
-                padding: 20,
-                fontSize: 25,
-            }}>Mis Pedidos</Text>
+            
                 <TouchableOpacity style={styles.itemProfile}> 
                     <Ionicons name="wallet-outline" size={24} color="black" /> 
                     <Text style={styles.textProfile}>Mis Pagos</Text> 

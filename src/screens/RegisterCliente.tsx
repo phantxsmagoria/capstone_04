@@ -114,11 +114,15 @@ const RegisterCliente: React.FC<Props> = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
+
       <TouchableOpacity style={styles.closeButton} onPress={() => navigation?.navigate('Home')}>
         <Icon name="times" size={30} color="#000" />
       </TouchableOpacity>
+
       <Text style={styles.titleRegisterClienteNatural}>Regístrate</Text>
+
       <Text style={styles.pClienteNatural}>Como cliente</Text>
+
       <TextInput
         placeholder="Nombre"
         style={styles.inputLine}
@@ -141,6 +145,7 @@ const RegisterCliente: React.FC<Props> = ({ navigation }) => {
         value={rut}
         onChangeText={setRut}
       />
+
       <Text style={styles.labelFecha}>Fecha de Nacimiento</Text>
       <View style={styles.datePickerContainer}>
         <Picker
@@ -161,6 +166,7 @@ const RegisterCliente: React.FC<Props> = ({ navigation }) => {
             <Picker.Item key={month} label={month} value={month} />
           ))}
         </Picker>
+        
         <Picker
           selectedValue={selectedYear}
           style={styles.picker}
@@ -171,6 +177,7 @@ const RegisterCliente: React.FC<Props> = ({ navigation }) => {
           ))}
         </Picker>
       </View>
+
       <TextInput
         placeholder="Contraseña"
         secureTextEntry
