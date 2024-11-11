@@ -332,5 +332,9 @@ export default StyleSheet.create({
         textAlign:'center',
         margin: 8,
 
+    },
+    cargardatosreceta: {
+        flex: 1,
+    justifyContent: 'center',
     }
 });
