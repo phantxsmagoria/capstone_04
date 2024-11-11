@@ -53,12 +53,13 @@ export default function ProfileClienteScreen({navigation}: Props) {
 
             {/* esto es para que muestre los botones de los pedidos, receta, etc. */}
 
+           
+            
+            <View style={{flex:1, flexDirection:'row', flexWrap:'wrap', justifyContent: 'center'}}> 
             <Text style={{
                 padding: 20,
                 fontSize: 25,
             }}>Mis Pedidos</Text>
-            
-            <View style={{flex:1, flexDirection:'row', flexWrap:'wrap', justifyContent: 'center'}}> 
                 <TouchableOpacity style={styles.itemProfile}> 
                     <Ionicons name="wallet-outline" size={24} color="black" /> 
                     <Text style={styles.textProfile}>Mis Pagos</Text> 

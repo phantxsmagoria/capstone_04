@@ -60,11 +60,12 @@ export default function OpticaScreen({ navigation }: Props) {
       </View>
       {/* esto es para que muestre los botones de los pedidos, receta, etc. */}
 
+      
+      <View style={{ flex: 1, flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'center' }}>
       <Text style={{
         padding: 20,
         fontSize: 25,
       }}>Mis Ventas</Text>
-      <View style={{ flex: 1, flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'center' }}>
         <TouchableOpacity style={styles.itemProfile}>
           <MaterialCommunityIcons name="credit-card-clock-outline" size={24} color="black" />
           <Text style={styles.textProfile}>Pendientes de cobro</Text>
