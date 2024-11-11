@@ -19,6 +19,13 @@ type RootStackParamList = {
   Home: undefined;
   OpticaScreen: undefined;
   VerProducto: undefined;
+  OpticaCobroPendiente: undefined;
+  OpticaEnvioPendiente: undefined;
+  OpticaEnviado: undefined;
+  OpticaReseña: undefined;
+  OpticaColaPedidos: undefined;
+  OpticaNotificarError: undefined;
+  OpticaConfiguracion: undefined;
 };
 
 type OpticaScreenNavigationProp = StackNavigationProp<RootStackParamList, 'OpticaScreen'>;
@@ -65,23 +72,23 @@ export default function OpticaScreen({ navigation }: Props) {
         padding: 20,
         fontSize: 25,
       }}>Mis Ventas</Text>
-        <TouchableOpacity style={styles.itemProfile}>
+        <TouchableOpacity style={styles.itemProfile} onPress={() => navigation.navigate('OpticaCobroPendiente')}>
           <MaterialCommunityIcons name="credit-card-clock-outline" size={24} color="black" />
           <Text style={styles.textProfile}>Pendientes de cobro</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.itemProfile}>
+        <TouchableOpacity style={styles.itemProfile} onPress={() => navigation.navigate('OpticaEnvioPendiente')}>
           <Feather name="package" size={24} color="black" />
           <Text style={styles.textProfile}>Pendientes de envío</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.itemProfile}>
+        <TouchableOpacity style={styles.itemProfile} onPress={() => navigation.navigate('OpticaEnviado')}>
           <Feather name="truck" size={24} color="black" />
           <Text style={styles.textProfile}>Enviados</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.itemProfile}>
+        <TouchableOpacity style={styles.itemProfile} onPress={() => navigation.navigate('OpticaReseña')}>
           <Feather name="edit" size={24} color="black" />
           <Text style={styles.textProfile}>Reseñas</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.itemProfile}>
+        <TouchableOpacity style={styles.itemProfile} onPress={() => navigation.navigate('OpticaColaPedidos')}>
           <Ionicons name="bag-outline" size={24} color="black" />
           <Text style={styles.textProfile}>Pedidos en cola</Text>
         </TouchableOpacity>
@@ -89,11 +96,11 @@ export default function OpticaScreen({ navigation }: Props) {
           <FontAwesome5 name="glasses" size={24} color="black" />
           <Text style={styles.textProfile}>Mi catálogo</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.itemProfile}>
+        <TouchableOpacity style={styles.itemProfile} onPress={() => navigation.navigate('OpticaNotificarError')}>
           <Feather name="alert-circle" size={24} color="black" />
           <Text style={styles.textProfile}>Notificar un error</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.itemProfile}>
+        <TouchableOpacity style={styles.itemProfile} onPress={() => navigation.navigate('OpticaConfiguracion')}>
           <Feather name="tool" size={24} color="black" />
           <Text style={styles.textProfile}>Configuración y soporte</Text>
         </TouchableOpacity>

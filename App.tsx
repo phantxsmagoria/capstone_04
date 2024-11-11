@@ -19,6 +19,14 @@ import ProfileClienteScreen from './src/screens/ProfileClienteScreen';
 import VerProducto from './src/screens/VerProducto';
 import ProductoOptica from './src/screens/ProductoOptica';
 import RecetaScreen from './src/screens/RecetaScreen';
+import OpticaCobroPendiente from './src/screens/OpticaCobroPendiente';
+import OpticaEnvioPendiente from './src/screens/OpticaEnvioPendiente';
+import OpticaEnviado from './src/screens/OpticaEnviado';
+import OpticaReseña from './src/screens/OpticaReseña';
+import OpticaColaPedidos from './src/screens/OpticaColaPedidos';
+import OpticaNotificarError from './src/screens/OpticaNotificarError';
+import OpticaConfiguracion from './src/screens/OpticaConfiguracion';
+
 
 type RootStackParamList = {
   MainTabs: undefined;
@@ -37,6 +45,13 @@ type RootStackParamList = {
   ProductoOptica: undefined;
   VerProducto: undefined;
   RecetaScreen: undefined;
+  OpticaCobroPendiente: undefined;
+  OpticaEnvioPendiente: undefined;
+  OpticaEnviado: undefined;
+  OpticaReseña: undefined;
+  OpticaColaPedidos: undefined;
+  OpticaNotificarError: undefined; 
+  OpticaConfiguracion: undefined;
 };
 
 const Tab = createBottomTabNavigator<RootStackParamList>();
@@ -107,6 +122,13 @@ export default function App() {
         <Stack.Screen name="ProductoOptica" component={ProductoOptica} options={{ headerShown: false}}/>
         <Stack.Screen name="VerProducto" component={VerProducto} options={{headerShown: false}}/>
         <Stack.Screen name="RecetaScreen" component={RecetaScreen} options={{headerShown: false}}/>
+        <Stack.Screen name="OpticaCobroPendiente" component={OpticaCobroPendiente} options={{headerShown: false}}/>
+        <Stack.Screen name="OpticaEnvioPendiente" component={OpticaEnvioPendiente} options={{headerShown: false}}/>
+        <Stack.Screen name="OpticaReseña" component={OpticaReseña} options={{headerShown: false}}/>
+        <Stack.Screen name="OpticaEnviado" component={OpticaEnviado} options={{headerShown: false}}/>
+        <Stack.Screen name="OpticaColaPedidos" component={OpticaColaPedidos} options={{headerShown: false}}/>
+        <Stack.Screen name="OpticaNotificarError" component={OpticaNotificarError} options={{headerShown: false}}/>
+        <Stack.Screen name="OpticaConfiguracion" component={OpticaConfiguracion} options={{headerShown:false}}/>
       </Stack.Navigator>
     </NavigationContainer>
   );
