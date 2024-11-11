@@ -260,4 +260,77 @@ export default StyleSheet.create({
         marginTop: 5, 
     },
       
+    
+    // Style Formulario Receta
+    textReceta:{
+        padding: 5, 
+        marginTop: 20,
+        display: 'flex',
+        flexDirection: 'row',
+        alignItems: 'center',
+        gap: 10
+    },
+    contenedorReceta: {
+        backgroundColor: '#e9ecef',
+        marginTop: 20,
+        marginLeft: 20,
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        width: '90%',
+        height: 160,
+        borderRadius: 10,
+        flexDirection: 'row',
+        flexWrap: 'wrap',
+    },
+
+    itemReceta: {
+        backgroundColor: '#f5f5f5',
+        width: '40%',
+        height: '30%',
+        margin: 10,
+        textAlign: 'center',
+        fontWeight: 'semibold',
+        fontSize: 14,
+    },
+
+    contendorReceta2: {
+        backgroundColor: '#e9ecef',
+        marginTop: 20,
+        marginLeft: 20,
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        width: '90%',
+        height: 80,
+        borderRadius: 10,
+        flexDirection: 'row',
+        flexWrap: 'wrap',
+    },
+    itemReceta2: {
+        backgroundColor: '#f5f5f5',
+        width: '40%',
+        height: '50%',
+        margin: 10,
+        textAlign: 'center',
+        fontWeight: 'semibold',
+        fontSize: 14,
+          
+    },
+
+    botonReceta:{
+        backgroundColor:'#FA7929',
+        marginTop: 30,
+        borderRadius: 10,
+        width: '60%',
+        height: 50,
+        alignItems: 'center',
+        alignSelf: 'center',
+    },
+    botonTextReceta:{
+        color: '#f5f5f5',
+        fontSize: 24,
+        fontWeight: 'bold',
+        textAlign:'center',
+        margin: 8,
+
+    }
 });

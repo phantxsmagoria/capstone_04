@@ -13,6 +13,7 @@ import { RouteProp } from '@react-navigation/native';
 type RootStackParamList = {
     Perfil: undefined; 
     Home: undefined;
+    RecetaScreen: undefined;
 }
 
 type ProfileClienteScreenNavigationProp = StackNavigationProp<RootStackParamList, 'Perfil'>;
@@ -66,7 +67,7 @@ export default function ProfileClienteScreen({navigation}: Props) {
                     <Ionicons name="receipt-outline" size={24} color="black" /> 
                     <Text style={styles.textProfile}>Mis Boletas</Text> 
                 </TouchableOpacity> 
-                <TouchableOpacity style={styles.itemProfile}> 
+                <TouchableOpacity style={styles.itemProfile} onPress={() => navigation.navigate('RecetaScreen')}> 
                     <FontAwesome5 name="glasses" size={24} color="black" /> 
                     <Text style={styles.textProfile}>Mi Receta</Text> 
                 </TouchableOpacity> 
