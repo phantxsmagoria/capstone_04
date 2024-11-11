@@ -47,8 +47,11 @@ export default function ProfileClienteScreen({navigation}: Props) {
             <View style={styles.nomProfile}>
                 <FontAwesome5 name="user-circle" size={40} color="black" />
                 <Text style={{ fontSize: 35 }}>{userName}</Text>
-                <Text style={{padding: 20,fontSize: 25, }}>Mis Pedidos</Text>
             </View>           
+
+            <View>
+            <Text style={{padding: 20,fontSize: 25, }}>Mis Pedidos</Text>
+            </View>
             
             <View style={{flex:1, flexDirection:'row', flexWrap:'wrap', justifyContent: 'center'}}> 
             

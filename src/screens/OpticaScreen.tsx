@@ -66,12 +66,15 @@ export default function OpticaScreen({ navigation }: Props) {
         <Text style={{ fontSize: 35 }}>{nombreOptica}</Text>
       </View>
 
-      
-      <View style={{ flex: 1, flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'center' }}>
+      <View>
       <Text style={{
         padding: 20,
         fontSize: 25,
       }}>Mis Ventas</Text>
+      </View>
+
+      
+      <View style={{ flex: 1, flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'center' }}>
         <TouchableOpacity style={styles.itemProfile} onPress={() => navigation.navigate('OpticaCobroPendiente')}>
           <MaterialCommunityIcons name="credit-card-clock-outline" size={24} color="black" />
           <Text style={styles.textProfile}>Pendientes de cobro</Text>
