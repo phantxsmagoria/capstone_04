@@ -5,7 +5,7 @@ import { RouteProp } from '@react-navigation/native';
 import { collection, getDoc, getDocs, query } from 'firebase/firestore';
 import { db } from '../firebaseConfig';
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
-import styles from '../styles/styles';
+import styles2 from '../styles/styles2';
 
 type RootStackParamList = {
   VerProducto: undefined;
@@ -48,9 +48,9 @@ export default function VerProducto({ navigation }: Props) {
   };
 
   return (
-    <View>
+    <View style={styles2.container}>
 
-      <TouchableOpacity style={styles.nomProfile } onPress={() => navigation.navigate('OpticaScreen')}>
+      <TouchableOpacity onPress={() => navigation.navigate('OpticaScreen')}>
         <MaterialIcons name="arrow-back-ios" size={35} color="#FA7929" /> 
         <Text style={{ fontSize: 30 }}>Mi Catálogo</Text> 
       </TouchableOpacity>
@@ -116,5 +116,4 @@ export default function VerProducto({ navigation }: Props) {
   );
 
 }
-
 

@@ -1,5 +1,6 @@
-import './src/firebaseConfig'; // Nuestra base de datos
 import 'react-native-gesture-handler';
+import 'react-native-reanimated';
+import './src/firebaseConfig'; // Nuestra base de datos
 import * as React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
@@ -26,7 +27,6 @@ import OpticaReseña from './src/screens/OpticaReseña';
 import OpticaColaPedidos from './src/screens/OpticaColaPedidos';
 import OpticaNotificarError from './src/screens/OpticaNotificarError';
 import OpticaConfiguracion from './src/screens/OpticaConfiguracion';
-
 
 type RootStackParamList = {
   MainTabs: undefined;
@@ -101,10 +101,8 @@ function MainTabs() {
         }} 
       />
     </Tab.Navigator>
-    
   );
 }
-
 
 export default function App() {
   return (
