@@ -1,16 +1,16 @@
-import React, {useEffect, useState} from 'react';
-import { View, Text, Button, TouchableOpacity } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { View, Text, TouchableOpacity } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RouteProp } from '@react-navigation/native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import styles from '../styles/styles';
 import { db, auth } from '../firebaseConfig';
-import { collection, getDocs, query, QuerySnapshot, where } from 'firebase/firestore';
-{/* estos son las importaciones de los iconos */ }
+import { collection, getDocs, query, where } from 'firebase/firestore';
+import { signOut } from 'firebase/auth';
 import FontAwesome5 from '@expo/vector-icons/FontAwesome5';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import Feather from '@expo/vector-icons/Feather';
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
-
 
 type RootStackParamList = {
   Usuario: undefined;
@@ -38,6 +38,7 @@ type Props = {
 
 export default function OpticaScreen({ navigation }: Props) {
   const [nombreOptica, setNombreOptica] = useState<string>('Optica');
+
   useEffect(() => {
     fetchNombreOptica();
   }, []);
@@ -58,21 +59,26 @@ export default function OpticaScreen({ navigation }: Props) {
     }
   };
 
+  const handleLogout = async () => {
+    try {
+      await signOut(auth);
+      await AsyncStorage.removeItem('user');
+      navigation.navigate('Home');
+    } catch (error) {
+      console.error("Error signing out: ", error);
+    }
+  };
+
   return (
     <View>
-
       <View style={styles.nomProfile}>
         <FontAwesome5 name="user-circle" size={40} color="black" />
         <Text style={{ fontSize: 35 }}>{nombreOptica}</Text>
       </View>
 
       <View>
-      <Text style={{
-        padding: 20,
-        fontSize: 25,
-      }}>Mis Ventas</Text>
+        <Text style={{ padding: 20, fontSize: 25 }}>Mis Ventas</Text>
       </View>
-
       
       <View style={{ flex: 1, flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'center' }}>
         <TouchableOpacity style={styles.itemProfile} onPress={() => navigation.navigate('OpticaCobroPendiente')}>
@@ -107,7 +113,7 @@ export default function OpticaScreen({ navigation }: Props) {
           <Feather name="tool" size={24} color="black" />
           <Text style={styles.textProfile}>Configuración y soporte</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.itemProfile} onPress={() => navigation.navigate('Home')}>
+        <TouchableOpacity style={styles.itemProfile} onPress={handleLogout}>
           <Feather name="log-out" size={24} color="black" />
           <Text style={styles.textProfile}>Cerrar Sesión</Text>
         </TouchableOpacity>

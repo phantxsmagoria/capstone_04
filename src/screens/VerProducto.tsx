@@ -25,7 +25,7 @@ interface ProductoData {
 }
 
 export default function VerProducto({ navigation }: Props) {
-  const [productoList, setProductoList] = useState<ProductoData[]>([]);
+  const [productoList, setProductoList] = useState<ProductoData[]>([]); //los array para guardar la info, ojito
 
   useEffect(() => {
     GetProductoList();

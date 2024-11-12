@@ -1,11 +1,13 @@
 import 'react-native-gesture-handler';
 import 'react-native-reanimated';
-import './src/firebaseConfig'; // Nuestra base de datos
-import * as React from 'react';
+import './src/firebaseConfig';
+import React, { useEffect, useState } from 'react';
+import { View, Text } from 'react-native'; 
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createStackNavigator } from '@react-navigation/stack';
-import Feather from '@expo/vector-icons/Feather'; // este es para los iconos
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import Feather from '@expo/vector-icons/Feather';
 import HomeScreen from './src/screens/HomeScreen';
 import SearchScreen from './src/screens/SearchScreen';
 import CartScreen from './src/screens/CartScreen';
@@ -50,7 +52,7 @@ type RootStackParamList = {
   OpticaEnviado: undefined;
   OpticaReseña: undefined;
   OpticaColaPedidos: undefined;
-  OpticaNotificarError: undefined; 
+  OpticaNotificarError: undefined;
   OpticaConfiguracion: undefined;
 };
 
@@ -62,9 +64,9 @@ function MainTabs() {
     <Tab.Navigator screenOptions={{ tabBarActiveTintColor: '#FA7929' }}>
       <Tab.Screen 
         name="Usuario" 
-        component={UserScreen} // este es la pestaña inicial onda tipo home
+        component={UserScreen}
         options={{ 
-          tabBarIcon: ({ color, size }) => (
+          tabBarIcon: ({ color }) => (
             <Feather name="home" size={24} color={color} />
           ), 
           headerShown: false 
@@ -74,8 +76,8 @@ function MainTabs() {
         name="Buscar" 
         component={SearchScreen} 
         options={{ 
-          tabBarIcon: ({ color, size }) => (
-            <Feather name="search" size={24} color={color}/>
+          tabBarIcon: ({ color }) => (
+            <Feather name="search" size={24} color={color} />
           ), 
           headerShown: false 
         }} 
@@ -84,7 +86,7 @@ function MainTabs() {
         name="Carrito" 
         component={CartScreen} 
         options={{ 
-          tabBarIcon: ({ color, size }) => (
+          tabBarIcon: ({ color }) => (
             <Feather name="shopping-cart" size={24} color={color} />
           ), 
           headerShown: false 
@@ -94,7 +96,7 @@ function MainTabs() {
         name="Perfil" 
         component={ProfileClienteScreen} 
         options={{ 
-          tabBarIcon: ({ color, size }) => (
+          tabBarIcon: ({ color }) => (
             <Feather name="user" size={24} color={color} />
           ), 
           headerShown: false 
@@ -105,9 +107,33 @@ function MainTabs() {
 }
 
 export default function App() {
+  const [initialRouteName, setInitialRouteName] = useState<keyof RootStackParamList | null>(null);
+
+  useEffect(() => {
+    const checkUserSession = async () => {
+      const storedUser = await AsyncStorage.getItem('user');
+      if (storedUser) {
+        const user = JSON.parse(storedUser);
+        if (user.type === 'cliente') {
+          setInitialRouteName('Usuario');
+        } else if (user.type === 'optica') {
+          setInitialRouteName('OpticaScreen');
+        }
+      } else {
+        setInitialRouteName('Home');
+      }
+    };
+    checkUserSession();
+  }, []);
+
+  if (!initialRouteName) {
+    // Puedes mostrar una pantalla de carga mientras verifica el estado de la sesión
+    return <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}><Text>Cargando...</Text></View>;
+  }
+
   return (
     <NavigationContainer>
-      <Stack.Navigator>
+      <Stack.Navigator initialRouteName={initialRouteName}>
         <Stack.Screen name="Home" component={HomeScreen} options={{ headerShown: false }} />
         <Stack.Screen name="MainTabs" component={MainTabs} options={{ headerShown: false }} />
         <Stack.Screen name="Register" component={RegisterScreen} options={{ headerShown: false }} />

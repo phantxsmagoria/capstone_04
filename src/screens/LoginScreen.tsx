@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RouteProp } from '@react-navigation/native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import styles from '../styles/styles';
 import { auth, db } from '../firebaseConfig';
@@ -30,15 +31,33 @@ const LoginScreen: React.FC<Props> = ({ navigation }) => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
+    useEffect(() => {
+        const checkUserSession = async () => {
+            const storedUser = await AsyncStorage.getItem('user');
+            if (storedUser) {
+                const user = JSON.parse(storedUser);
+                if (user.type === 'cliente') {
+                    navigation?.navigate('Usuario');
+                } else if (user.type === 'optica') {
+                    navigation?.navigate('OpticaScreen');
+                } else {
+                    navigation?.navigate('MainTabs');
+                }
+            }
+        };
+        checkUserSession();
+    }, []);
+
     const handleLogin = async () => {
         try {
             const userCredential = await signInWithEmailAndPassword(auth, email, password);
-            
+
             const userQuery = query(collection(db, 'users'), where('uid', '==', userCredential.user.uid));
             const userQuerySnapshot = await getDocs(userQuery);
-            
+
             if (!userQuerySnapshot.empty) {
                 const userData = userQuerySnapshot.docs[0].data();
+                await AsyncStorage.setItem('user', JSON.stringify(userData));
                 if (userData.type === 'cliente') {
                     navigation?.navigate('Usuario');
                     return;
@@ -50,6 +69,7 @@ const LoginScreen: React.FC<Props> = ({ navigation }) => {
 
             if (!opticaQuerySnapshot.empty) {
                 const opticaData = opticaQuerySnapshot.docs[0].data();
+                await AsyncStorage.setItem('user', JSON.stringify(opticaData));
                 if (opticaData.type === 'optica') {
                     navigation?.navigate('OpticaScreen');
                 } else {

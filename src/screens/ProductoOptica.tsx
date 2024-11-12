@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { View, Text, TextInput, TouchableOpacity, FlatList } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RouteProp } from '@react-navigation/native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { auth, db } from '../firebaseConfig'; // Asegúrate de que la configuración de Firebase está correcta
-import { collection, addDoc } from 'firebase/firestore';
+import { collection, addDoc, query, where, getDocs } from 'firebase/firestore';
 import styles from '../styles/styles';
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 
@@ -21,6 +22,15 @@ type Props = {
   route: ProductoOpticaRouteProp;
 };
 
+type Product = {
+  id: string;
+  nombre: string;
+  descripcion: string;
+  precio: number;
+  imagenURL: string;
+  categoria: string;
+};
+
 export default function ProductoOptica({ navigation }: Props) {
   const [nombre, setNombre] = useState('');
   const [descripcion, setDescripcion] = useState('');
@@ -29,6 +39,20 @@ export default function ProductoOptica({ navigation }: Props) {
   const [categoria, setCategoria] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
   const [successMessage, setSuccessMessage] = useState('');
+  const [products, setProducts] = useState<Product[]>([]);
+
+  useEffect(() => {
+    const loadProducts = async () => {
+      const uid = auth.currentUser?.uid;
+      if (uid) {
+        const productQuery = query(collection(db, 'productos'), where('usuarioId', '==', uid));
+        const querySnapshot = await getDocs(productQuery);
+        const loadedProducts = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as Product));
+        setProducts(loadedProducts);
+      }
+    };
+    loadProducts();
+  }, []);
 
   const handleAddProduct = async () => {
     setErrorMessage('');
@@ -40,7 +64,7 @@ export default function ProductoOptica({ navigation }: Props) {
     }
 
     try {
-      await addDoc(collection(db, 'productos'), {
+      const docRef = await addDoc(collection(db, 'productos'), {
         nombre,
         descripcion,
         precio: parseFloat(precio),
@@ -48,6 +72,16 @@ export default function ProductoOptica({ navigation }: Props) {
         categoria,
         usuarioId: auth.currentUser?.uid, // Asegúrate de que el usuario está autenticado
       });
+      const newProduct = {
+        id: docRef.id,
+        nombre,
+        descripcion,
+        precio: parseFloat(precio),
+        imagenURL,
+        categoria,
+        usuarioId: auth.currentUser?.uid,
+      };
+      setProducts([...products, newProduct]);
       setSuccessMessage('Producto añadido con éxito.');
       setNombre('');
       setDescripcion('');
@@ -121,6 +155,17 @@ export default function ProductoOptica({ navigation }: Props) {
       <TouchableOpacity style={styles.button} onPress={handleAddProduct}>
         <Text style={styles.buttonText}>Añadir Producto</Text>
       </TouchableOpacity>
+      <FlatList
+        data={products}
+        keyExtractor={(item) => item.id}
+        renderItem={({ item }) => (
+          <View>
+            <Text>{item.nombre}</Text>
+            <Text>{item.descripcion}</Text>
+            <Text>{item.precio}</Text>
+          </View>
+        )}
+      />
     </View>
   );
 }
