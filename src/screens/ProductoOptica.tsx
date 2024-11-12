@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity, FlatList } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RouteProp } from '@react-navigation/native';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import { auth, db } from '../firebaseConfig'; // Asegúrate de que la configuración de Firebase está correcta
+import { auth, db } from '../firebaseConfig'; 
 import { collection, addDoc, query, where, getDocs } from 'firebase/firestore';
+import { launchImageLibrary } from 'react-native-image-picker'; 
 import styles from '../styles/styles';
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
+import styles2 from '../styles/styles2';
+
 
 type RootStackParamList = {
   Home: undefined;
@@ -54,6 +56,16 @@ export default function ProductoOptica({ navigation }: Props) {
     loadProducts();
   }, []);
 
+  const pickImage = async () => {
+    const result = await launchImageLibrary({ mediaType: 'photo' });
+    if (result.assets) {
+      const image = result.assets[0];
+      if (image.uri) {
+        setImagenURL(image.uri); // Guardamos la URI de la imagen seleccionada
+      }
+    }
+  };
+
   const handleAddProduct = async () => {
     setErrorMessage('');
     setSuccessMessage('');
@@ -95,7 +107,7 @@ export default function ProductoOptica({ navigation }: Props) {
   };
 
   return (
-    <View style={styles.container}>
+    <View style={styles2.container}>
       <TouchableOpacity style={{
         position: 'absolute',
         top: 21.5,
@@ -108,12 +120,13 @@ export default function ProductoOptica({ navigation }: Props) {
         <MaterialIcons name="arrow-back-ios" size={30} color="#FA7929" />
       </TouchableOpacity>
       <Text style={{ 
-        fontSize: 40,
-        marginBottom: 40,
-        fontWeight: 'bold',
+        fontSize: 30,
+        marginTop: 20,
+        marginBottom:50,
         color: '#000',
         marginLeft: 30,
-       }}>Añadir Nuevo Producto</Text>
+
+       }}>Añadir nuevo producto</Text>
       <TextInput
         placeholder="Nombre del producto"
         style={styles.inputLine}
@@ -137,13 +150,6 @@ export default function ProductoOptica({ navigation }: Props) {
         onChangeText={setPrecio}
       />
       <TextInput
-        placeholder="URL de la imagen del producto"
-        style={styles.inputLine}
-        placeholderTextColor="#aaa"
-        value={imagenURL}
-        onChangeText={setImagenURL}
-      />
-      <TextInput
         placeholder="Categoría del producto"
         style={styles.inputLine}
         placeholderTextColor="#aaa"
@@ -152,20 +158,12 @@ export default function ProductoOptica({ navigation }: Props) {
       />
       {errorMessage ? <Text style={styles.errorText}>{errorMessage}</Text> : null}
       {successMessage ? <Text style={styles.successText}>{successMessage}</Text> : null}
+      <TouchableOpacity style={styles.button} onPress={pickImage}>
+        <Text style={styles.buttonText}>Seleccionar Imagen</Text>
+      </TouchableOpacity>
       <TouchableOpacity style={styles.button} onPress={handleAddProduct}>
         <Text style={styles.buttonText}>Añadir Producto</Text>
       </TouchableOpacity>
-      <FlatList
-        data={products}
-        keyExtractor={(item) => item.id}
-        renderItem={({ item }) => (
-          <View>
-            <Text>{item.nombre}</Text>
-            <Text>{item.descripcion}</Text>
-            <Text>{item.precio}</Text>
-          </View>
-        )}
-      />
     </View>
   );
 }
