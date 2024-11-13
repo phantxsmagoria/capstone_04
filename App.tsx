@@ -30,6 +30,7 @@ import OpticaNotificarError from './src/screens/OpticaNotificarError';
 import OpticaConfiguracion from './src/screens/OpticaConfiguracion';
 import EditarProducto from './src/screens/EditarProducto';
 import EditarPerfilOpticaScreen from './src/screens/EditarPerfilOptica';
+import ProductoCliente from './src/screens/ProductoCliente';
 
 type RootStackParamList = {
   MainTabs: undefined;
@@ -55,6 +56,7 @@ type RootStackParamList = {
   OpticaNotificarError: undefined;
   OpticaConfiguracion: undefined;
   EditarPerfilOptica: undefined;
+  ProductoCliente: undefined;
   EditarProducto: {
     id: string;
     nombre: string;
@@ -172,6 +174,7 @@ export default function App() {
         <Stack.Screen name="OpticaConfiguracion" component={OpticaConfiguracion} options={{ headerShown: false }} />
         <Stack.Screen name="EditarProducto" component={EditarProducto} options={{ headerShown: false }} />
         <Stack.Screen name="EditarPerfilOptica" component={EditarPerfilOpticaScreen} options={{ headerShown: false }} />
+        <Stack.Screen name="ProductoCliente" component={ProductoCliente} options={{headerShown: false}}/>
       </Stack.Navigator>
     </NavigationContainer>
   );
