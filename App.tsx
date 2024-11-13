@@ -107,27 +107,36 @@ function MainTabs() {
 }
 
 export default function App() {
-  const [initialRouteName, setInitialRouteName] = useState<keyof RootStackParamList | null>(null);
+  const [initialRouteName, setInitialRouteName] = useState<keyof RootStackParamList | 'Login' | undefined>(undefined);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const checkUserSession = async () => {
-      const storedUser = await AsyncStorage.getItem('user');
-      if (storedUser) {
-        const user = JSON.parse(storedUser);
-        if (user.type === 'cliente') {
-          setInitialRouteName('Usuario');
-        } else if (user.type === 'optica') {
-          setInitialRouteName('OpticaScreen');
+      try {
+        const storedUser = await AsyncStorage.getItem('user');
+        if (storedUser) {
+          const user = JSON.parse(storedUser);
+          if (user.type === 'cliente') {
+            setInitialRouteName('Usuario');
+          } else if (user.type === 'optica') {
+            setInitialRouteName('OpticaScreen');
+          } else {
+            setInitialRouteName('MainTabs');
+          }
+        } else {
+          setInitialRouteName('Login');
         }
-      } else {
-        setInitialRouteName('Home');
+      } catch (error) {
+        console.error("Error checking user session: ", error);
+        setInitialRouteName('Login');
+      } finally {
+        setLoading(false);
       }
     };
     checkUserSession();
   }, []);
 
-  if (!initialRouteName) {
-    // Puedes mostrar una pantalla de carga mientras verifica el estado de la sesión
+  if (loading) {
     return <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}><Text>Cargando...</Text></View>;
   }
 
@@ -142,17 +151,17 @@ export default function App() {
         <Stack.Screen name="Login" component={LoginScreen} options={{ headerShown: false }} />
         <Stack.Screen name="RegisterOpticaDocumento" component={RegistroOpticaDocumento} options={{ headerShown: false }} />
         <Stack.Screen name="OpticaScreen" component={OpticaScreen} options={{ headerShown: false }} />
-        <Stack.Screen name="Usuario" component={UserScreen} options={{ headerShown: false}} />
-        <Stack.Screen name="ProductoOptica" component={ProductoOptica} options={{ headerShown: false}}/>
-        <Stack.Screen name="VerProducto" component={VerProducto} options={{headerShown: false}}/>
-        <Stack.Screen name="RecetaScreen" component={RecetaScreen} options={{headerShown: false}}/>
-        <Stack.Screen name="OpticaCobroPendiente" component={OpticaCobroPendiente} options={{headerShown: false}}/>
-        <Stack.Screen name="OpticaEnvioPendiente" component={OpticaEnvioPendiente} options={{headerShown: false}}/>
-        <Stack.Screen name="OpticaReseña" component={OpticaReseña} options={{headerShown: false}}/>
-        <Stack.Screen name="OpticaEnviado" component={OpticaEnviado} options={{headerShown: false}}/>
-        <Stack.Screen name="OpticaColaPedidos" component={OpticaColaPedidos} options={{headerShown: false}}/>
-        <Stack.Screen name="OpticaNotificarError" component={OpticaNotificarError} options={{headerShown: false}}/>
-        <Stack.Screen name="OpticaConfiguracion" component={OpticaConfiguracion} options={{headerShown:false}}/>
+        <Stack.Screen name="Usuario" component={UserScreen} options={{ headerShown: false }} />
+        <Stack.Screen name="ProductoOptica" component={ProductoOptica} options={{ headerShown: false }} />
+        <Stack.Screen name="VerProducto" component={VerProducto} options={{ headerShown: false }} />
+        <Stack.Screen name="RecetaScreen" component={RecetaScreen} options={{ headerShown: false }} />
+        <Stack.Screen name="OpticaCobroPendiente" component={OpticaCobroPendiente} options={{ headerShown: false }} />
+        <Stack.Screen name="OpticaEnvioPendiente" component={OpticaEnvioPendiente} options={{ headerShown: false }} />
+        <Stack.Screen name="OpticaReseña" component={OpticaReseña} options={{ headerShown: false }} />
+        <Stack.Screen name="OpticaEnviado" component={OpticaEnviado} options={{ headerShown: false }} />
+        <Stack.Screen name="OpticaColaPedidos" component={OpticaColaPedidos} options={{ headerShown: false }} />
+        <Stack.Screen name="OpticaNotificarError" component={OpticaNotificarError} options={{ headerShown: false }} />
+        <Stack.Screen name="OpticaConfiguracion" component={OpticaConfiguracion} options={{ headerShown: false }} />
       </Stack.Navigator>
     </NavigationContainer>
   );

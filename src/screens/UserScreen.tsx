@@ -30,7 +30,6 @@ export default function UserScreen({ navigation }: Props) {
       const querySnapshot = await getDocs(q);
       const sliders: SliderData[] = [];
       querySnapshot.forEach((doc) => {
-        console.log(doc.data());
         sliders.push(doc.data() as SliderData);
       });
       setSliderList(sliders);
@@ -48,56 +47,56 @@ export default function UserScreen({ navigation }: Props) {
         if (!querySnapshot.empty) {
           const userData = querySnapshot.docs[0].data();
           setUserName(userData.name);
+        } else {
+          console.error("No user data found");
         }
       } catch (error) {
         console.error("Error fetching user data: ", error);
       }
+    } else {
+      console.error("No user is logged in");
     }
   };
 
   return (
-    
-      <View style={{ padding: 20, marginTop: 20 }}>
+    <View style={{ padding: 20, marginTop: 20 }}>
+      <Text style={{ fontSize: 20 }}>Hola,</Text>
+      <Text style={{ fontSize: 20 }}>{userName}</Text> 
 
-        
-          <Text style={{ fontSize: 20 }}>Hola,</Text>
-          <Text style={{ fontSize: 20 }}>{userName}</Text> 
-        
-
-        <View style={{
-          display: 'flex',
-          flexDirection: 'row',
-          gap: 10,
-          alignItems: 'center',
-          backgroundColor: '#FA7929',
-          padding: 10,
-          marginVertical: 10,
-          marginTop: 15,
-          borderRadius: 10,
-        }}>
-          <Ionicons name="search" size={24} color="white" />
-          <TextInput placeholder='Buscador' style={{ color: '#ffff', fontSize: 16 }} />
-        </View>
-
-        <View>
-          <FlatList
-            data={sliderList}
-            horizontal={true}
-            style={{ paddingLeft: 20 }}
-            renderItem={({ item, index }) =>
-              <Image
-                source={{ uri: item.imageURL }}
-                style={{
-                  width: 300,
-                  height: 160,
-                  borderRadius: 15,
-                  marginRight: 20,
-                  marginTop: 10,
-                }}
-              />
-            }
-          />
-        </View>
+      <View style={{
+        display: 'flex',
+        flexDirection: 'row',
+        gap: 10,
+        alignItems: 'center',
+        backgroundColor: '#FA7929',
+        padding: 10,
+        marginVertical: 10,
+        marginTop: 15,
+        borderRadius: 10,
+      }}>
+        <Ionicons name="search" size={24} color="white" />
+        <TextInput placeholder='Buscador' style={{ color: '#ffff', fontSize: 16 }} />
       </View>
+
+      <View>
+        <FlatList
+          data={sliderList}
+          horizontal={true}
+          style={{ paddingLeft: 20 }}
+          renderItem={({ item, index }) =>
+            <Image
+              source={{ uri: item.imageURL }}
+              style={{
+                width: 300,
+                height: 160,
+                borderRadius: 15,
+                marginRight: 20,
+                marginTop: 10,
+              }}
+            />
+          }
+        />
+      </View>
+    </View>
   );
 }
