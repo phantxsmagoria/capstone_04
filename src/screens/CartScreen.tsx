@@ -4,7 +4,7 @@ import { StackNavigationProp } from '@react-navigation/stack';
 import { RouteProp } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import styles from '../styles/styles';
+import styles from '../styles/styles'; //Hola
 
 type RootStackParamList = {
   Carrito: undefined;
