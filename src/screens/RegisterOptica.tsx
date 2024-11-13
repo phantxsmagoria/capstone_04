@@ -8,7 +8,10 @@ import { auth, db } from '../firebaseConfig';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
 import { collection, addDoc, query, where, getDocs } from 'firebase/firestore';
 
-type RootStackParamList = { Home: undefined; RegisterOpticaDocumento: undefined; };
+type RootStackParamList = { 
+  Home: { showPopup?: boolean }; // Aquí he actualizado el tipo
+  RegisterOpticaDocumento: undefined; 
+};
 type RegisterScreenNavigationProp = StackNavigationProp<RootStackParamList, 'Home'>;
 type RegisterScreenRouteProp = RouteProp<RootStackParamList, 'Home'>;
 type Props = { navigation?: RegisterScreenNavigationProp; route?: RegisterScreenRouteProp; };
@@ -79,7 +82,7 @@ export default function RegisterOptica({ navigation }: Props) {
         try {
             const userCredential = await createUserWithEmailAndPassword(auth, email, contraseña);
             await addDoc(collection(db, 'opticas'), {
-                uid: userCredential.user.uid, // codigo de registro que se le asigna al usuario cuando se registra, guardado en firebase. 
+                uid: userCredential.user.uid, // código de registro que se le asigna al usuario cuando se registra, guardado en firebase. 
                 nombreOptica,
                 email,
                 rut,
@@ -87,7 +90,11 @@ export default function RegisterOptica({ navigation }: Props) {
                 type: 'optica',  // Esto es para que las tablas no se mezclen y haga la separación de credenciales correspondiente!!!! No borrar!!!
             });
             setSuccessMessage('Registro completado exitosamente.');
-            navigation?.navigate('RegisterOpticaDocumento');
+            navigation?.navigate({
+                name: 'Home', 
+                params: { showPopup: true },
+                merge: true,
+            });  // Navegar a Home y mostrar el popup
         } catch (error) {
             if (error instanceof Error) {
                 console.error('Error al registrar: ', error.message);
@@ -97,11 +104,15 @@ export default function RegisterOptica({ navigation }: Props) {
                 setErrorMessage('Error desconocido al registrar.');
             }
         }
-    }; 
+    };
 
     return (
         <View style={styles.container}>
-            <TouchableOpacity style={styles.closeButton} onPress={() => navigation?.navigate('Home')}>
+            <TouchableOpacity style={styles.closeButton} onPress={() => navigation?.navigate({
+                name: 'Home',
+                params: { showPopup: false },
+                merge: true,
+            })}>
                 <Icon name="times" size={30} color="#000" />
             </TouchableOpacity>
             <Text style={styles.titleRegisterCliente}>Registra</Text>

@@ -29,10 +29,11 @@ import OpticaColaPedidos from './src/screens/OpticaColaPedidos';
 import OpticaNotificarError from './src/screens/OpticaNotificarError';
 import OpticaConfiguracion from './src/screens/OpticaConfiguracion';
 import EditarProducto from './src/screens/EditarProducto';
+import EditarPerfilOpticaScreen from './src/screens/EditarPerfilOptica';
 
 type RootStackParamList = {
   MainTabs: undefined;
-  Home: undefined;
+  Home: { showPopup?: boolean }; // Updated here
   Register: undefined;
   RegisterCliente: undefined;
   RegisterOptica: undefined;
@@ -53,6 +54,7 @@ type RootStackParamList = {
   OpticaColaPedidos: undefined;
   OpticaNotificarError: undefined;
   OpticaConfiguracion: undefined;
+  EditarPerfilOptica: undefined;
   EditarProducto: {
     id: string;
     nombre: string;
@@ -114,7 +116,7 @@ function MainTabs() {
 }
 
 export default function App() {
-  const [initialRouteName, setInitialRouteName] = useState<keyof RootStackParamList | 'Home' | undefined>(undefined);
+  const [initialRouteName, setInitialRouteName] = useState<keyof RootStackParamList | undefined>(undefined);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -169,6 +171,7 @@ export default function App() {
         <Stack.Screen name="OpticaNotificarError" component={OpticaNotificarError} options={{ headerShown: false }} />
         <Stack.Screen name="OpticaConfiguracion" component={OpticaConfiguracion} options={{ headerShown: false }} />
         <Stack.Screen name="EditarProducto" component={EditarProducto} options={{ headerShown: false }} />
+        <Stack.Screen name="EditarPerfilOptica" component={EditarPerfilOpticaScreen} options={{ headerShown: false }} />
       </Stack.Navigator>
     </NavigationContainer>
   );

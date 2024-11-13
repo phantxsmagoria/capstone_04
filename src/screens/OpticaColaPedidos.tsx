@@ -19,8 +19,8 @@ export default function OpticaColaPedidos({navigation}: Props) {
   return (
     <View>
       <TouchableOpacity style={styles.nomProfile } onPress={() => navigation.navigate('OpticaScreen')}>
-        <MaterialIcons name="arrow-back-ios" size={35} color="#FA7929" /> 
-        <Text style={{ fontSize: 30 }}>Pedidos en Cola</Text> 
+        <MaterialIcons name="arrow-back-ios" size={25} color="#FA7929" /> 
+        <Text style={styles.tituloMenusOptica}>Pedidos en Cola</Text> 
       </TouchableOpacity>
     </View>
   )

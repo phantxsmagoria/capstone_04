@@ -18,8 +18,8 @@ export default function OpticaEnvioPendiente({navigation}: Props) {
   return (
     <View>
       <TouchableOpacity style={styles.nomProfile } onPress={() => navigation.navigate('OpticaScreen')}>
-        <MaterialIcons name="arrow-back-ios" size={35} color="#FA7929" /> 
-        <Text style={{ fontSize: 30 }}>Pendientes de Envío</Text> 
+        <MaterialIcons name="arrow-back-ios" size={25} color="#FA7929" /> 
+        <Text style={styles.tituloMenusOptica}>Pendientes de envío</Text> 
       </TouchableOpacity>
     </View>
   )

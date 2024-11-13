@@ -183,8 +183,8 @@ export default StyleSheet.create({
         textAlign: 'center',
         marginVertical: 10,
       },
-      //
-      cartItem: {
+    
+    cartItem: {
         flexDirection: 'row',
         alignItems: 'center',
         padding: 10,
@@ -193,72 +193,99 @@ export default StyleSheet.create({
         marginBottom: 20,
       },
 
-      productImage: {
+    productImage: {
         width: 60,
         height: 60,
         marginRight: 10 },
 
-
-        // Style CartScreen
     
-      productTitle: {
+    productTitle: {
         fontSize: 18,
         fontWeight: 'bold',
       },
-      productDescription: {
+    
+    productDescription: {
         fontSize: 14,
         color: '#666',
       },
-      productSubtitle: {
+
+    productSubtitle: {
         fontSize: 12,
         color: '#aaa',
       },
-      productPrice: {
+
+    productPrice: {
         fontSize: 16,
         color: '#000',
-        fontWeight: 'bold'},
-        trashButton: {
-            padding: 10,
-            borderRadius: 50,
-            backgroundColor: '#FA7929',
-            justifyContent: 'center',
-            alignItems: 'center',
-          },
-          card: {
-            padding: 15,
-            backgroundColor: '#f9f9f9',
-            borderRadius: 10,
-            marginBottom: 20,
-            alignItems: 'center',
-          },
-          cardTitle: {
-            fontSize: 20,
-            fontWeight: 'bold',
-            marginBottom: 10,
-          },
+        fontWeight: 'bold'
+    },
+
+    trashButton: {
+        padding: 10,
+        borderRadius: 50,
+        backgroundColor: '#FA7929',
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+
+    card: {
+     padding: 15,
+     backgroundColor: '#f9f9f9',
+     borderRadius: 10,
+     marginBottom: 20,
+     alignItems: 'center',
+    },
+
+     cardTitle: {
+      fontSize: 20,
+      fontWeight: 'bold',
+      marginBottom: 10,
+    },
           
     // Style Perfil de usuario
     nomProfile: {
         padding: 20, 
-        marginTop: 20,
+        marginTop: 60,
         display: 'flex',
         flexDirection: 'row',
         alignItems: 'center',
-        gap: 10
+        gap: 10,
     },
+
+    tituloMenusOptica: {
+        fontSize:25,
+    },
+
+    filasMenu:{
+        flexDirection: 'row', 
+        flexWrap: 'wrap', 
+        justifyContent: 'center', 
+    },
+
     itemProfile: { 
         fontSize: 10, 
-        backgroundColor: '#f9f9f9', 
-        width: 65, 
+        backgroundColor: '#fff', 
+        width: 70, 
         height: 90, 
         justifyContent: 'center', 
         alignItems: 'center', 
-        marginTop: 20,
+        marginTop: 0,
+        marginLeft:10,
     }, 
+    
     textProfile: { 
         fontSize: 10, 
         textAlign: 'center', 
         marginTop: 5, 
+    },
+    containerOptica: {
+        backgroundColor:'#fff',
+        alignItems:'flex-start',
+
+    },
+    fondoView: {
+        backgroundColor: '#fff',
+        flex: 1,
     },
       
     
@@ -344,4 +371,17 @@ export default StyleSheet.create({
     borderWidth: 1, 
     paddingLeft: 8, 
     margin: 10, },
+
+    popup: { 
+    position: 'absolute', 
+    top: 50, 
+    padding: 10, 
+    backgroundColor: '#333', 
+    borderRadius: 5, 
+    zIndex: 1000, 
+    }, 
+
+    popupText:  { 
+    color: '#fff', 
+    },
 });
