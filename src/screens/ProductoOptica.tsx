@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, Image, Alert } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RouteProp } from '@react-navigation/native';
-import { auth, db } from '../firebaseConfig'; 
+import { auth, db } from '../firebaseConfig';
 import { collection, addDoc, query, where, getDocs } from 'firebase/firestore';
-import { launchImageLibrary } from 'react-native-image-picker'; 
+import { launchImageLibrary, Asset } from 'react-native-image-picker';
 import styles from '../styles/styles';
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 import styles2 from '../styles/styles2';
-
+import { Picker } from '@react-native-picker/picker';
 
 type RootStackParamList = {
   Home: undefined;
@@ -38,10 +38,11 @@ export default function ProductoOptica({ navigation }: Props) {
   const [descripcion, setDescripcion] = useState('');
   const [precio, setPrecio] = useState('');
   const [imagenURL, setImagenURL] = useState('');
-  const [categoria, setCategoria] = useState('');
+  const [categoria, setCategoria] = useState('Marcos');
   const [errorMessage, setErrorMessage] = useState('');
   const [successMessage, setSuccessMessage] = useState('');
   const [products, setProducts] = useState<Product[]>([]);
+  const [selectedImage, setSelectedImage] = useState<Asset | null>(null);
 
   useEffect(() => {
     const loadProducts = async () => {
@@ -61,6 +62,7 @@ export default function ProductoOptica({ navigation }: Props) {
     if (result.assets) {
       const image = result.assets[0];
       if (image.uri) {
+        setSelectedImage(image); // Guardamos el objeto de la imagen seleccionada
         setImagenURL(image.uri); // Guardamos la URI de la imagen seleccionada
       }
     }
@@ -99,11 +101,20 @@ export default function ProductoOptica({ navigation }: Props) {
       setDescripcion('');
       setPrecio('');
       setImagenURL('');
-      setCategoria('');
+      setCategoria('Marcos');
+      setSelectedImage(null);
     } catch (error) {
       console.error('Error añadiendo producto: ', error);
       setErrorMessage('Error al añadir producto.');
     }
+  };
+
+  const handlePriceChange = (text: string) => {
+    const formattedText = text.replace(/[^0-9.]/g, '');
+    const validText = formattedText.split('.').length > 2 
+      ? formattedText.split('.').slice(0, 2).join('.') 
+      : formattedText;
+    setPrecio(validText);
   };
 
   return (
@@ -119,14 +130,13 @@ export default function ProductoOptica({ navigation }: Props) {
       }} onPress={() => navigation.navigate('VerProducto')}>
         <MaterialIcons name="arrow-back-ios" size={30} color="#FA7929" />
       </TouchableOpacity>
-      <Text style={{ 
+      <Text style={{
         fontSize: 30,
         marginTop: 20,
-        marginBottom:50,
+        marginBottom: 50,
         color: '#000',
         marginLeft: 30,
-
-       }}>Añadir nuevo producto</Text>
+      }}>Añadir nuevo producto</Text>
       <TextInput
         placeholder="Nombre del producto"
         style={styles.inputLine}
@@ -147,20 +157,31 @@ export default function ProductoOptica({ navigation }: Props) {
         keyboardType="numeric"
         placeholderTextColor="#aaa"
         value={precio}
-        onChangeText={setPrecio}
+        onChangeText={handlePriceChange}
       />
-      <TextInput
-        placeholder="Categoría del producto"
+      <Text>Categorias</Text>
+      <Text> </Text>
+      <Picker
+        selectedValue={categoria}
         style={styles.inputLine}
-        placeholderTextColor="#aaa"
-        value={categoria}
-        onChangeText={setCategoria}
-      />
+        onValueChange={(itemValue) => setCategoria(itemValue)}
+      >
+        <Picker.Item label="Marcos" value="Marcos" />
+        <Picker.Item label="Cristales" value="Cristales" />
+        <Picker.Item label="Lentes de sol" value="Lentes de sol" />
+        <Picker.Item label="Otros" value="Otros" />
+      </Picker>
       {errorMessage ? <Text style={styles.errorText}>{errorMessage}</Text> : null}
       {successMessage ? <Text style={styles.successText}>{successMessage}</Text> : null}
       <TouchableOpacity style={styles.button} onPress={pickImage}>
         <Text style={styles.buttonText}>Seleccionar Imagen</Text>
       </TouchableOpacity>
+      {selectedImage && (
+        <Image
+          source={{ uri: selectedImage.uri }}
+          style={{ width: 200, height: 200, marginVertical: 20 }}
+        />
+      )}
       <TouchableOpacity style={styles.button} onPress={handleAddProduct}>
         <Text style={styles.buttonText}>Añadir Producto</Text>
       </TouchableOpacity>

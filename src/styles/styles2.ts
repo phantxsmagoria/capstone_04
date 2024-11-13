@@ -106,4 +106,12 @@ export default StyleSheet.create({
         color: '#000',
         marginLeft:30,
       },
+      //Css EditarProducto
+      nuevoProducto: { display: 'flex',
+         flexDirection: 'row',
+        gap: 10, alignItems: 'center', 
+        backgroundColor: '#f9f9f9', 
+        padding: 20, marginVertical: 10, 
+        marginTop: 15, borderRadius: 10, 
+        marginLeft: 10, marginRight: 10, },
 });

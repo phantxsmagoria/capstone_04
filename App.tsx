@@ -16,7 +16,6 @@ import RegisterScreen from './src/screens/RegisterScreen';
 import RegisterCliente from './src/screens/RegisterCliente';
 import RegisterOptica from './src/screens/RegisterOptica';
 import LoginScreen from './src/screens/LoginScreen';
-import RegistroOpticaDocumento from './src/screens/RegistroOpticaDocumento';
 import OpticaScreen from './src/screens/OpticaScreen';
 import ProfileClienteScreen from './src/screens/ProfileClienteScreen';
 import VerProducto from './src/screens/VerProducto';
@@ -29,6 +28,7 @@ import OpticaReseña from './src/screens/OpticaReseña';
 import OpticaColaPedidos from './src/screens/OpticaColaPedidos';
 import OpticaNotificarError from './src/screens/OpticaNotificarError';
 import OpticaConfiguracion from './src/screens/OpticaConfiguracion';
+import EditarProducto from './src/screens/EditarProducto';
 
 type RootStackParamList = {
   MainTabs: undefined;
@@ -40,7 +40,6 @@ type RootStackParamList = {
   Buscar: undefined;
   Carrito: undefined;
   Usuario: undefined;
-  RegisterOpticaDocumento: undefined;
   OpticaHome: undefined;
   OpticaScreen: undefined;
   Perfil: undefined;
@@ -54,6 +53,14 @@ type RootStackParamList = {
   OpticaColaPedidos: undefined;
   OpticaNotificarError: undefined;
   OpticaConfiguracion: undefined;
+  EditarProducto: {
+    id: string;
+    nombre: string;
+    descripcion: string;
+    precio: number;
+    imagenURL: string;
+    categoria: string;
+  };
 };
 
 const Tab = createBottomTabNavigator<RootStackParamList>();
@@ -107,7 +114,7 @@ function MainTabs() {
 }
 
 export default function App() {
-  const [initialRouteName, setInitialRouteName] = useState<keyof RootStackParamList | 'Login' | undefined>(undefined);
+  const [initialRouteName, setInitialRouteName] = useState<keyof RootStackParamList | 'Home' | undefined>(undefined);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -124,11 +131,11 @@ export default function App() {
             setInitialRouteName('MainTabs');
           }
         } else {
-          setInitialRouteName('Login');
+          setInitialRouteName('Home');
         }
       } catch (error) {
         console.error("Error checking user session: ", error);
-        setInitialRouteName('Login');
+        setInitialRouteName('Home');
       } finally {
         setLoading(false);
       }
@@ -149,7 +156,6 @@ export default function App() {
         <Stack.Screen name="RegisterCliente" component={RegisterCliente} options={{ headerShown: false }} />
         <Stack.Screen name="RegisterOptica" component={RegisterOptica} options={{ headerShown: false }} />
         <Stack.Screen name="Login" component={LoginScreen} options={{ headerShown: false }} />
-        <Stack.Screen name="RegisterOpticaDocumento" component={RegistroOpticaDocumento} options={{ headerShown: false }} />
         <Stack.Screen name="OpticaScreen" component={OpticaScreen} options={{ headerShown: false }} />
         <Stack.Screen name="Usuario" component={UserScreen} options={{ headerShown: false }} />
         <Stack.Screen name="ProductoOptica" component={ProductoOptica} options={{ headerShown: false }} />
@@ -162,6 +168,7 @@ export default function App() {
         <Stack.Screen name="OpticaColaPedidos" component={OpticaColaPedidos} options={{ headerShown: false }} />
         <Stack.Screen name="OpticaNotificarError" component={OpticaNotificarError} options={{ headerShown: false }} />
         <Stack.Screen name="OpticaConfiguracion" component={OpticaConfiguracion} options={{ headerShown: false }} />
+        <Stack.Screen name="EditarProducto" component={EditarProducto} options={{ headerShown: false }} />
       </Stack.Navigator>
     </NavigationContainer>
   );

@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, Image, FlatList, TouchableOpacity } from 'react-native';
+import { View, Text, Image, FlatList, TouchableOpacity, Button, Alert } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RouteProp } from '@react-navigation/native';
-import { collection, getDocs, query, where } from 'firebase/firestore';
+import { collection, getDocs, query, where, doc, deleteDoc } from 'firebase/firestore';
 import { auth, db } from '../firebaseConfig';
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 import styles2 from '../styles/styles2';
@@ -11,6 +11,14 @@ type RootStackParamList = {
   VerProducto: undefined;
   ProductoOptica: undefined;
   OpticaScreen: undefined;
+  EditarProducto: {
+    id: string;
+    nombre: string;
+    descripcion: string;
+    precio: number;
+    imagenURL: string;
+    categoria: string;
+  };
 };
 
 type VerProductoNavigationProp = StackNavigationProp<RootStackParamList, 'VerProducto'>;
@@ -33,6 +41,7 @@ interface ProductoData {
 export default function VerProducto({ navigation }: Props) {
   const [productoList, setProductoList] = useState<ProductoData[]>([]);
 
+  // Fetch product list when the component mounts
   useEffect(() => {
     GetProductoList();
   }, []);
@@ -47,22 +56,12 @@ export default function VerProducto({ navigation }: Props) {
         const productos: ProductoData[] = [];
         for (const doc of querySnapshot.docs) {
           const data = doc.data();
-          // Obtener el documento de imagenData
-          const imagenDataRef = collection(db, `productos/${doc.id}/imagenData`);
-          const imagenDataSnapshot = await getDocs(imagenDataRef);
-          let imagenURL = '';
-          imagenDataSnapshot.forEach((imagenDoc) => {
-            if (imagenDoc.data().uri) {
-              imagenURL = imagenDoc.data().uri;
-            }
-          });
-
           const producto = {
             id: doc.id,
             nombre: data.nombre,
             descripcion: data.descripcion,
             precio: data.precio,
-            imagenURL,
+            imagenURL: data.imagenURL, // Usamos la URL de Firebase Storage directamente
             categoria: data.categoria,
           };
           productos.push(producto);
@@ -74,31 +73,37 @@ export default function VerProducto({ navigation }: Props) {
     }
   };
 
+  const handleDelete = async (id: string) => {
+    try {
+      // Referencia al documento que se va a eliminar
+      const productDocRef = doc(db, 'productos', id);
+
+      // Eliminar el documento de Firebase
+      await deleteDoc(productDocRef);
+
+      // Actualizar la lista de productos después de la eliminación
+      setProductoList((prevProductoList) => prevProductoList.filter((producto) => producto.id !== id));
+
+      Alert.alert('Éxito', 'Producto eliminado correctamente');
+    } catch (error) {
+      console.error("Error deleting product: ", error);
+      Alert.alert('Error', 'Hubo un problema al eliminar el producto');
+    }
+  };
+
   return (
     <View style={styles2.container}>
       <TouchableOpacity onPress={() => navigation.navigate('OpticaScreen')}>
-        <MaterialIcons name="arrow-back-ios" size={30} color="#FA7929" style={{paddingTop:20,}}/>
+        <MaterialIcons name="arrow-back-ios" size={30} color="#FA7929" style={{paddingTop:20}}/>
         <Text style={styles2.titulosPagina}>Mi Catálogo</Text>
       </TouchableOpacity>
 
       <TouchableOpacity
-        style={{
-          display: 'flex',
-          flexDirection: 'row',
-          gap: 10,
-          alignItems: 'center',
-          backgroundColor: '#f9f9f9',
-          padding: 20,
-          marginVertical: 10,
-          marginTop: 15,
-          borderRadius: 10,
-          marginLeft: 10,
-          marginRight: 10,
-        }}
+        style={styles2.nuevoProducto}
         onPress={() => navigation.navigate('ProductoOptica')}
       >
         <MaterialIcons name="create" size={24} color="black" />
-        <Text style={{paddingTop:0,}}>Crear Nuevo Producto</Text>
+        <Text style={{paddingTop:0}}>Crear Nuevo Producto</Text>
       </TouchableOpacity>
 
       <FlatList
@@ -112,6 +117,22 @@ export default function VerProducto({ navigation }: Props) {
             />
             <Text style={styles2.productDescription}>{item.descripcion}</Text>
             <Text style={styles2.productPrice}>${item.precio}</Text>
+            <Button
+              title="Editar"
+              onPress={() => navigation.navigate('EditarProducto', {
+                id: item.id,
+                nombre: item.nombre,
+                descripcion: item.descripcion,
+                precio: item.precio,
+                imagenURL: item.imagenURL,
+                categoria: item.categoria,
+              })}
+            />
+            <Button
+              title="Eliminar"
+              onPress={() => handleDelete(item.id)}
+              color="red"
+            />
           </View>
         )}
         keyExtractor={(item) => item.id}
