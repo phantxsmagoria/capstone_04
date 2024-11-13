@@ -18,8 +18,8 @@ export default function OpticaNotificarError({navigation}: Props) {
   return (
     <View>
       <TouchableOpacity style={styles.nomProfile } onPress={() => navigation.navigate('OpticaScreen')}>
-        <MaterialIcons name="arrow-back-ios" size={35} color="#FA7929" /> {/* acá modifique el tamaño por 35*/}
-        <Text style={{ fontSize: 30 }}>Notificar un Error</Text> {/* acá modifique el tamaño por 30*/}
+        <MaterialIcons name="arrow-back-ios" size={35} color="#FA7929" /> 
+        <Text style={{ fontSize: 30 }}>Notificar un Error</Text> 
       </TouchableOpacity>
     </View>
   )

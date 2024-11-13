@@ -41,7 +41,7 @@ export default StyleSheet.create({
         fontWeight: 'bold',
         color: '#000',
         marginTop: 0,
-        marginRight: 150,
+        marginRight: 120,
         marginBottom: 80,
     },
     inputLine: {
@@ -102,9 +102,10 @@ export default StyleSheet.create({
     labelFecha: {
         alignSelf: 'flex-start',
         width: '80%',
-        marginLeft: 40,
+        marginLeft: 30,
         marginBottom: 10,
         color: '#333',
+        fontWeight: '500',
     },
     buttonContainer: {
         marginTop: 400,

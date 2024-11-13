@@ -18,8 +18,8 @@ export default function OpticaConfiguracion({navigation}: Props) {
   return (
     <View>
       <TouchableOpacity style={styles.nomProfile } onPress={() => navigation.navigate('OpticaScreen')}>
-        <MaterialIcons name="arrow-back-ios" size={35} color="#FA7929" /> {/* acá modifique el tamaño por 35*/}
-        <Text style={{ fontSize: 30 }}>Configuración y Soporte</Text> {/* acá modifique el tamaño por 30*/}
+        <MaterialIcons name="arrow-back-ios" size={35} color="#FA7929" /> 
+        <Text style={{ fontSize: 30 }}>Configuración y Soporte</Text> 
       </TouchableOpacity>
     </View>
   )

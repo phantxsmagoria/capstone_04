@@ -1,15 +1,11 @@
-
 // Import the functions you need from the SDKs you need
 import { initializeApp } from 'firebase/app';
 import { getFirestore } from 'firebase/firestore';
-import { getAuth } from 'firebase/auth';
-import { getAnalytics } from 'firebase/analytics'
-
-// TODO: Add SDKs for Firebase products that you want to use
-// https://firebase.google.com/docs/web/setup#available-libraries
+import { initializeAuth, reactNativeLocalPersistence } from 'firebase/auth/react-native';
+import { getAnalytics, isSupported } from 'firebase/analytics';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 // Your web app's Firebase configuration
-// For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
   apiKey: "AIzaSyBGAfl2ThtWoTNq1vZeu66DOAvBWIqNGOI",
   authDomain: "lenteaapp.firebaseapp.com",
@@ -22,8 +18,22 @@ const firebaseConfig = {
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
-const analytics = getAnalytics(app);
+
+// Setup Analytics with isSupported check
+(async () => {
+  const supported = await isSupported();
+  if (supported) {
+    getAnalytics(app);
+  } else {
+    console.warn('Firebase Analytics no es compatible en este entorno.');
+  }
+})();
+
 const db = getFirestore(app);
-const auth = getAuth(app);
+
+// Initialize Auth and set persistence
+const auth = initializeAuth(app, {
+  persistence: reactNativeLocalPersistence
+});
 
 export { db, auth };
