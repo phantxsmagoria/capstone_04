@@ -1,7 +1,7 @@
 import 'react-native-gesture-handler';
 import 'react-native-reanimated';
 import './src/firebaseConfig';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, createContext, useContext } from 'react';
 import { View, Text } from 'react-native'; 
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
@@ -34,7 +34,7 @@ import ProductoCliente from './src/screens/ProductoCliente';
 
 type RootStackParamList = {
   MainTabs: undefined;
-  Home: { showPopup?: boolean }; // Updated here
+  Home: { showPopup?: boolean };
   Register: undefined;
   RegisterCliente: undefined;
   RegisterOptica: undefined;
@@ -66,6 +66,12 @@ type RootStackParamList = {
     categoria: string;
   };
 };
+
+interface AuthContextType {
+  checkUserSession: () => Promise<void>;
+}
+
+const AuthContext = createContext<AuthContextType | null>(null);
 
 const Tab = createBottomTabNavigator<RootStackParamList>();
 const Stack = createStackNavigator<RootStackParamList>();
@@ -121,29 +127,32 @@ export default function App() {
   const [initialRouteName, setInitialRouteName] = useState<keyof RootStackParamList | undefined>(undefined);
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    const checkUserSession = async () => {
-      try {
-        const storedUser = await AsyncStorage.getItem('user');
-        if (storedUser) {
-          const user = JSON.parse(storedUser);
-          if (user.type === 'cliente') {
-            setInitialRouteName('Usuario');
-          } else if (user.type === 'optica') {
-            setInitialRouteName('OpticaScreen');
-          } else {
-            setInitialRouteName('MainTabs');
-          }
+  const checkUserSession = async () => {
+    try {
+      const storedUser = await AsyncStorage.getItem('user');
+      console.log('Stored User:', storedUser);
+      if (storedUser) {
+        const user = JSON.parse(storedUser);
+        console.log('User:', user);
+        if (user.type === 'cliente') {
+          setInitialRouteName('Usuario');
+        } else if (user.type === 'optica') {
+          setInitialRouteName('OpticaScreen');
         } else {
-          setInitialRouteName('Home');
+          setInitialRouteName('MainTabs');
         }
-      } catch (error) {
-        console.error("Error checking user session: ", error);
+      } else {
         setInitialRouteName('Home');
-      } finally {
-        setLoading(false);
       }
-    };
+    } catch (error) {
+      console.error("Error checking user session: ", error);
+      setInitialRouteName('Home');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
     checkUserSession();
   }, []);
 
@@ -152,30 +161,32 @@ export default function App() {
   }
 
   return (
-    <NavigationContainer>
-      <Stack.Navigator initialRouteName={initialRouteName}>
-        <Stack.Screen name="Home" component={HomeScreen} options={{ headerShown: false }} />
-        <Stack.Screen name="MainTabs" component={MainTabs} options={{ headerShown: false }} />
-        <Stack.Screen name="Register" component={RegisterScreen} options={{ headerShown: false }} />
-        <Stack.Screen name="RegisterCliente" component={RegisterCliente} options={{ headerShown: false }} />
-        <Stack.Screen name="RegisterOptica" component={RegisterOptica} options={{ headerShown: false }} />
-        <Stack.Screen name="Login" component={LoginScreen} options={{ headerShown: false }} />
-        <Stack.Screen name="OpticaScreen" component={OpticaScreen} options={{ headerShown: false }} />
-        <Stack.Screen name="Usuario" component={UserScreen} options={{ headerShown: false }} />
-        <Stack.Screen name="ProductoOptica" component={ProductoOptica} options={{ headerShown: false }} />
-        <Stack.Screen name="VerProducto" component={VerProducto} options={{ headerShown: false }} />
-        <Stack.Screen name="RecetaScreen" component={RecetaScreen} options={{ headerShown: false }} />
-        <Stack.Screen name="OpticaCobroPendiente" component={OpticaCobroPendiente} options={{ headerShown: false }} />
-        <Stack.Screen name="OpticaEnvioPendiente" component={OpticaEnvioPendiente} options={{ headerShown: false }} />
-        <Stack.Screen name="OpticaReseña" component={OpticaReseña} options={{ headerShown: false }} />
-        <Stack.Screen name="OpticaEnviado" component={OpticaEnviado} options={{ headerShown: false }} />
-        <Stack.Screen name="OpticaColaPedidos" component={OpticaColaPedidos} options={{ headerShown: false }} />
-        <Stack.Screen name="OpticaNotificarError" component={OpticaNotificarError} options={{ headerShown: false }} />
-        <Stack.Screen name="OpticaConfiguracion" component={OpticaConfiguracion} options={{ headerShown: false }} />
-        <Stack.Screen name="EditarProducto" component={EditarProducto} options={{ headerShown: false }} />
-        <Stack.Screen name="EditarPerfilOptica" component={EditarPerfilOpticaScreen} options={{ headerShown: false }} />
-        <Stack.Screen name="ProductoCliente" component={ProductoCliente} options={{headerShown: false}}/>
-      </Stack.Navigator>
-    </NavigationContainer>
+    <AuthContext.Provider value={{ checkUserSession }}>
+      <NavigationContainer>
+        <Stack.Navigator initialRouteName={initialRouteName}>
+          <Stack.Screen name="Home" component={HomeScreen} options={{ headerShown: false }} />
+          <Stack.Screen name="MainTabs" component={MainTabs} options={{ headerShown: false }} />
+          <Stack.Screen name="Register" component={RegisterScreen} options={{ headerShown: false }} />
+          <Stack.Screen name="RegisterCliente" component={RegisterCliente} options={{ headerShown: false }} />
+          <Stack.Screen name="RegisterOptica" component={RegisterOptica} options={{ headerShown: false }} />
+          <Stack.Screen name="Login" component={LoginScreen} options={{ headerShown: false }} />
+          <Stack.Screen name="OpticaScreen" component={OpticaScreen} options={{ headerShown: false }} />
+          <Stack.Screen name="Usuario" component={UserScreen} options={{ headerShown: false }} />
+          <Stack.Screen name="ProductoOptica" component={ProductoOptica} options={{ headerShown: false }} />
+          <Stack.Screen name="VerProducto" component={VerProducto} options={{ headerShown: false }} />
+          <Stack.Screen name="RecetaScreen" component={RecetaScreen} options={{ headerShown: false }} />
+          <Stack.Screen name="OpticaCobroPendiente" component={OpticaCobroPendiente} options={{ headerShown: false }} />
+          <Stack.Screen name="OpticaEnvioPendiente" component={OpticaEnvioPendiente} options={{ headerShown: false }} />
+          <Stack.Screen name="OpticaReseña" component={OpticaReseña} options={{ headerShown: false }} />
+          <Stack.Screen name="OpticaEnviado" component={OpticaEnviado} options={{ headerShown: false }} />
+          <Stack.Screen name="OpticaColaPedidos" component={OpticaColaPedidos} options={{ headerShown: false }} />
+          <Stack.Screen name="OpticaNotificarError" component={OpticaNotificarError} options={{ headerShown: false }} />
+          <Stack.Screen name="OpticaConfiguracion" component={OpticaConfiguracion} options={{ headerShown: false }} />
+          <Stack.Screen name="EditarProducto" component={EditarProducto} options={{ headerShown: false }} />
+          <Stack.Screen name="EditarPerfilOptica" component={EditarPerfilOpticaScreen} options={{ headerShown: false }} />
+          <Stack.Screen name="ProductoCliente" component={ProductoCliente} options={{ headerShown: false }} />
+        </Stack.Navigator>
+      </NavigationContainer>
+    </AuthContext.Provider>
   );
 }

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, Image, TouchableOpacity, FlatList } from 'react-native';
+import { View, Text, Image, TouchableOpacity, FlatList, Button } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RouteProp } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -31,6 +31,7 @@ type CartItem = {
 
 const CartScreen: React.FC<Props> = ({ navigation }) => {
   const [cartItems, setCartItems] = useState<CartItem[]>([]);
+  const [selectedItems, setSelectedItems] = useState<string[]>([]);
 
   useEffect(() => {
     const loadCart = async () => {
@@ -43,11 +44,26 @@ const CartScreen: React.FC<Props> = ({ navigation }) => {
     loadCart();
   }, []);
 
-  const removeFromCart = async (itemId: string) => {
-    const updatedCart = cartItems.filter(item => item.id !== itemId);
+  const toggleSelectItem = (itemId: string) => {
+    setSelectedItems((prevSelectedItems) => {
+      if (prevSelectedItems.includes(itemId)) {
+        return prevSelectedItems.filter((id) => id !== itemId);
+      } else {
+        return [...prevSelectedItems, itemId];
+      }
+    });
+  };
+
+  const removeFromCart = async (itemIds: string[]) => {
+    const updatedCart = cartItems.filter(item => !itemIds.includes(item.id));
     setCartItems(updatedCart);
     const uid = await AsyncStorage.getItem('userUID');
     await AsyncStorage.setItem(`cart_${uid}`, JSON.stringify(updatedCart));
+    setSelectedItems([]);
+  };
+
+  const handleRemoveSelectedItems = () => {
+    removeFromCart(selectedItems);
   };
 
   return (
@@ -58,19 +74,27 @@ const CartScreen: React.FC<Props> = ({ navigation }) => {
         data={cartItems}
         keyExtractor={(item) => item.id}
         renderItem={({ item }) => (
-          <View style={styles.cartItem}>
-            <Image source={{ uri: item.image }} style={styles.productImage} />
-            <View style={{ flex: 1 }}>
-              <Text style={styles.productTitle}>{item.title}</Text>
-              <Text style={styles.productDescription}>{item.description}</Text>
-              <Text style={styles.productPrice}>${item.price}</Text>
+          <TouchableOpacity onLongPress={() => toggleSelectItem(item.id)}>
+            <View style={[styles.cartItem, { backgroundColor: selectedItems.includes(item.id) ? '#ddd' : '#fff' }]}>
+              <Image source={{ uri: item.image }} style={styles.productImage} />
+              <View style={{ flex: 1 }}>
+                <Text style={styles.productTitle}>{item.title}</Text>
+                <Text style={styles.productDescription}>{item.description}</Text>
+                <Text style={styles.productPrice}>${item.price}</Text>
+              </View>
+              <TouchableOpacity style={styles.trashButton} onPress={() => removeFromCart([item.id])}>
+                <Icon name="trash" size={20} color="#fff" />
+              </TouchableOpacity>
             </View>
-            <TouchableOpacity style={styles.trashButton} onPress={() => removeFromCart(item.id)}>
-              <Icon name="trash" size={20} color="#fff" />
-            </TouchableOpacity>
-          </View>
+          </TouchableOpacity>
         )}
       />
+
+      {selectedItems.length > 0 && (
+        <View style={{ marginBottom: 20 }}>
+          <Button title="Eliminar Seleccionados" onPress={handleRemoveSelectedItems} color="red" />
+        </View>
+      )}
 
       <View style={styles.card}>
         <Text style={styles.cardTitle}>Total de Orden</Text>

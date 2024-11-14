@@ -114,4 +114,21 @@ export default StyleSheet.create({
         padding: 20, marginVertical: 10, 
         marginTop: 15, borderRadius: 10, 
         marginLeft: 10, marginRight: 10, },
+
+       addButton: { 
+          backgroundColor: '#FA7929', 
+          padding: 10, 
+          borderRadius: 5, 
+          alignItems: 'center', 
+          justifyContent: 'center', 
+          flexDirection: 'row', 
+          marginTop: 10, 
+        }, 
+        
+        addButtonText: { 
+          color: 'white', 
+          fontSize: 16, 
+          fontWeight: 'bold', 
+          marginLeft: 5, 
+        },
 });
