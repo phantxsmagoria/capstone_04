@@ -1,14 +1,17 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, Image } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RouteProp } from '@react-navigation/native';
 import { db, auth } from '../firebaseConfig';
 import { updateDoc, doc, getDoc } from 'firebase/firestore';
 import { updatePassword } from 'firebase/auth';
 import styles from '../styles/styles';
+import MaterialIcons from '@expo/vector-icons/MaterialIcons';
+
 
 type RootStackParamList = {
   EditarPerfilCliente: undefined;
+  Perfil: undefined;
 };
 
 type EditarPerfilClienteScreenNavigationProp = StackNavigationProp<RootStackParamList, 'EditarPerfilCliente'>;
@@ -59,9 +62,19 @@ export default function EditarPerfilClienteScreen({ navigation }: Props) {
   };
 
   return (
-    <View style={[styles.fondoView, styles.container]}>
-      <Text style={[styles.titleRegisterClienteNatural, { marginLeft: 20 }]}>Editar perfil</Text>
-      
+    <View style={styles.fondoView}>
+      <View>
+        <TouchableOpacity style={styles.nomProfile} onPress={() => navigation.navigate('Perfil')}>
+          <MaterialIcons name="arrow-back-ios" size={35} color="#FA7929" />
+          <Text style={styles.tituloMenusOptica}>Editar perfil</Text>
+        </TouchableOpacity>
+      </View>
+
+      <View style={styles.imagenOpticaContainerEdit}>
+        <Image source={require('../assets/ClienteEditPerfil.png')} style={{ width: 250, height: 250 }} />
+      </View>
+
+      <View style={styles.containerEdit}>
       <TextInput
         placeholder="Nombre"
         style={styles.inputLine}
@@ -79,6 +92,7 @@ export default function EditarPerfilClienteScreen({ navigation }: Props) {
       <TouchableOpacity style={styles.button} onPress={handleSave}>
         <Text style={styles.buttonText}>Guardar cambios</Text>
       </TouchableOpacity>
+      </View>
     </View>
   );
 }

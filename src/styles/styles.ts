@@ -426,4 +426,17 @@ export default StyleSheet.create({
         color: 'gray', 
         fontWeight:'semibold'
     },
+    // esto es para edit perfil
+    imagenOpticaContainerEdit: {
+        width: '100%', 
+        marginTop: 20,
+        justifyContent:'center',
+        alignItems:'center',
+    },
+    containerEdit: {
+        flex:1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: '#ffffff',
+    },
 });
