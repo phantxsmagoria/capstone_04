@@ -23,10 +23,10 @@ type Props = {
 
 type CartItem = {
   id: string;
-  title: string;
-  description: string;
-  price: number;
-  image: string;
+  nombre: string;
+  descripcion: string;
+  precio: number | null; // el null es para permitir los valores nulos
+  imagenURL: string | null;
 };
 
 const CartScreen: React.FC<Props> = ({ navigation }) => {
@@ -63,7 +63,7 @@ const CartScreen: React.FC<Props> = ({ navigation }) => {
   };
 
   const calculateTotalPrice = () => {
-    return cartItems.reduce((total, item) => total + (item.price || 0), 0);
+    return cartItems.reduce((total, item) => total + (item.precio || 0), 0);
   };
 
   return (
@@ -82,15 +82,15 @@ const CartScreen: React.FC<Props> = ({ navigation }) => {
         ]}
       >
         <Image
-          source={{ uri: item.image || 'https://via.placeholder.com/150' }}
+          source={{ uri: item.imagenURL || 'https://via.placeholder.com/150' }}
           style={styles.productImage}
         />
         <View style={{ flex: 1 }}>
-        <Text style={styles.productTitle}>{item.title}</Text>
-                <Text style={styles.productDescription}>{item.description}</Text>
-                <Text style={styles.productPrice}>${item.price}</Text>
+        <Text style={styles.productTitle}>{item.nombre}</Text>
+                <Text style={styles.productDescription}>{item.descripcion}</Text>
+                <Text style={styles.productPrice}>${item.precio}</Text>
           <Text style={styles.productPrice}>
-            ${item.price != null ? item.price : 'Precio no disponible'}
+            ${item.precio != null ? item.precio : 'Precio no disponible'}
           </Text>
         </View>
         <TouchableOpacity
