@@ -2,7 +2,6 @@
 import { initializeApp } from 'firebase/app';
 import { getFirestore } from 'firebase/firestore';
 import { initializeAuth, reactNativeLocalPersistence } from 'firebase/auth/react-native';
-import { getAnalytics, isSupported } from 'firebase/analytics';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 // Your web app's Firebase configuration
@@ -19,15 +18,6 @@ const firebaseConfig = {
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 
-// Setup Analytics with isSupported check
-(async () => {
-  const supported = await isSupported();
-  if (supported) {
-    getAnalytics(app);
-  } else {
-    console.warn('Firebase Analytics no es compatible en este entorno.');
-  }
-})();
 
 const db = getFirestore(app);
 

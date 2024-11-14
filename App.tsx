@@ -29,11 +29,13 @@ import OpticaColaPedidos from './src/screens/OpticaColaPedidos';
 import OpticaNotificarError from './src/screens/OpticaNotificarError';
 import OpticaConfiguracion from './src/screens/OpticaConfiguracion';
 import EditarProducto from './src/screens/EditarProducto';
-import EditarPerfilOpticaScreen from './src/screens/EditarPerfilOptica';
+import EditarPerfilOptica from './src/screens/EditarPerfilOptica';
 import ProductoCliente from './src/screens/ProductoCliente';
 import ClienteRegistroBoletas from './src/screens/ClienteRegistroBoletas';
 import ClienteRegistroPagos from './src/screens/ClienteRegistroPagos';
+import EditarPerfilCliente from './src/screens/EditarPerfilCliente';
 
+// Aquí están los roots, siempre hay que declararlos!!!!!!!
 type RootStackParamList = {
   MainTabs: undefined;
   Home: { showPopup?: boolean };
@@ -58,6 +60,7 @@ type RootStackParamList = {
   OpticaNotificarError: undefined;
   OpticaConfiguracion: undefined;
   EditarPerfilOptica: undefined;
+  EditarPerfilCliente: undefined;
   ProductoCliente: undefined;
   ClienteRegistroBoletas: undefined;
   ClienteRegistroPagos: undefined;
@@ -187,10 +190,11 @@ export default function App() {
           <Stack.Screen name="OpticaNotificarError" component={OpticaNotificarError} options={{ headerShown: false }} />
           <Stack.Screen name="OpticaConfiguracion" component={OpticaConfiguracion} options={{ headerShown: false }} />
           <Stack.Screen name="EditarProducto" component={EditarProducto} options={{ headerShown: false }} />
-          <Stack.Screen name="EditarPerfilOptica" component={EditarPerfilOpticaScreen} options={{ headerShown: false }} />
+          <Stack.Screen name="EditarPerfilOptica" component={EditarPerfilOptica} options={{ headerShown: false }} />
           <Stack.Screen name="ProductoCliente" component={ProductoCliente} options={{ headerShown: false }} />
           <Stack.Screen name="ClienteRegistroBoletas" component={ClienteRegistroBoletas} options={{ headerShown: false }} />
           <Stack.Screen name="ClienteRegistroPagos" component={ClienteRegistroPagos} options={{ headerShown: false }} />
+          <Stack.Screen name="EditarPerfilCliente" component={EditarPerfilCliente} options={{ headerShown: false }} />
         </Stack.Navigator>
       </NavigationContainer>
     </AuthContext.Provider>

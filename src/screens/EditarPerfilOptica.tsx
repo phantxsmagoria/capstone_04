@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, Button, StyleSheet } from 'react-native';
+import { View, Text, TextInput, Button, StyleSheet, TouchableOpacity } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RouteProp } from '@react-navigation/native';
 import { db, auth } from '../firebaseConfig';
 import { updateDoc, doc } from 'firebase/firestore';
 import { updatePassword } from 'firebase/auth';
+import styles from '../styles/styles';
 
 type RootStackParamList = {
   EditarPerfilOptica: undefined;
@@ -41,40 +42,24 @@ export default function EditarPerfilOpticaScreen({ navigation }: Props) {
   };
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.label}>Nombre de la Óptica:</Text>
+    <View style={[styles.container, styles.fondoView]}>
+      <Text style={[styles.titleRegisterClienteNatural, { marginLeft: 20 }]}>Editar perfil de óptica</Text>
       <TextInput
-        style={styles.input}
+        placeholder='Nuevo nombre óptica'
+        style={styles.inputLine}
         value={nombreOptica}
         onChangeText={setNombreOptica}
       />
-      <Text style={styles.label}>Nueva Contraseña:</Text>
       <TextInput
-        style={styles.input}
+        placeholder='Nueva contraseña'
+        style={styles.inputLine}
         value={password}
         onChangeText={setPassword}
         secureTextEntry
       />
-      <Button title="Guardar Cambios" onPress={handleSave} />
+      <TouchableOpacity style={styles.button} onPress={handleSave}>
+        <Text style={styles.buttonText}>Guardar cambios</Text>
+      </TouchableOpacity>
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    padding: 16,
-    backgroundColor: 'white',
-  },
-  label: {
-    fontSize: 18,
-    marginBottom: 8,
-  },
-  input: {
-    height: 40,
-    borderColor: 'gray',
-    borderWidth: 1,
-    marginBottom: 16,
-    paddingLeft: 8,
-  },
-});

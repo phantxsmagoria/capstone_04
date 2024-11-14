@@ -17,13 +17,14 @@ type RootStackParamList = {
     RecetaScreen: undefined;
     ClienteRegistroBoletas: undefined;
     ClienteRegistroPagos: undefined;
+    EditarPerfilCliente: undefined;
 }
 
 type ProfileClienteScreenNavigationProp = StackNavigationProp<RootStackParamList, 'Perfil'>;
 type ProfileClientesScreenRouterProp = RouteProp<RootStackParamList,'Perfil'>;
-type Props = {navigation: ProfileClienteScreenNavigationProp; route:ProfileClientesScreenRouterProp};
+type Props = { navigation: ProfileClienteScreenNavigationProp; route:ProfileClientesScreenRouterProp };
 
-export default function ProfileClienteScreen({navigation}: Props) {
+export default function ProfileClienteScreen({ navigation }: Props) {
     const [userName, setUserName] = useState<string>('Usuario');
 
     useEffect(() => {
@@ -62,41 +63,47 @@ export default function ProfileClienteScreen({navigation}: Props) {
     };
 
     return (
-        <View>
+        <View style={styles.fondoView}>
             <View style={styles.nomProfile}>
                 <FontAwesome5 name="user-circle" size={40} color="black" />
                 <Text style={{ fontSize: 35 }}>{userName}</Text>
             </View>           
 
-            <View>
+            <View style={styles.containerOptica}> 
                 <Text style={{padding: 20, fontSize: 25}}>Mis Pedidos</Text>
+                <View style={{ flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'center' }}>
+                    <TouchableOpacity style={styles.itemProfile} onPress={() => navigation.navigate('ClienteRegistroPagos')}> 
+                        <Ionicons name="wallet-outline" size={24} color="black" />
+                        <Text style={styles.textProfile}>Mis Pagos</Text> 
+                    </TouchableOpacity> 
+                    <TouchableOpacity style={styles.itemProfile} onPress={() => navigation.navigate('ClienteRegistroBoletas')}> 
+                        <Ionicons name="receipt-outline" size={24} color="black" />
+                        <Text style={styles.textProfile}>Mis Boletas</Text> 
+                    </TouchableOpacity> 
+                    <TouchableOpacity style={styles.itemProfile} onPress={() => navigation.navigate('RecetaScreen')}> 
+                        <FontAwesome5 name="glasses" size={24} color="black" />
+                        <Text style={styles.textProfile}>Mi Receta</Text> 
+                    </TouchableOpacity> 
+                    <TouchableOpacity style={styles.itemProfile}> 
+                        <Feather name="alert-circle" size={24} color="black" />
+                        <Text style={styles.textProfile}>Notificar un error</Text> 
+                    </TouchableOpacity> 
+                    <TouchableOpacity style={styles.itemProfile} onPress={() => navigation.navigate('EditarPerfilCliente')}> 
+                        <Feather name="edit" size={24} color="black" />
+                        <Text style={styles.textProfile}>Editar Perfil</Text> 
+                    </TouchableOpacity> 
+                </View>
             </View>
-            
-            <View style={{flex:1, flexDirection:'row', flexWrap:'wrap', justifyContent: 'center'}}> 
+
+            <View style={{ flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'flex-start' }}>
                 <TouchableOpacity style={styles.itemProfile}> 
-                    <Ionicons name="wallet-outline" size={24} color="black" onPress={() => navigation.navigate('ClienteRegistroPagos')}/> 
-                    <Text style={styles.textProfile}>Mis Pagos</Text> 
-                </TouchableOpacity> 
-                <TouchableOpacity style={styles.itemProfile}> 
-                    <Ionicons name="receipt-outline" size={24} color="black" onPress={() => navigation.navigate('ClienteRegistroBoletas')}/> 
-                    <Text style={styles.textProfile}>Mis Boletas</Text> 
-                </TouchableOpacity> 
-                <TouchableOpacity style={styles.itemProfile} onPress={() => navigation.navigate('RecetaScreen')}> 
-                    <FontAwesome5 name="glasses" size={24} color="black" /> 
-                    <Text style={styles.textProfile}>Mi Receta</Text> 
-                </TouchableOpacity> 
-                <TouchableOpacity style={styles.itemProfile}> 
-                    <Feather name="alert-circle" size={24} color="black" /> 
-                    <Text style={styles.textProfile}>Notificar un error</Text> 
-                </TouchableOpacity> 
-                <TouchableOpacity style={styles.itemProfile}> 
-                    <Feather name="tool" size={24} color="black" /> 
+                    <Feather name="tool" size={24} color="black" />
                     <Text style={styles.textProfile}>Configuración y Soporte</Text> 
                 </TouchableOpacity> 
                 <TouchableOpacity style={styles.itemProfile} onPress={handleLogout}> 
-                    <Feather name="log-out" size={24} color="black" /> 
+                    <Feather name="log-out" size={24} color="black" />
                     <Text style={styles.textProfile}>Cerrar Sesión</Text> 
-                </TouchableOpacity> 
+                </TouchableOpacity>
             </View>
         </View>
     );
