@@ -412,4 +412,18 @@ export default StyleSheet.create({
       unselectedItem: {
         backgroundColor: '#fff', // Color de fondo para items no seleccionados
       },
+
+      // Ajuste imagen optica
+    imagenOpticaContainer: {
+        width: '100%', 
+        marginTop: '50%',
+        justifyContent: 'center', 
+        alignItems: 'center', 
+    },
+    textoOptica:{
+        textAlign:'center', 
+        fontSize: 18, 
+        color: 'gray', 
+        fontWeight:'semibold'
+    },
 });

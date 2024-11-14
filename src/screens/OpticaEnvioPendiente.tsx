@@ -1,4 +1,4 @@
-import { View, Text, TouchableOpacity } from 'react-native'
+import { View, Text, TouchableOpacity, Image } from 'react-native'
 import React from 'react'
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RouteProp } from '@react-navigation/native';
@@ -21,6 +21,11 @@ export default function OpticaEnvioPendiente({navigation}: Props) {
         <MaterialIcons name="arrow-back-ios" size={25} color="#FA7929" /> 
         <Text style={styles.tituloMenusOptica}>Pendientes de envío</Text> 
       </TouchableOpacity>
+
+      <View style={styles.imagenOpticaContainer}>
+        <Image source={require('../assets/EnviosPendientes.png')} style={{width: 300, height: 300}}/>
+        <Text style={styles.textoOptica}>No hay envios pendientes existentes</Text>
+      </View>
     </View>
   )
 }
