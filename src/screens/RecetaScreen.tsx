@@ -1,10 +1,9 @@
-import { View, Text, TouchableOpacity, ActivityIndicator } from 'react-native'
+import { View, Text, TouchableOpacity, ActivityIndicator, TextInput } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RouteProp } from '@react-navigation/native';
 import { collection, addDoc, doc, getDoc, setDoc } from 'firebase/firestore';
 import { auth, db } from '../firebaseConfig';
-import { TextInput } from 'react-native-gesture-handler';
 import styles from '../styles/styles';
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 import Ionicons from '@expo/vector-icons/Ionicons';
@@ -17,7 +16,7 @@ type RecetaScreenNavigationProp = StackNavigationProp<RootStackParamList, 'Recet
 type RecetaScreenRouterProp = RouteProp<RootStackParamList, 'RecetaScreen'>;
 type Props = { navigation: RecetaScreenNavigationProp; route: RecetaScreenRouterProp; }
 
-export default function RecetaScreen({navigation}: Props) {
+export default function RecetaScreen({ navigation }: Props) {
   const [ODesfera, setOdEsfera] = useState('');
   const [ODcilindro, setOdCilindro] = useState('');
   const [ODeje, setOdEje] = useState('');
@@ -39,7 +38,7 @@ export default function RecetaScreen({navigation}: Props) {
         const docRef = doc(db, 'receta', usuarioId!);
         const docSnap = await getDoc(docRef);
 
-        if(docSnap.exists()) {
+        if (docSnap.exists()) {
           const data = docSnap.data();
           setOdEsfera(data?.ODesfera || '');
           setOdCilindro(data?.ODcilindro || '');
@@ -52,7 +51,7 @@ export default function RecetaScreen({navigation}: Props) {
           setModificarInfo(true); // esto es si el usuario ya tiene datos lo pueda modificar
         }
       } catch (error) {
-        console.error('Error obteniendo los datos: ', error);       
+        console.error('Error obteniendo los datos: ', error);
       } finally {
         setCargandoInfo(false);
       }
@@ -63,16 +62,16 @@ export default function RecetaScreen({navigation}: Props) {
   }, [usuarioId]);
 
 
-  {/* Este const es para que solo puedan ingresar datos decimales separados por un punto, además de los "+" y "-"*/}
+  //Este const es para que solo puedan ingresar datos decimales separados por un punto, además de los "+" y "-"*/ 
   const validateDatosReceta = (text: string) => {
     const regex = /^[-+]?\d*\.?\d*$/;
-    return regex.test(text) && text.length <=5;
-    
+    return regex.test(text) && text.length <= 5;
+
   };
 
-  {/* Este const es para mostrar que está cargando la pagina*/}
+  //Este const es para mostrar que está cargando la pagina
   if (cargandoinfo) {
-    return <ActivityIndicator size='large' color='#fa7929' style={styles.cargardatosreceta}/>
+    return <ActivityIndicator size='large' color='#fa7929' style={styles.cargardatosreceta} />
   };
 
   const handleReceta = async () => {
@@ -87,7 +86,7 @@ export default function RecetaScreen({navigation}: Props) {
 
     try {
       const docRef = doc(db, 'receta', usuarioId!);
-      await setDoc( docRef, {
+      await setDoc(docRef, {
         ODesfera,
         ODcilindro,
         ODeje,
@@ -98,14 +97,13 @@ export default function RecetaScreen({navigation}: Props) {
         distanciapupilar,
         usuarioId,
       });
-      if (modificarinfo == false){
+      if (!modificarinfo) {
         setSuccessMessage('Se ha guardado su receta con éxito');
         setModificarInfo(true);
       }
       else {
-      setSuccessMessage('Se ha modificado su receta con éxito');
-      setModificarInfo(true);
-    }
+        setSuccessMessage('Se ha modificado su receta con éxito');
+      }
     } catch (error) {
       console.error('Error creando receta: ', error);
       setErrorMessage('Error al crear su receta');
@@ -113,90 +111,93 @@ export default function RecetaScreen({navigation}: Props) {
   };
   return (
     <View>
-
-      <TouchableOpacity style={styles.nomProfile } onPress={() => navigation.navigate('Perfil')}>
-        <MaterialIcons name="arrow-back-ios" size={35} color="#FA7929" /> {/* acá modifique el tamaño por 35*/}
-        <Text style={{ fontSize: 30 }}>Mi Receta</Text> {/* acá modifique el tamaño por 30*/}
-      </TouchableOpacity>
+      <View>
+        <TouchableOpacity style={styles.nomProfile} onPress={() => navigation.navigate('Perfil')}>
+          <MaterialIcons name="arrow-back-ios" size={35} color="#FA7929" /> 
+          <Text style={{ fontSize: 30 }}>Mi Receta</Text> 
+        </TouchableOpacity>
+      </View>
       <View style={styles.textReceta} >
-      <Text style={{marginLeft: 15,fontSize: 18}}>OD: Ojo Derecho</Text>
-      <Ionicons  name="information-circle-outline" size={30} color="#FA7929" />
+        <Text style={{ marginLeft: 15, fontSize: 18 }}>OD: Ojo Derecho</Text>
+        <Ionicons name="information-circle-outline" size={30} color="#FA7929" />
       </View>
 
-      <View style={styles.contenedorReceta}>  
-      <TextInput style={styles.itemReceta}
-        placeholder='ESF / SPH'
-        value={ODesfera}
-        editable={true}
-        onChangeText={(text) => {if (validateDatosReceta(text)) setOdEsfera(text);}}
-      />
+      <View style={styles.contenedorReceta}>
+        <TextInput style={styles.itemReceta}
+          placeholder='ESF / SPH'
+          value={ODesfera}
+          editable={true}
+          onChangeText={(text) => { if (validateDatosReceta(text)) setOdEsfera(text); }}
+        />
 
-      <TextInput style={styles.itemReceta}
-        placeholder='CLI / CYL'
-        value={ODcilindro}
-        editable={true}
-        onChangeText={(text) => {if (validateDatosReceta(text)) setOdCilindro(text);}}
-      />
+        <TextInput style={styles.itemReceta}
+          placeholder='CLI / CYL'
+          value={ODcilindro}
+          editable={true}
+          onChangeText={(text) => { if (validateDatosReceta(text)) setOdCilindro(text); }}
+        />
 
-      <TextInput style={styles.itemReceta}
-        placeholder='EJE'
-        value={ODeje}
-        editable={true}
-        onChangeText={(text) => {if (validateDatosReceta(text)) setOdEje(text);}}
-      />
+        <TextInput style={styles.itemReceta}
+          placeholder='EJE'
+          value={ODeje}
+          editable={true}
+          onChangeText={(text) => { if (validateDatosReceta(text)) setOdEje(text); }}
+        />
       </View>
 
       <View style={styles.textReceta}>
-      <Text style={{marginLeft:15,fontSize: 18}}>OI: Ojo Izquierdo</Text>
-      <Ionicons name="information-circle-outline" size={30} color="#FA7929" />
+        <Text style={{ marginLeft: 15, fontSize: 18 }}>OI: Ojo Izquierdo</Text>
+        <Ionicons name="information-circle-outline" size={30} color="#FA7929" />
       </View>
       <View style={styles.contenedorReceta}>
 
-      <TextInput style={styles.itemReceta}
-        placeholder='ESF / SPH'
-        value={OIesfera}
-        editable={true}
-        onChangeText={(text) => {if (validateDatosReceta(text)) setOiEsfera(text);}}
-      />
+        <TextInput style={styles.itemReceta}
+          placeholder='ESF / SPH'
+          value={OIesfera}
+          editable={true}
+          onChangeText={(text) => { if (validateDatosReceta(text)) setOiEsfera(text); }}
+        />
 
-      <TextInput style={styles.itemReceta}
-        placeholder='CLI / CYL'
-        value={OIcilindro}
-        editable={true}
-        onChangeText={(text) => {if (validateDatosReceta(text)) setOiCilindro(text);}}
-      />
+        <TextInput style={styles.itemReceta}
+          placeholder='CLI / CYL'
+          value={OIcilindro}
+          editable={true}
+          onChangeText={(text) => { if (validateDatosReceta(text)) setOiCilindro(text); }}
+        />
 
-      <TextInput style={styles.itemReceta}
-        placeholder='EJE'
-        value={OIeje}
-        editable={true}
-        onChangeText={(text) => {if (validateDatosReceta(text)) setOiEje(text);}}
-      />
+        <TextInput style={styles.itemReceta}
+          placeholder='EJE'
+          value={OIeje}
+          editable={true}
+          onChangeText={(text) => { if (validateDatosReceta(text)) setOiEje(text); }}
+        />
 
       </View>
-      <Ionicons style={{marginLeft:15, marginTop:10, marginBottom: -8}} name="information-circle-outline" size={30} color="#FA7929" />
+      <View>
+        <Ionicons style={{ marginLeft: 15, marginTop: 10, marginBottom: -8 }} name="information-circle-outline" size={30} color="#FA7929" />
+      </View>
       <View style={styles.contendorReceta2}>
-      <TextInput style={styles.itemReceta2}
-        placeholder='ADD'
-        value={adicion}
-        editable={true}
-        onChangeText={(text) => {if (validateDatosReceta(text)) setAdicion(text);}}
-      />
+        <TextInput style={styles.itemReceta2}
+          placeholder='ADD'
+          value={adicion}
+          editable={true}
+          onChangeText={(text) => { if (validateDatosReceta(text)) setAdicion(text); }}
+        />
 
-      <TextInput style={styles.itemReceta2}
-        placeholder='DP'
-        value={distanciapupilar}
-        editable={true}
-        onChangeText={(text) => {if (validateDatosReceta(text)) setDistanciaPupilar(text);}}
-      />
+        <TextInput style={styles.itemReceta2}
+          placeholder='DP'
+          value={distanciapupilar}
+          editable={true}
+          onChangeText={(text) => { if (validateDatosReceta(text)) setDistanciaPupilar(text); }}
+        />
       </View>
-      
-
-      {errorMessage ? <Text style={styles.errorText}>{errorMessage}</Text> : null}
-      {successMessage ? <Text style={styles.successText}>{successMessage}</Text> : null}
-      <TouchableOpacity style={styles.botonReceta} onPress={handleReceta}>
-        <Text style={styles.botonTextReceta}>{modificarinfo? 'Modificar Receta' : 'Guardar Receta'}</Text>
-      </TouchableOpacity>
+      <View>
+        {errorMessage ? <Text style={styles.errorText}>{errorMessage}</Text> : null}
+        {successMessage ? <Text style={styles.successText}>{successMessage}</Text> : null}
+        <TouchableOpacity style={styles.botonReceta} onPress={handleReceta}>
+          <Text style={styles.botonTextReceta}>{modificarinfo ? 'Modificar Receta' : 'Guardar Receta'}</Text>
+        </TouchableOpacity>
+      </View>
     </View>
   )
 }
