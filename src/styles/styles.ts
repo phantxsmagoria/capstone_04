@@ -406,4 +406,10 @@ export default StyleSheet.create({
         flex: 0.5,
         
     },
+    selectedItem: {
+        backgroundColor: '#ddd', // Color de fondo para items seleccionados
+      },
+      unselectedItem: {
+        backgroundColor: '#fff', // Color de fondo para items no seleccionados
+      },
 });
