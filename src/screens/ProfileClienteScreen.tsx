@@ -15,6 +15,8 @@ type RootStackParamList = {
     Perfil: undefined; 
     Home: undefined;
     RecetaScreen: undefined;
+    ClienteRegistroBoletas: undefined;
+    ClienteRegistroPagos: undefined;
 }
 
 type ProfileClienteScreenNavigationProp = StackNavigationProp<RootStackParamList, 'Perfil'>;
@@ -72,11 +74,11 @@ export default function ProfileClienteScreen({navigation}: Props) {
             
             <View style={{flex:1, flexDirection:'row', flexWrap:'wrap', justifyContent: 'center'}}> 
                 <TouchableOpacity style={styles.itemProfile}> 
-                    <Ionicons name="wallet-outline" size={24} color="black" /> 
+                    <Ionicons name="wallet-outline" size={24} color="black" onPress={() => navigation.navigate('ClienteRegistroPagos')}/> 
                     <Text style={styles.textProfile}>Mis Pagos</Text> 
                 </TouchableOpacity> 
                 <TouchableOpacity style={styles.itemProfile}> 
-                    <Ionicons name="receipt-outline" size={24} color="black" /> 
+                    <Ionicons name="receipt-outline" size={24} color="black" onPress={() => navigation.navigate('ClienteRegistroBoletas')}/> 
                     <Text style={styles.textProfile}>Mis Boletas</Text> 
                 </TouchableOpacity> 
                 <TouchableOpacity style={styles.itemProfile} onPress={() => navigation.navigate('RecetaScreen')}> 
