@@ -128,7 +128,7 @@ function MainTabs() {
 }
 
 export default function App() {
-  const [initialRouteName, setInitialRouteName] = useState<keyof RootStackParamList | undefined>(undefined);
+  const [initialRouteName, setInitialRouteName] = useState<keyof RootStackParamList | null>(null);
   const [loading, setLoading] = useState(true);
 
   const checkUserSession = async () => {
@@ -167,7 +167,7 @@ export default function App() {
   return (
     <AuthContext.Provider value={{ checkUserSession }}>
       <NavigationContainer>
-        <Stack.Navigator initialRouteName={initialRouteName}>
+        <Stack.Navigator initialRouteName={initialRouteName || 'Home'}>
           <Stack.Screen name="Home" component={HomeScreen} options={{ headerShown: false }} />
           <Stack.Screen name="MainTabs" component={MainTabs} options={{ headerShown: false }} />
           <Stack.Screen name="Register" component={RegisterScreen} options={{ headerShown: false }} />
