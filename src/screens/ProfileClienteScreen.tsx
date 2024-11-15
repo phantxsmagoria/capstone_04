@@ -12,99 +12,100 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { signOut } from 'firebase/auth';
 
 type RootStackParamList = {
-    Perfil: undefined; 
-    Home: undefined;
-    RecetaScreen: undefined;
-    ClienteRegistroBoletas: undefined;
-    ClienteRegistroPagos: undefined;
-    EditarPerfilCliente: undefined;
-}
+  Perfil: undefined; 
+  Home: undefined;
+  RecetaScreen: undefined;
+  ClienteRegistroBoletas: undefined;
+  ClienteRegistroPagos: undefined;
+  EditarPerfilCliente: undefined;
+  ReportErrorScreen: undefined;
+};
 
 type ProfileClienteScreenNavigationProp = StackNavigationProp<RootStackParamList, 'Perfil'>;
-type ProfileClientesScreenRouterProp = RouteProp<RootStackParamList,'Perfil'>;
-type Props = { navigation: ProfileClienteScreenNavigationProp; route:ProfileClientesScreenRouterProp };
+type ProfileClientesScreenRouterProp = RouteProp<RootStackParamList, 'Perfil'>;
+type Props = { navigation: ProfileClienteScreenNavigationProp; route: ProfileClientesScreenRouterProp };
 
 export default function ProfileClienteScreen({ navigation }: Props) {
-    const [userName, setUserName] = useState<string>('Usuario');
+  const [userName, setUserName] = useState<string>('Usuario');
 
-    useEffect(() => {
-        fetchUserName();
-    }, []);
+  useEffect(() => {
+    fetchUserName();
+  }, []);
 
-    const fetchUserName = async () => {
-        const user = auth.currentUser;
-        if (user) {
-            try {
-                const q = query(collection(db, 'users'), where('uid', '==', user.uid));
-                const querySnapshot = await getDocs(q);
-                if (!querySnapshot.empty) {
-                    const userData = querySnapshot.docs[0].data();
-                    console.log("User data fetched:", userData); // Debugging line
-                    setUserName(userData.name);
-                } else {
-                    console.error("No user data found for uid:", user.uid);
-                }
-            } catch (error) {
-                console.error("Error fetching user data: ", error);
-            }
+  const fetchUserName = async () => {
+    const user = auth.currentUser;
+    if (user) {
+      try {
+        const q = query(collection(db, 'users'), where('uid', '==', user.uid));
+        const querySnapshot = await getDocs(q);
+        if (!querySnapshot.empty) {
+          const userData = querySnapshot.docs[0].data();
+          console.log("User data fetched:", userData); // Debugging line
+          setUserName(userData.name);
         } else {
-            console.error("No user is logged in");
+          console.error("No user data found for uid:", user.uid);
         }
-    };
+      } catch (error) {
+        console.error("Error fetching user data: ", error);
+      }
+    } else {
+      console.error("No user is logged in");
+    }
+  };
 
-    const handleLogout = async () => {
-        try {
-            await signOut(auth);
-            await AsyncStorage.removeItem('user');
-            navigation.navigate('Home');
-        } catch (error) {
-            console.error("Error signing out: ", error);
-        }
-    };
+  const handleLogout = async () => {
+    try {
+      await signOut(auth);
+      await AsyncStorage.removeItem('user');
+      navigation.navigate('Home');
+    } catch (error) {
+      console.error("Error signing out: ", error);
+    }
+  };
 
-    return (
-        <View style={styles.fondoView}>
-            <View style={styles.nomProfile}>
-                <FontAwesome5 name="user-circle" size={40} color="black" />
-                <Text style={{ fontSize: 35 }}>{userName}</Text>
-            </View>           
+  return (
+    <View style={styles.fondoView}>
+      <View style={styles.nomProfile}>
+        <FontAwesome5 name="user-circle" size={40} color="black" />
+        <Text style={{ fontSize: 35 }}>{userName}</Text>
+      </View>           
 
-            <View style={styles.containerOptica}> 
-                <Text style={{padding: 20, fontSize: 25}}>Mis Pedidos</Text>
-                <View style={{ flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'center' }}>
-                    <TouchableOpacity style={styles.itemProfile} onPress={() => navigation.navigate('ClienteRegistroPagos')}> 
-                        <Ionicons name="wallet-outline" size={24} color="black" />
-                        <Text style={styles.textProfile}>Mis Pagos</Text> 
-                    </TouchableOpacity> 
-                    <TouchableOpacity style={styles.itemProfile} onPress={() => navigation.navigate('ClienteRegistroBoletas')}> 
-                        <Ionicons name="receipt-outline" size={24} color="black" />
-                        <Text style={styles.textProfile}>Mis Boletas</Text> 
-                    </TouchableOpacity> 
-                    <TouchableOpacity style={styles.itemProfile} onPress={() => navigation.navigate('RecetaScreen')}> 
-                        <FontAwesome5 name="glasses" size={24} color="black" />
-                        <Text style={styles.textProfile}>Mi Receta</Text> 
-                    </TouchableOpacity> 
-                    <TouchableOpacity style={styles.itemProfile}> 
-                        <Feather name="alert-circle" size={24} color="black" />
-                        <Text style={styles.textProfile}>Notificar un error</Text> 
-                    </TouchableOpacity> 
-                    <TouchableOpacity style={styles.itemProfile} onPress={() => navigation.navigate('EditarPerfilCliente')}> 
-                        <Feather name="edit" size={24} color="black" />
-                        <Text style={styles.textProfile}>Editar Perfil</Text> 
-                    </TouchableOpacity> 
-                </View>
-            </View>
-
-            <View style={{ flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'flex-start' }}>
-                <TouchableOpacity style={styles.itemProfile}> 
-                    <Feather name="tool" size={24} color="black" />
-                    <Text style={styles.textProfile}>Configuración y Soporte</Text> 
-                </TouchableOpacity> 
-                <TouchableOpacity style={styles.itemProfile} onPress={handleLogout}> 
-                    <Feather name="log-out" size={24} color="black" />
-                    <Text style={styles.textProfile}>Cerrar Sesión</Text> 
-                </TouchableOpacity>
-            </View>
+      <View style={styles.containerOptica}> 
+        <Text style={{padding: 20, fontSize: 25}}>Mis Pedidos</Text>
+        <View style={{ flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'center' }}>
+          <TouchableOpacity style={styles.itemProfile} onPress={() => navigation.navigate('ClienteRegistroPagos')}> 
+            <Ionicons name="wallet-outline" size={24} color="black" />
+            <Text style={styles.textProfile}>Mis Pagos</Text> 
+          </TouchableOpacity> 
+          <TouchableOpacity style={styles.itemProfile} onPress={() => navigation.navigate('ClienteRegistroBoletas')}> 
+            <Ionicons name="receipt-outline" size={24} color="black" />
+            <Text style={styles.textProfile}>Mis Boletas</Text> 
+          </TouchableOpacity> 
+          <TouchableOpacity style={styles.itemProfile} onPress={() => navigation.navigate('RecetaScreen')}> 
+            <FontAwesome5 name="glasses" size={24} color="black" />
+            <Text style={styles.textProfile}>Mi Receta</Text> 
+          </TouchableOpacity> 
+          <TouchableOpacity style={styles.itemProfile} onPress={() => navigation.navigate('ReportErrorScreen')}> 
+            <Feather name="alert-circle" size={24} color="black" />
+            <Text style={styles.textProfile}>Notificar un error</Text> 
+          </TouchableOpacity> 
+          <TouchableOpacity style={styles.itemProfile} onPress={() => navigation.navigate('EditarPerfilCliente')}> 
+            <Feather name="edit" size={24} color="black" />
+            <Text style={styles.textProfile}>Editar Perfil</Text> 
+          </TouchableOpacity> 
         </View>
-    );
+      </View>
+
+      <View style={{ flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'flex-start' }}>
+        <TouchableOpacity style={styles.itemProfile}> 
+          <Feather name="tool" size={24} color="black" />
+          <Text style={styles.textProfile}>Configuración y Soporte</Text> 
+        </TouchableOpacity> 
+        <TouchableOpacity style={styles.itemProfile} onPress={handleLogout}> 
+          <Feather name="log-out" size={24} color="black" />
+          <Text style={styles.textProfile}>Cerrar Sesión</Text> 
+        </TouchableOpacity>
+      </View>
+    </View>
+  );
 }

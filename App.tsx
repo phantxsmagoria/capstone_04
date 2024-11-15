@@ -25,7 +25,6 @@ import OpticaEnvioPendiente from './src/screens/OpticaEnvioPendiente';
 import OpticaEnviado from './src/screens/OpticaEnviado';
 import OpticaReseña from './src/screens/OpticaReseña';
 import OpticaColaPedidos from './src/screens/OpticaColaPedidos';
-import OpticaNotificarError from './src/screens/OpticaNotificarError';
 import OpticaConfiguracion from './src/screens/OpticaConfiguracion';
 import EditarProducto from './src/screens/EditarProducto';
 import EditarPerfilOptica from './src/screens/EditarPerfilOptica';
@@ -33,6 +32,7 @@ import ProductoCliente from './src/screens/ProductoCliente';
 import ClienteRegistroBoletas from './src/screens/ClienteRegistroBoletas';
 import ClienteRegistroPagos from './src/screens/ClienteRegistroPagos';
 import EditarPerfilCliente from './src/screens/EditarPerfilCliente';
+import ReportErrorScreen from './src/screens/ReportErrorScreen';
 
 // Aquí están los roots, siempre hay que declararlos!!!!!!!
 type RootStackParamList = {
@@ -55,7 +55,6 @@ type RootStackParamList = {
   OpticaEnviado: undefined;
   OpticaReseña: undefined;
   OpticaColaPedidos: undefined;
-  OpticaNotificarError: undefined;
   OpticaConfiguracion: undefined;
   EditarPerfilOptica: undefined;
   EditarPerfilCliente: undefined;
@@ -70,6 +69,7 @@ type RootStackParamList = {
     imagenURL: string;
     categoria: string;
   };
+  ReportErrorScreen: undefined;
 };
 
 interface AuthContextType {
@@ -175,7 +175,6 @@ export default function App() {
           <Stack.Screen name="OpticaReseña" component={OpticaReseña} options={{ headerShown: false }} />
           <Stack.Screen name="OpticaEnviado" component={OpticaEnviado} options={{ headerShown: false }} />
           <Stack.Screen name="OpticaColaPedidos" component={OpticaColaPedidos} options={{ headerShown: false }} />
-          <Stack.Screen name="OpticaNotificarError" component={OpticaNotificarError} options={{ headerShown: false }} />
           <Stack.Screen name="OpticaConfiguracion" component={OpticaConfiguracion} options={{ headerShown: false }} />
           <Stack.Screen name="EditarProducto" component={EditarProducto} options={{ headerShown: false }} />
           <Stack.Screen name="EditarPerfilOptica" component={EditarPerfilOptica} options={{ headerShown: false }} />
@@ -183,6 +182,8 @@ export default function App() {
           <Stack.Screen name="ClienteRegistroBoletas" component={ClienteRegistroBoletas} options={{ headerShown: false }} />
           <Stack.Screen name="ClienteRegistroPagos" component={ClienteRegistroPagos} options={{ headerShown: false }} />
           <Stack.Screen name="EditarPerfilCliente" component={EditarPerfilCliente} options={{ headerShown: false }} />
+          <Stack.Screen name="ReportErrorScreen" component={ReportErrorScreen} options={{ headerShown: false }} />
+
         </Stack.Navigator>
       </NavigationContainer>
     </AuthContext.Provider>
