@@ -28,6 +28,7 @@ export default function UserScreen({ navigation }: Props) {
   const [sliderList, setSliderList] = useState<SliderData[]>([]);
   const [userName, setUserName] = useState<string>('Usuario');
   const [productoList, setProductoList] = useState<ProductoData[]>([]);
+  const [searchQuery, setSearchQuery] = useState<string>('');
 
   useEffect(() => {
     GetSliderList();
@@ -100,9 +101,13 @@ export default function UserScreen({ navigation }: Props) {
     }
   };
 
+  const filteredProducts = productoList.filter(product =>
+    product.nombre.toLowerCase().includes(searchQuery.toLowerCase())
+  );
+
   return (
     <FlatList
-      data={productoList}
+      data={filteredProducts}
       numColumns={2}
       columnWrapperStyle={styles.columnWrapper}
       ListHeaderComponent={
@@ -122,7 +127,12 @@ export default function UserScreen({ navigation }: Props) {
             borderRadius: 10,
           }}>
             <Ionicons name="search" size={24} color="white" />
-            <TextInput placeholder='Buscador' style={{ color: '#ffff', fontSize: 16 }} />
+            <TextInput
+              placeholder='Buscador'
+              style={{ color: '#ffff', fontSize: 16 }}
+              value={searchQuery}
+              onChangeText={setSearchQuery}
+            />
           </View>
 
           <FlatList

@@ -87,11 +87,7 @@ const CartScreen: React.FC<Props> = ({ navigation }) => {
         />
         <View style={{ flex: 1 }}>
         <Text style={styles.productTitle}>{item.nombre}</Text>
-                <Text style={styles.productDescription}>{item.descripcion}</Text>
-                <Text style={styles.productPrice}>${item.precio}</Text>
-          <Text style={styles.productPrice}>
-            ${item.precio != null ? item.precio : 'Precio no disponible'}
-          </Text>
+        <Text style={styles.productPrice}>${item.precio}</Text>
         </View>
         <TouchableOpacity
           style={styles.trashButton}
