@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity, Alert } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, Alert, Image } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RouteProp } from '@react-navigation/native';
 import { collection, addDoc } from 'firebase/firestore';
@@ -26,7 +26,7 @@ const ReportErrorScreen: React.FC<Props> = ({ navigation }) => {
   const [description, setDescription] = useState<string>('');
 
   const handleSubmit = async () => {
-    if (!title.trim() || !reportedBy.trim()  || !description.trim()) {
+    if (!title.trim() || !reportedBy.trim() || !description.trim()) {
       Alert.alert('Error', 'Please fill in all the fields.');
       return;
     }
@@ -38,7 +38,7 @@ const ReportErrorScreen: React.FC<Props> = ({ navigation }) => {
         description,
         timestamp: new Date(),
       });
-      Alert.alert('Success', 'Error report submitted successfully.');
+      Alert.alert('Guardado con Éxito', 'Su reporte ha sido guardado con éxito.');
       navigation.goBack();
     } catch (error) {
       console.error('Error submitting error report: ', error);
@@ -48,38 +48,41 @@ const ReportErrorScreen: React.FC<Props> = ({ navigation }) => {
 
   return (
     <View style={styles.fondoView}>
-      
+
       <View>
         <TouchableOpacity style={styles.nomProfile} onPress={() => navigation.navigate('Perfil')}>
           <MaterialIcons name="arrow-back-ios" size={35} color="#FA7929" />
           <Text style={styles.tituloMenusOptica}>Notificar error</Text>
         </TouchableOpacity>
       </View>
-      <View style={styles.container}>
-      <TextInput
-        style={styles.input}
-        placeholder="Titulo"
-        value={title}
-        onChangeText={setTitle}
-      />
-      
-      <TextInput
-        style={styles.input}
-        placeholder="Reportado Por"
-        value={reportedBy}
-        onChangeText={setReportedBy}
-      />
-      
-      <TextInput
-        style={styles.input}
-        placeholder="Descripcion"
-        value={description}
-        onChangeText={setDescription}
-      />
-      
-      <TouchableOpacity style={styles.button} onPress={handleSubmit}>
-        <Text style={styles.buttonText}>Guardar Reporte</Text>
-      </TouchableOpacity>
+      <View style={styles.imagenOpticaContainerEdit}>
+        <Image source={require('../assets/ReportError.png')} style={{ width: 300, height: 300 }} />
+      </View>
+      <View style={styles.containerEdit}>
+        <TextInput
+          style={styles.inputLine}
+          placeholder="Titulo"
+          value={title}
+          onChangeText={setTitle}
+        />
+
+        <TextInput
+          style={styles.inputLine}
+          placeholder="Reportado Por"
+          value={reportedBy}
+          onChangeText={setReportedBy}
+        />
+
+        <TextInput
+          style={styles.inputLine}
+          placeholder="Descripcion"
+          value={description}
+          onChangeText={setDescription}
+        />
+
+        <TouchableOpacity style={styles.button} onPress={handleSubmit}>
+          <Text style={styles.buttonText}>Guardar Reporte</Text>
+        </TouchableOpacity>
       </View>
     </View>
   );
