@@ -4,10 +4,12 @@ import { StackNavigationProp } from '@react-navigation/stack';
 import { RouteProp } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import styles from '../styles/styles';
+import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 
 type RootStackParamList = {
   Pago: undefined;
   DatosCompra: undefined;
+  Carrito: undefined,
 };
 
 type PagoClienteNavigationProp = StackNavigationProp<RootStackParamList, 'Pago'>;
@@ -66,7 +68,12 @@ const PagoCliente: React.FC<Props> = ({ navigation }) => {
 
   return (
     <View style={styles.fondoView2}>
-      <Text style={{fontSize:35, fontWeight: 500, marginTop:60, marginLeft:20, marginBottom: 20,}}>Pagar</Text>
+      <View>
+        <TouchableOpacity style={styles.nomProfile} onPress={() => navigation.navigate('Carrito')}>
+          <MaterialIcons name="arrow-back-ios" size={35} color="#FA7929" />
+          <Text style={styles.tituloMenusOptica}>Pago</Text>
+        </TouchableOpacity>
+      </View>
 
       <FlatList
         data={cartItems}

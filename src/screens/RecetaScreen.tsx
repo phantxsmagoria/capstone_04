@@ -1,4 +1,4 @@
-import { View, Text, TouchableOpacity, ActivityIndicator, TextInput } from 'react-native'
+import { View, Text, TouchableOpacity, ActivityIndicator, TextInput, Alert } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RouteProp } from '@react-navigation/native';
@@ -109,17 +109,45 @@ export default function RecetaScreen({ navigation }: Props) {
       setErrorMessage('Error al crear su receta');
     }
   };
+
+  // Este es para el Alert
+
+    const InfoAlert1 = () => {
+      Alert.alert('Información', 'ESF/ SPH = Esfera\nCLI / CYL = Cilindro\nEJE = Orienteción', [
+        {
+          text: 'Cancel',
+          onPress: () => console.log('Cancel Pressed'),
+          style: 'cancel',
+        },
+        { text: 'OK', onPress: () => console.log('OK Pressed') },
+      ])
+  };
+
+
+    const InfoAlert2 = () => {
+      Alert.alert('Información', 'ADD = Adición\nDP = Distancia Pupilar', [
+        {
+          text: 'Cancel',
+          onPress: () => console.log('Cancel Pressed'),
+          style: 'cancel',
+        },
+        { text: 'OK', onPress: () => console.log('OK Pressed') },
+      ])
+  };
+
   return (
     <View>
       <View>
         <TouchableOpacity style={styles.nomProfile} onPress={() => navigation.navigate('Perfil')}>
-          <MaterialIcons name="arrow-back-ios" size={35} color="#FA7929" /> 
-          <Text style={{ fontSize: 30 }}>Mi Receta</Text> 
+          <MaterialIcons name="arrow-back-ios" size={35} color="#FA7929" />
+          <Text style={{ fontSize: 30 }}>Mi Receta</Text>
         </TouchableOpacity>
       </View>
       <View style={styles.textReceta} >
         <Text style={{ marginLeft: 15, fontSize: 18 }}>OD: Ojo Derecho</Text>
-        <Ionicons name="information-circle-outline" size={30} color="#FA7929" />
+        <TouchableOpacity onPress={InfoAlert1}>
+          <Ionicons name="information-circle-outline" size={30} color="#FA7929" />
+        </TouchableOpacity>
       </View>
 
       <View style={styles.contenedorReceta}>
@@ -147,7 +175,9 @@ export default function RecetaScreen({ navigation }: Props) {
 
       <View style={styles.textReceta}>
         <Text style={{ marginLeft: 15, fontSize: 18 }}>OI: Ojo Izquierdo</Text>
-        <Ionicons name="information-circle-outline" size={30} color="#FA7929" />
+        <TouchableOpacity onPress={InfoAlert1}>
+          <Ionicons name="information-circle-outline" size={30} color="#FA7929" />
+        </TouchableOpacity>
       </View>
       <View style={styles.contenedorReceta}>
 
@@ -173,9 +203,11 @@ export default function RecetaScreen({ navigation }: Props) {
         />
 
       </View>
-      <View>
+
+      <TouchableOpacity onPress={InfoAlert2}>
         <Ionicons style={{ marginLeft: 15, marginTop: 10, marginBottom: -8 }} name="information-circle-outline" size={30} color="#FA7929" />
-      </View>
+      </TouchableOpacity>
+
       <View style={styles.contendorReceta2}>
         <TextInput style={styles.itemReceta2}
           placeholder='ADD'

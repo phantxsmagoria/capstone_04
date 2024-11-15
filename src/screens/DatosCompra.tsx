@@ -3,11 +3,16 @@ import { View, Text, TextInput, TouchableOpacity, Alert, FlatList } from 'react-
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RouteProp } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { collection, addDoc } from 'firebase/firestore';
+import { db, auth } from '../firebaseConfig';
 import styles from '../styles/styles';
+import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 
 type RootStackParamList = {
   Pago: undefined;
   DatosCompra: undefined;
+  ReciboBoletaCliente: undefined;
+  MainTabs: undefined;
 };
 
 type DatosCompraNavigationProp = StackNavigationProp<RootStackParamList, 'DatosCompra'>;
@@ -64,11 +69,28 @@ const DatosCompra: React.FC<Props> = ({ navigation }) => {
       Alert.alert('Error', 'Por favor ingresa tu nombre y una dirección de entrega');
       return;
     }
+    try {
+      await addDoc(collection(db, 'boletacliente'), {
+        name,
+        address,
+        cartItems,
+        totalPrice,
+      });
+      Alert.alert('Guardado con Éxito', 'Su boleta ha sido creada con éxito.');
+    } catch (error) {
+      Alert.alert('Error', 'Hubo un problema al crear su boleta.');
+      console.error('Error con su boleta: ', error);
+    }
   };
 
   return (
     <View style={styles.fondoView2}>
-      <Text style={{fontSize: 35, fontWeight: 500, marginTop: 60, marginLeft: 20}}>Datos de Compra</Text>
+      <View>
+        <TouchableOpacity style={styles.nomProfile} onPress={() => navigation.navigate('Pago')}>
+          <MaterialIcons name="arrow-back-ios" size={35} color="#FA7929" />
+          <Text style={styles.tituloMenusOptica}>Datos de Compra</Text>
+        </TouchableOpacity>
+      </View>
 
       <FlatList
         data={cartItems}
@@ -98,7 +120,8 @@ const DatosCompra: React.FC<Props> = ({ navigation }) => {
           onChangeText={setAddress}
         />
 
-        <TouchableOpacity style={[styles.button, { alignContent: 'center', justifyContent: 'center', marginLeft: 80 }]} onPress={confirmOrder}>
+        <TouchableOpacity style={[styles.button, { alignContent: 'center', justifyContent: 'center', marginLeft: 80 }]} onPress={() => { confirmOrder(); navigation.navigate('MainTabs'); }} >
+
           <Text style={styles.buttonText}>Confirmar Pedido</Text>
         </TouchableOpacity>
       </View>
