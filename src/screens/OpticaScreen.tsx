@@ -107,10 +107,6 @@ export default function OpticaScreen({ navigation }: Props) {
           </TouchableOpacity>
         </View>
         <View style={{ flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'center' }}>
-          <TouchableOpacity style={styles.itemProfile} onPress={() => navigation.navigate('EditarPerfilOptica')}>
-            <Feather name="edit" size={24} color="black" />
-            <Text style={styles.textProfile}>Editar Perfil</Text>
-          </TouchableOpacity>
           <TouchableOpacity style={styles.itemProfile} onPress={() => navigation.navigate('VerProducto')}>
             <FontAwesome5 name="glasses" size={24} color="black" />
             <Text style={styles.textProfile}>Mi catálogo</Text>

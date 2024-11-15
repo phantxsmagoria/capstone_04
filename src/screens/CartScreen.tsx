@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, Image, TouchableOpacity, FlatList, Button, RefreshControl } from 'react-native';
+import { View, Text, Image, TouchableOpacity, FlatList, RefreshControl } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RouteProp } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -10,6 +10,7 @@ type RootStackParamList = {
   Carrito: undefined;
   Usuario: undefined;
   Home: undefined;
+  Pago: undefined; 
 };
 
 type CartScreenNavigationProp = StackNavigationProp<RootStackParamList, 'Carrito'>;
@@ -24,7 +25,7 @@ type CartItem = {
   id: string;
   nombre: string;
   descripcion: string;
-  precio: number | null; // el null es para permitir los valores nulos
+  precio: number | null;
   imagenURL: string | null;
 };
 
@@ -33,20 +34,25 @@ const CartScreen: React.FC<Props> = ({ navigation }) => {
   const [selectedItems, setSelectedItems] = useState<string[]>([]);
   const [refreshing, setRefreshing] = useState<boolean>(false);
 
-  
-    const loadCart = async () => {
-      const uid = await AsyncStorage.getItem('userUID');
-      const savedCart = await AsyncStorage.getItem(`cart_${uid}`);
-      if (savedCart) {
-        const parsedCart = JSON.parse(savedCart);
-        console.log(parsedCart); // Verifica si los datos son correctos
-        setCartItems(parsedCart);
-      }
-    };
+  const loadCart = async () => {
+    const uid = await AsyncStorage.getItem('userUID');
+    const savedCart = await AsyncStorage.getItem(`cart_${uid}`);
+    if (savedCart) {
+      const parsedCart = JSON.parse(savedCart);
+      console.log(parsedCart);
+      setCartItems(parsedCart);
+    }
+  };
 
-    useEffect(() =>{
-    loadCart();
-  }, []);
+  useEffect(() => {
+    const focusListener = navigation.addListener('focus', () => {
+      loadCart();
+    });
+
+    return () => {
+      focusListener();
+    };
+  }, [navigation]);
 
   const onRefresh = async () => {
     setRefreshing(true);
@@ -107,17 +113,16 @@ const CartScreen: React.FC<Props> = ({ navigation }) => {
           </TouchableOpacity>
         )}
         refreshControl={
-          <RefreshControl refreshing={refreshing} onRefresh={onRefresh}/>
+          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
         }
       />
-
 
       <View style={styles.card}>
         <Text style={styles.cardTitle}>Total de Orden</Text>
         <Text style={{ fontSize: 16, marginBottom: 5 }}>Costo de Envío: Gratis</Text>
         <Text style={{ fontSize: 16, marginBottom: 5 }}>Costo Total: ${calculateTotalPrice()}</Text>
         <Text style={{ fontSize: 16, marginBottom: 5 }}>Tiempo de entrega: 10 días hábiles</Text>
-        <TouchableOpacity style={styles.button}>
+        <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Pago')}>
           <Text style={styles.buttonText}>Pagar</Text>
         </TouchableOpacity>
       </View>

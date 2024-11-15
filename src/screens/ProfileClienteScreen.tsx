@@ -89,18 +89,14 @@ export default function ProfileClienteScreen({ navigation }: Props) {
             <Feather name="alert-circle" size={24} color="black" />
             <Text style={styles.textProfile}>Notificar un error</Text> 
           </TouchableOpacity> 
-          <TouchableOpacity style={styles.itemProfile} onPress={() => navigation.navigate('EditarPerfilCliente')}> 
-            <Feather name="edit" size={24} color="black" />
-            <Text style={styles.textProfile}>Editar Perfil</Text> 
-          </TouchableOpacity> 
+          <TouchableOpacity style={styles.itemProfile}> 
+          <Feather name="tool" size={24} color="black" />
+          <Text style={styles.textProfile}>Configuración y Soporte</Text> 
+        </TouchableOpacity> 
         </View>
       </View>
 
       <View style={{ flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'flex-start' }}>
-        <TouchableOpacity style={styles.itemProfile}> 
-          <Feather name="tool" size={24} color="black" />
-          <Text style={styles.textProfile}>Configuración y Soporte</Text> 
-        </TouchableOpacity> 
         <TouchableOpacity style={styles.itemProfile} onPress={handleLogout}> 
           <Feather name="log-out" size={24} color="black" />
           <Text style={styles.textProfile}>Cerrar Sesión</Text> 

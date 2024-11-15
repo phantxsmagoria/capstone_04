@@ -33,6 +33,8 @@ import ClienteRegistroBoletas from './src/screens/ClienteRegistroBoletas';
 import ClienteRegistroPagos from './src/screens/ClienteRegistroPagos';
 import EditarPerfilCliente from './src/screens/EditarPerfilCliente';
 import ReportErrorScreen from './src/screens/ReportErrorScreen';
+import PagoCliente from './src/screens/PagoCliente';  // Importamos la nueva pantalla de pago
+import DatosCompra from './src/screens/DatosCompra';
 
 // Aquí están los roots, siempre hay que declararlos!!!!!!!
 type RootStackParamList = {
@@ -70,6 +72,8 @@ type RootStackParamList = {
     categoria: string;
   };
   ReportErrorScreen: undefined;
+  Pago: undefined;
+  DatosCompra: undefined;
 };
 
 interface AuthContextType {
@@ -183,7 +187,8 @@ export default function App() {
           <Stack.Screen name="ClienteRegistroPagos" component={ClienteRegistroPagos} options={{ headerShown: false }} />
           <Stack.Screen name="EditarPerfilCliente" component={EditarPerfilCliente} options={{ headerShown: false }} />
           <Stack.Screen name="ReportErrorScreen" component={ReportErrorScreen} options={{ headerShown: false }} />
-
+          <Stack.Screen name="Pago" component={PagoCliente} options={{ headerShown: false }} /> 
+          <Stack.Screen name="DatosCompra" component={DatosCompra} options={{ headerShown: false }} /> 
         </Stack.Navigator>
       </NavigationContainer>
     </AuthContext.Provider>

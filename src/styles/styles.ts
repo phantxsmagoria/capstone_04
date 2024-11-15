@@ -365,6 +365,7 @@ export default StyleSheet.create({
         flex: 1,
     justifyContent: 'center',
     },
+
     input: { 
     height: 40, 
     borderColor: 'gray', 
@@ -407,10 +408,10 @@ export default StyleSheet.create({
         
     },
     selectedItem: {
-        backgroundColor: '#ddd', // Color de fondo para items seleccionados
+        backgroundColor: '#ddd', // Color de fondo para items seleccionados, o el hover, como le digas ustds ntp!!
       },
       unselectedItem: {
-        backgroundColor: '#fff', // Color de fondo para items no seleccionados
+        backgroundColor: '#fff', // Color de fondo para items no seleccionados!!!!
       },
 
       // Ajuste imagen optica
@@ -427,16 +428,29 @@ export default StyleSheet.create({
         fontWeight:'semibold'
     },
     // esto es para edit perfil
+
     imagenOpticaContainerEdit: {
         width: '100%', 
         marginTop: 20,
         justifyContent:'center',
         alignItems:'center',
     },
+
     containerEdit: {
         flex:1,
         justifyContent: 'center',
         alignItems: 'center',
         backgroundColor: '#ffffff',
+    },
+
+    tituloPago: {
+        marginTop: 20,
+        marginLeft: 100,
+    },
+
+    fondoView2: {
+        backgroundColor: '#fff',
+        flex: 1,
+        marginTop:30,
     },
 });

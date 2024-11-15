@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, Image, TextInput, FlatList, TouchableOpacity, Alert } from 'react-native';
+import { View, Text, Image, TextInput, FlatList, TouchableOpacity, Alert, Modal, Pressable } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RouteProp } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -29,6 +29,7 @@ export default function UserScreen({ navigation }: Props) {
   const [userName, setUserName] = useState<string>('Usuario');
   const [productoList, setProductoList] = useState<ProductoData[]>([]);
   const [searchQuery, setSearchQuery] = useState<string>('');
+  const [modalVisible, setModalVisible] = useState<boolean>(false);
 
   useEffect(() => {
     GetSliderList();
@@ -94,7 +95,7 @@ export default function UserScreen({ navigation }: Props) {
       let cartItems = savedCart ? JSON.parse(savedCart) : [];
       cartItems.push(product);
       await AsyncStorage.setItem(`cart_${uid}`, JSON.stringify(cartItems));
-      Alert.alert('Éxito', 'Producto agregado al carrito');
+      setModalVisible(true);
     } catch (error) {
       console.error("Error adding product to cart: ", error);
       Alert.alert('Error', 'Hubo un problema al agregar el producto al carrito');
@@ -106,79 +107,100 @@ export default function UserScreen({ navigation }: Props) {
   );
 
   return (
-    <FlatList
-      data={filteredProducts}
-      numColumns={2}
-      columnWrapperStyle={styles.columnWrapper}
-      ListHeaderComponent={
-        <View style={{ padding: 20, marginTop: 20 }}>
-          <Text style={{ fontSize: 20 }}>Hola,</Text>
-          <Text style={{ fontSize: 20 }}>{userName}</Text>
+    <View style={{ flex: 1 }}>
+      <FlatList
+        data={filteredProducts}
+        numColumns={2}
+        columnWrapperStyle={styles.columnWrapper}
+        ListHeaderComponent={
+          <View style={{ padding: 20, marginTop: 20 }}>
+            <Text style={{ fontSize: 20 }}>Hola,</Text>
+            <Text style={{ fontSize: 20 }}>{userName}</Text>
 
-          <View style={{
-            display: 'flex',
-            flexDirection: 'row',
-            gap: 10,
-            alignItems: 'center',
-            backgroundColor: '#FA7929',
-            padding: 10,
-            marginVertical: 10,
-            marginTop: 15,
-            borderRadius: 10,
-          }}>
-            <Ionicons name="search" size={24} color="white" />
-            <TextInput
-              placeholder='Buscador'
-              style={{ color: '#ffff', fontSize: 16 }}
-              value={searchQuery}
-              onChangeText={setSearchQuery}
-            />
-          </View>
-
-          <FlatList
-            data={sliderList}
-            horizontal={true}
-            showsHorizontalScrollIndicator={false}
-            style={{ paddingLeft: 20 }}
-            renderItem={({ item }) =>
-              <Image
-                source={{ uri: item.imageURL }}
-                style={{
-                  width: 300,
-                  height: 160,
-                  borderRadius: 15,
-                  marginRight: 20,
-                  marginTop: 10,
-                }}
+            <View style={{
+              display: 'flex',
+              flexDirection: 'row',
+              gap: 10,
+              alignItems: 'center',
+              backgroundColor: '#FA7929',
+              padding: 10,
+              marginVertical: 10,
+              marginTop: 15,
+              borderRadius: 10,
+            }}>
+              <Ionicons name="search" size={24} color="white" />
+              <TextInput
+                placeholder='Buscador'
+                style={{ color: '#ffff', fontSize: 16 }}
+                value={searchQuery}
+                onChangeText={setSearchQuery}
               />
-            }
-            keyExtractor={(item, index) => index.toString()}
-          />
-        </View>
-      }
-      renderItem={({ item, index }) => {
-        const isLastItem = index === productoList.length - 1;
-        const isOdd = productoList.length % 2 !== 0;
-        return (
-          <View style={[styles.productoContainer, isLastItem && isOdd ? styles.singleColumnItem : {}]}>
-            <Image
-              source={{ uri: item.imagenURL }}
-              style={styles2.productImage}
+            </View>
+
+            <FlatList
+              data={sliderList}
+              horizontal={true}
+              showsHorizontalScrollIndicator={false}
+              style={{ paddingLeft: 20 }}
+              renderItem={({ item }) =>
+                <Image
+                  source={{ uri: item.imageURL }}
+                  style={{
+                    width: 300,
+                    height: 160,
+                    borderRadius: 15,
+                    marginRight: 20,
+                    marginTop: 10,
+                  }}
+                />
+              }
+              keyExtractor={(item, index) => index.toString()}
             />
-            <Text style={styles2.productTitle}>{item.nombre}</Text>
-            <Text>{item.categoria}</Text>
-            <Text style={styles2.productPrice}>${item.precio}</Text>
-            <TouchableOpacity
-              style={styles2.addButton}
-              onPress={() => addToCart(item)}
-            >
-              <Ionicons name="cart" size={24} color="white" />
-              <Text style={styles2.addButtonText}>Agregar al carrito</Text>
-            </TouchableOpacity>
           </View>
-        );
-      }}
-      keyExtractor={(item, index) => index.toString()}
-    />
+        }
+        renderItem={({ item, index }) => {
+          const isLastItem = index === productoList.length - 1;
+          const isOdd = productoList.length % 2 !== 0;
+          return (
+            <View style={[styles.productoContainer, isLastItem && isOdd ? styles.singleColumnItem : {}]}>
+              <Image
+                source={{ uri: item.imagenURL }}
+                style={styles2.productImage}
+              />
+              <Text style={styles2.productTitle}>{item.nombre}</Text>
+              <Text>{item.categoria}</Text>
+              <Text style={styles2.productPrice}>${item.precio}</Text>
+              <TouchableOpacity
+                style={styles2.addButton}
+                onPress={() => addToCart(item)}
+              >
+                <Ionicons name="cart" size={24} color="white" />
+                <Text style={styles2.addButtonText}>Agregar al carrito</Text>
+              </TouchableOpacity>
+            </View>
+          );
+        }}
+        keyExtractor={(item, index) => index.toString()}
+      />
+
+      <Modal
+        transparent={true}
+        animationType="fade"
+        visible={modalVisible}
+        onRequestClose={() => setModalVisible(false)}
+      >
+        <View style={styles2.modalBackground}>
+          <View style={styles2.modalContainer}>
+            <Text style={styles2.modalText}>¡Producto agregado al carrito!</Text>
+            <Pressable
+              style={styles2.modalButton}
+              onPress={() => setModalVisible(false)}
+            >
+              <Text style={styles2.modalButtonText}>OK</Text>
+            </Pressable>
+          </View>
+        </View>
+      </Modal>
+    </View>
   );
 }

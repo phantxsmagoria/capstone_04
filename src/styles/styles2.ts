@@ -131,4 +131,41 @@ export default StyleSheet.create({
           fontWeight: 'bold', 
           marginLeft: 5, 
         },
+        
+    //css popup de UserScreen, no borrar!
+
+    modalBackground: { 
+      flex: 1, 
+      justifyContent: 'center', 
+      alignItems: 'center', 
+    }, 
+    
+    modalContainer: { 
+      width: 300, 
+      padding: 20, 
+      backgroundColor: 'white', 
+      borderRadius: 10, 
+      alignItems: 'center' 
+    }, 
+    
+    modalText: { 
+      fontSize: 18, 
+      color: 'black', 
+      marginBottom: 20, 
+    }, 
+    
+    modalButton: { 
+      backgroundColor: '#FA7929', 
+      padding: 10,
+      borderRadius: 5,
+      width: 50,
+      alignContent: 'center', 
+      justifyContent: 'center',
+    }, 
+    
+    modalButtonText: { 
+      color: 'white', 
+      fontSize: 16, 
+      textAlign:'center',
+    },
 });
