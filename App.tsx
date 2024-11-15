@@ -9,7 +9,6 @@ import { createStackNavigator } from '@react-navigation/stack';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Feather from '@expo/vector-icons/Feather';
 import HomeScreen from './src/screens/HomeScreen';
-import SearchScreen from './src/screens/SearchScreen';
 import CartScreen from './src/screens/CartScreen';
 import UserScreen from './src/screens/UserScreen';
 import RegisterScreen from './src/screens/RegisterScreen';
@@ -43,7 +42,6 @@ type RootStackParamList = {
   RegisterCliente: undefined;
   RegisterOptica: undefined;
   Login: undefined;
-  Buscar: undefined;
   Carrito: undefined;
   Usuario: undefined;
   OpticaHome: undefined;
@@ -92,16 +90,6 @@ function MainTabs() {
         options={{ 
           tabBarIcon: ({ color }) => (
             <Feather name="home" size={24} color={color} />
-          ), 
-          headerShown: false 
-        }} 
-      />
-      <Tab.Screen 
-        name="Buscar" 
-        component={SearchScreen} 
-        options={{ 
-          tabBarIcon: ({ color }) => (
-            <Feather name="search" size={24} color={color} />
           ), 
           headerShown: false 
         }} 

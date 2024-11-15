@@ -14,7 +14,6 @@ import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 
 type RootStackParamList = {
   Usuario: undefined;
-  Buscar: undefined;
   Carrito: undefined;
   Home: undefined;
   OpticaScreen: undefined;

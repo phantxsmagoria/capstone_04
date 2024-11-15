@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, Image, TouchableOpacity, FlatList, Button } from 'react-native';
+import { View, Text, Image, TouchableOpacity, FlatList, Button, RefreshControl } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RouteProp } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -8,7 +8,6 @@ import styles from '../styles/styles';
 
 type RootStackParamList = {
   Carrito: undefined;
-  Buscar: undefined;
   Usuario: undefined;
   Home: undefined;
 };
@@ -32,8 +31,9 @@ type CartItem = {
 const CartScreen: React.FC<Props> = ({ navigation }) => {
   const [cartItems, setCartItems] = useState<CartItem[]>([]);
   const [selectedItems, setSelectedItems] = useState<string[]>([]);
+  const [refreshing, setRefreshing] = useState<boolean>(false);
 
-  useEffect(() => {
+  
     const loadCart = async () => {
       const uid = await AsyncStorage.getItem('userUID');
       const savedCart = await AsyncStorage.getItem(`cart_${uid}`);
@@ -43,8 +43,16 @@ const CartScreen: React.FC<Props> = ({ navigation }) => {
         setCartItems(parsedCart);
       }
     };
+
+    useEffect(() =>{
     loadCart();
   }, []);
+
+  const onRefresh = async () => {
+    setRefreshing(true);
+    await loadCart();
+    setRefreshing(false);
+  };
 
   const toggleSelectItem = (itemId: string) => {
     setSelectedItems((prevSelectedItems) =>
@@ -71,34 +79,37 @@ const CartScreen: React.FC<Props> = ({ navigation }) => {
       <Text style={[styles.title, { textAlign: 'center', marginTop: 0 }]}>Carrito</Text>
 
       <FlatList
-  data={cartItems}
-  keyExtractor={(item, index) => `${item.id}-${index}`}
-  renderItem={({ item }) => (
-    <TouchableOpacity onLongPress={() => toggleSelectItem(item.id)}>
-      <View
-        style={[
-          styles.cartItem,
-          selectedItems.includes(item.id) ? styles.selectedItem : styles.unselectedItem,
-        ]}
-      >
-        <Image
-          source={{ uri: item.imagenURL || 'https://via.placeholder.com/150' }}
-          style={styles.productImage}
-        />
-        <View style={{ flex: 1 }}>
-        <Text style={styles.productTitle}>{item.nombre}</Text>
-        <Text style={styles.productPrice}>${item.precio}</Text>
-        </View>
-        <TouchableOpacity
-          style={styles.trashButton}
-          onPress={() => removeFromCart([item.id])}
-        >
-          <Icon name="trash" size={20} color="#fff" />
-        </TouchableOpacity>
-      </View>
-    </TouchableOpacity>
-  )}
-/>
+        data={cartItems}
+        keyExtractor={(item, index) => `${item.id}-${index}`}
+        renderItem={({ item }) => (
+          <TouchableOpacity onLongPress={() => toggleSelectItem(item.id)}>
+            <View
+              style={[
+                styles.cartItem,
+                selectedItems.includes(item.id) ? styles.selectedItem : styles.unselectedItem,
+              ]}
+            >
+              <Image
+                source={{ uri: item.imagenURL || 'https://via.placeholder.com/150' }}
+                style={styles.productImage}
+              />
+              <View style={{ flex: 1 }}>
+                <Text style={styles.productTitle}>{item.nombre}</Text>
+                <Text style={styles.productPrice}>${item.precio}</Text>
+              </View>
+              <TouchableOpacity
+                style={styles.trashButton}
+                onPress={() => removeFromCart([item.id])}
+              >
+                <Icon name="trash" size={20} color="#fff" />
+              </TouchableOpacity>
+            </View>
+          </TouchableOpacity>
+        )}
+        refreshControl={
+          <RefreshControl refreshing={refreshing} onRefresh={onRefresh}/>
+        }
+      />
 
 
       <View style={styles.card}>
