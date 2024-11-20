@@ -15,6 +15,7 @@ type RootStackParamList = {
     MainTabs: undefined; 
     Usuario: undefined; 
     OpticaScreen: undefined;
+    OlvidarContraseña: undefined; 
 };
 
 type LoginScreenNavigationProp = StackNavigationProp<RootStackParamList, 'Login'>;
@@ -117,7 +118,7 @@ const LoginScreen: React.FC<Props> = ({ navigation }) => {
             <TouchableOpacity style={styles.button} onPress={handleLogin}>
                 <Text style={styles.buttonText}>Iniciar sesión</Text>
             </TouchableOpacity>
-            <TouchableOpacity style={styles.forgotPassword}>
+            <TouchableOpacity style={styles.forgotPassword} onPress={() => navigation?.navigate('OlvidarContraseña')}>
                 <Text style={styles.forgotPasswordText}>¿Olvidaste tu contraseña?</Text>
             </TouchableOpacity>
         </View>

@@ -7,7 +7,7 @@ import styles from '../styles/styles';
 
 type RootStackParamList = {
   Home: { showPopup?: boolean };
-  Register: undefined;
+  Register: undefined; 
   Login: undefined;
   MainTabs: undefined;
   OpticaScreen: undefined;
