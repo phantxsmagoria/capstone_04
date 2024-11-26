@@ -25,7 +25,7 @@ type RootStackParamList = {
   OpticaColaPedidos: undefined;
   OpticaConfiguracion: undefined;
   EditarPerfilOptica: undefined;
-  ReportErrorScreen: undefined;
+  OpticaNotificarError: undefined;
 };
 
 type OpticaScreenNavigationProp = StackNavigationProp<RootStackParamList, 'OpticaScreen'>;
@@ -111,7 +111,7 @@ export default function OpticaScreen({ navigation }: Props) {
             <FontAwesome5 name="glasses" size={24} color="black" />
             <Text style={styles.textProfile}>Mi catálogo</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.itemProfile} onPress={() => navigation.navigate('ReportErrorScreen')}>
+          <TouchableOpacity style={styles.itemProfile} onPress={() => navigation.navigate('OpticaNotificarError')}>
             <Feather name="alert-circle" size={24} color="black" />
             <Text style={styles.textProfile}>Notificar un error</Text>
           </TouchableOpacity>

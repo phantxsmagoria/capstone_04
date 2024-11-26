@@ -37,6 +37,8 @@ import PagoCliente from './src/screens/PagoCliente';  // Importamos la nueva pan
 import DatosCompra from './src/screens/DatosCompra';
 import ReciboBoletaCliente from './src/screens/ReciboBoletaCliente';
 import OlvidarContraseña from './src/screens/OlvidarContraseña';
+import ClienteConfiguracion from './src/screens/ClienteConfiguracion';
+import OpticaNotificarError from './src/screens/OpticaNotificarError';
 
 // Aquí están los roots, siempre hay que declararlos!!!!!!!
 type RootStackParamList = {
@@ -78,6 +80,8 @@ type RootStackParamList = {
   DatosCompra: undefined;
   ReciboBoletaCliente: undefined;
   OlvidarContraseña: undefined;
+  ClienteConfiguracion: undefined;
+  OpticaNotificarError: undefined;
 };
 
 interface AuthContextType {
@@ -195,6 +199,8 @@ export default function App() {
           <Stack.Screen name="DatosCompra" component={DatosCompra} options={{ headerShown: false }} /> 
           <Stack.Screen name="ReciboBoletaCliente" component={ReciboBoletaCliente} options={{ headerShown: false }} />
           <Stack.Screen name="OlvidarContraseña" component={OlvidarContraseña} options={{ headerShown: false }} />
+          <Stack.Screen name="ClienteConfiguracion" component={ClienteConfiguracion} options={{headerShown:false}}/>
+          <Stack.Screen name="OpticaNotificarError" component={OpticaNotificarError} options={{headerShown:false}}/>
         </Stack.Navigator>
       </NavigationContainer>
     </AuthContext.Provider>

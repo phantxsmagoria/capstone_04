@@ -453,4 +453,16 @@ export default StyleSheet.create({
         flex: 1,
         marginTop:30,
     },
+    confi: {
+        padding: 15,
+        backgroundColor: '#f9f9f9',
+        borderRadius: 10,
+        marginBottom: 20,
+        alignItems: 'center',
+    },
+    confiTitle: {
+        fontSize: 16,
+        fontWeight: 'semibold',
+        marginBottom: 10,
+    },
 });

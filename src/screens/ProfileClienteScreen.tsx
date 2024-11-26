@@ -19,6 +19,7 @@ type RootStackParamList = {
   ClienteRegistroPagos: undefined;
   EditarPerfilCliente: undefined;
   ReportErrorScreen: undefined;
+  ClienteConfiguracion: undefined;
 };
 
 type ProfileClienteScreenNavigationProp = StackNavigationProp<RootStackParamList, 'Perfil'>;
@@ -89,7 +90,7 @@ export default function ProfileClienteScreen({ navigation }: Props) {
             <Feather name="alert-circle" size={24} color="black" />
             <Text style={styles.textProfile}>Notificar un error</Text> 
           </TouchableOpacity> 
-          <TouchableOpacity style={styles.itemProfile}> 
+          <TouchableOpacity style={styles.itemProfile} onPress={() => navigation.navigate('ClienteConfiguracion')}> 
           <Feather name="tool" size={24} color="black" />
           <Text style={styles.textProfile}>Configuración y Soporte</Text> 
         </TouchableOpacity> 
