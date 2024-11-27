@@ -465,4 +465,149 @@ export default StyleSheet.create({
         fontWeight: 'semibold',
         marginBottom: 10,
     },
+    // Esto es para Direccion Cliente
+    contendorDireccionCli: {
+        marginTop: 20,
+        marginLeft: 20,
+        alignItems: 'center',
+        width: '90%',
+        height: '24%',
+        borderRadius: 10,
+    },
+    itemDireccionCli: {
+        borderColor: '#EEEFF0',
+        borderWidth: 1, 
+        backgroundColor: '#ffffff',
+        width: '90%',
+        height: 50,
+        margin: 10,
+        textAlign: 'justify',
+        fontWeight: 'semibold',
+        fontSize: 14,   
+        paddingLeft: 10,       
+    },
+
+    // Esto es para la parte del Teléfono
+    telefonoContainer: {
+        flexDirection: 'row',
+        alignItems:'center',
+        width: '90%',
+        borderWidth: 1,
+        borderColor: '#EEEFF0', 
+        borderRadius: 5, 
+        margin: 10, 
+        backgroundColor: '#ffffff',
+    },
+    telefonoIdi:{
+        padding: 15,
+        color:'#888',
+        backgroundColor:'#EEEFF0',
+        borderTopLeftRadius:5,
+        borderBottomLeftRadius: 5,
+    },
+    telefono:{
+        flex:1,
+        height:50,
+        fontSize:14,
+        fontWeight:'semibold',
+        paddingLeft:10,
+    },
+
+    //Esto es para los "iconos" de los números
+    contenedorIcon1: {
+        marginLeft: 5,
+    },
+    containerIcon: {
+        width: 35, 
+        height: 35, 
+        borderRadius: 25, 
+        backgroundColor: '#FA7929', 
+        justifyContent: 'center', 
+        alignItems: 'center', 
+    },
+    numeroIcon: {
+        color: 'white', 
+        fontSize: 20, 
+        fontWeight: 'bold',
+    },
+
+    // esto es para el fondo de direccion cliente
+    fondoView3: {
+        backgroundColor: '#fff',
+        flex: 1,
+        height: 900,
+    },
+
+    // esto es para Pago Cliente
+    textPago:{
+        padding: 5,
+        marginTop: 20,
+        marginLeft: 5,
+        display: 'flex',
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'center',
+        
+    },
+    iconPago: {
+        marginRight: 5,
+        marginTop: 5,
+    },
+    textPagoCli:{
+        paddingTop: 5, 
+        fontSize: 20, 
+        fontWeight: 'semibold', 
+        marginVertical: 10, 
+        paddingHorizontal: 15,
+    },
+    contenedorPagoCli1: {
+        backgroundColor:'#e9ecef',
+        marginTop: 20,
+        marginLeft: 20,
+        alignItems: 'center',
+        width: '90%',
+        height: '16%',
+        borderRadius: 10,
+    },
+    itemPagoCli1: { 
+        backgroundColor: '#ffffff',
+        width: '90%',
+        height: 50,
+        margin: 10,
+        textAlign: 'justify',
+        fontWeight: 'semibold',
+        fontSize: 14,   
+        paddingLeft: 10,       
+    },
+
+    contenedorPagoCli2: {
+        backgroundColor: '#e9ecef',
+        marginTop: 20,
+        marginLeft: 20,
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        width: '90%',
+        height: '16%',
+        borderRadius: 10,
+        flexDirection: 'row',
+        flexWrap: 'wrap',
+    },
+
+    itemPagoCli2: {
+        backgroundColor: '#ffffff',
+        width: 150,
+        height: 50,
+        margin: 10,
+        textAlign: 'center',
+        fontWeight: 'semibold',
+        fontSize: 14,
+    },
+    infoPago:{
+        marginLeft:35,
+        justifyContent:'center',
+    },
+    contenedorCvv:{
+        flexDirection:'row',
+        alignItems:'center',
+    },
 });

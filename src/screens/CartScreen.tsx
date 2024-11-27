@@ -11,6 +11,7 @@ type RootStackParamList = {
   Usuario: undefined;
   Home: undefined;
   Pago: undefined; 
+  DireccionCliente: undefined;
 };
 
 type CartScreenNavigationProp = StackNavigationProp<RootStackParamList, 'Carrito'>;
@@ -122,7 +123,7 @@ const CartScreen: React.FC<Props> = ({ navigation }) => {
         <Text style={{ fontSize: 16, marginBottom: 5 }}>Costo de Envío: Gratis</Text>
         <Text style={{ fontSize: 16, marginBottom: 5 }}>Costo Total: ${calculateTotalPrice()}</Text>
         <Text style={{ fontSize: 16, marginBottom: 5 }}>Tiempo de entrega: 10 días hábiles</Text>
-        <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Pago')}>
+        <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('DireccionCliente')}>
           <Text style={styles.buttonText}>Pagar</Text>
         </TouchableOpacity>
       </View>

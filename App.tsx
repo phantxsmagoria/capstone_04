@@ -39,6 +39,7 @@ import ReciboBoletaCliente from './src/screens/ReciboBoletaCliente';
 import OlvidarContraseña from './src/screens/OlvidarContraseña';
 import ClienteConfiguracion from './src/screens/ClienteConfiguracion';
 import OpticaNotificarError from './src/screens/OpticaNotificarError';
+import DireccionCliente from './src/screens/DireccionCliente';
 
 // Aquí están los roots, siempre hay que declararlos!!!!!!!
 type RootStackParamList = {
@@ -82,6 +83,7 @@ type RootStackParamList = {
   OlvidarContraseña: undefined;
   ClienteConfiguracion: undefined;
   OpticaNotificarError: undefined;
+  DireccionCliente: undefined;
 };
 
 interface AuthContextType {
@@ -201,6 +203,7 @@ export default function App() {
           <Stack.Screen name="OlvidarContraseña" component={OlvidarContraseña} options={{ headerShown: false }} />
           <Stack.Screen name="ClienteConfiguracion" component={ClienteConfiguracion} options={{headerShown:false}}/>
           <Stack.Screen name="OpticaNotificarError" component={OpticaNotificarError} options={{headerShown:false}}/>
+          <Stack.Screen name="DireccionCliente" component={DireccionCliente} options={{headerShown:false}}/>
         </Stack.Navigator>
       </NavigationContainer>
     </AuthContext.Provider>
