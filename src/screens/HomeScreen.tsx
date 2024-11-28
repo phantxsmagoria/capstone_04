@@ -35,6 +35,7 @@ export default function HomeScreen({ navigation, route }: Props) {
 
   return (
     <ImageBackground source={require('../assets/image1.png')} style={styles.fondoHome}>
+    <LinearGradient colors={['rgba(255,255,255,1)', 'rgba(255,255,255,0)']} style={styles.gradient} >
     <View style={styles.overlay}>
       {showPopup && (
         <View style={styles.popup}>
@@ -57,6 +58,7 @@ export default function HomeScreen({ navigation, route }: Props) {
         </TouchableOpacity>
       </View>
     </View>
+    </LinearGradient>
     </ImageBackground>
   );
 }
