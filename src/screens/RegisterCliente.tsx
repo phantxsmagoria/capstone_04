@@ -5,9 +5,10 @@ import { RouteProp } from '@react-navigation/native';
 import { Picker } from '@react-native-picker/picker';
 import styles from '../styles/styles';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import { auth, db } from '../firebaseConfig'; // Importa auth y db desde firebaseConfig
+import { auth, db } from '../firebaseConfig';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
 import { collection, addDoc, query, where, getDocs } from 'firebase/firestore';
+import Popup from '../components/Popup'; // Importa el componente Popup
 
 type RootStackParamList = { Register: undefined; Home: undefined; Login: undefined; };
 type RegisterScreenNavigationProp = StackNavigationProp<RootStackParamList, 'Register'>;
@@ -23,10 +24,17 @@ const RegisterCliente: React.FC<Props> = ({ navigation }) => {
   const [rut, setRut] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
+  const [popupVisible, setPopupVisible] = useState(false);
+  const [popupMessage, setPopupMessage] = useState('');
 
   const days = Array.from({ length: 31 }, (_, i) => (i + 1).toString());
   const months = Array.from({ length: 12 }, (_, i) => (i + 1).toString());
   const years = Array.from({ length: 95 }, (_, i) => (1930 + i).toString());
+
+  const showAlert = (message: string) => {
+    setPopupMessage(message);
+    setPopupVisible(true);
+  };
 
   const validateEmail = async (email: string) => {
     const userQuery = query(collection(db, 'users'), where('email', '==', email));
@@ -52,7 +60,6 @@ const RegisterCliente: React.FC<Props> = ({ navigation }) => {
   };
 
   const validateRUT = (rut: string) => {    
-    // Validación del RUT chileno sin puntos y guion, aceptando entre 8 y 9 caracteres    
     const rutRegex = /^[0-9]{7,8}[0-9kK]$/;    
     if (!rutRegex.test(rut)) return false;    
     const [number, verifier] = [rut.slice(0, -1), rut.slice(-1)];    
@@ -69,24 +76,24 @@ const RegisterCliente: React.FC<Props> = ({ navigation }) => {
 
   const handleRegister = async () => {
     if (password !== confirmPassword) {
-      alert('Las contraseñas no coinciden');
+      showAlert('Las contraseñas no coinciden.');
       return;
     }
     if (!validatePassword(password)) {
-      alert('La contraseña debe tener al menos 12 caracteres, una mayúscula, un símbolo y un número');
+      showAlert('La contraseña debe tener al menos 12 caracteres, una mayúscula, un símbolo y un número.');
       return;
     }
     if (!validateAge(selectedDay, selectedMonth, selectedYear)) {
-      alert('Debes tener al menos 18 años para registrarte');
+      showAlert('Debes tener al menos 18 años para registrarte.');
       return;
     }
     if (!validateRUT(rut)) {
-      alert('El RUT no es válido');
+      showAlert('¡El RUT no es válido!');
       return;
     }
     const emailAvailable = await validateEmail(email);
     if (!emailAvailable) {
-      alert('El correo electrónico ya está registrado');
+      showAlert('¡El correo electrónico ya está registrado!');
       return;
     }
 
@@ -99,25 +106,31 @@ const RegisterCliente: React.FC<Props> = ({ navigation }) => {
         rut,
         birthdate: `${selectedYear}-${selectedMonth}-${selectedDay}`,
       });
-      alert('Registro exitoso');
+      showAlert('Registro exitoso');
       navigation?.navigate('Login');
     } catch (error) {
       if (error instanceof Error) {
         console.error('Error al registrar: ', error.message);
-        alert(`Error al registrar: ${error.message}`);
+        showAlert(`Error al registrar: ${error.message}`);
       } else {
         console.error('Error con registrar: ', error);
-        alert('Error desconocido al registrar');
+        showAlert('Error desconocido al registrar, intenta nuevamente.');
       }
     }
   };
 
   return (
     <View style={styles.container}>
+      <Popup
+        visible={popupVisible}
+        message={popupMessage}
+        onClose={() => setPopupVisible(false)}
+      />
 
-      <TouchableOpacity style={styles.closeButton} onPress={() => navigation?.navigate('Home')}>
+      <TouchableOpacity style={styles.closeButton} onPress={() => navigation?.goBack()}>
         <Icon name="times" size={30} color="#000" />
       </TouchableOpacity>
+
 
       <Text style={styles.titleRegisterClienteNatural}>Regístrate</Text>
 
@@ -166,7 +179,6 @@ const RegisterCliente: React.FC<Props> = ({ navigation }) => {
             <Picker.Item key={month} label={month} value={month} />
           ))}
         </Picker>
-        
         <Picker
           selectedValue={selectedYear}
           style={styles.picker}
