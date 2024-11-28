@@ -610,4 +610,9 @@ export default StyleSheet.create({
         flexDirection:'row',
         alignItems:'center',
     },
+    fondoHome:{
+        flex: 1, 
+        resizeMode: 'cover', 
+        justifyContent: 'center',
+    },
 });

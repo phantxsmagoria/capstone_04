@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, TouchableOpacity, Image } from 'react-native';
+import { View, Text, TouchableOpacity, Image, ImageBackground } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RouteProp } from '@react-navigation/native';
@@ -29,11 +29,12 @@ export default function HomeScreen({ navigation, route }: Props) {
       setShowPopup(true);
       setTimeout(() => {
         setShowPopup(false);
-      }, 3000); // Mostrar el popup por 3 segundos
+      }, 3000); // Mostrar el popup por 3 segundos!!!!
     }
   }, [route.params?.showPopup]);
 
   return (
+    <ImageBackground source={require('../assets/image1.png')} style={styles.fondoHome}>
     <View style={styles.overlay}>
       {showPopup && (
         <View style={styles.popup}>
@@ -56,5 +57,6 @@ export default function HomeScreen({ navigation, route }: Props) {
         </TouchableOpacity>
       </View>
     </View>
+    </ImageBackground>
   );
 }
