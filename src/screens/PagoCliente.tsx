@@ -70,39 +70,6 @@ const PagoCliente: React.FC<Props> = ({ navigation }) => {
   }, [usuarioId]);
 
   const validarNombreTarjeta = (nomT: string): boolean => /^[a-zA-Z\s]+$/.test(nomT);
-  const validarNumeroTarjeta = (numT: string): boolean => /^[0-9]{16}$/.test(numT);
-  const validarDiaTarjeta = (diaT: string): boolean => /^[0-9]{2}$/.test(diaT);
-  const validarMesTarjeta = (mesT: string): boolean => /^[0-9]{2}$/.test(mesT);
-  const validarCvvTarjeta = (cvvT: string): boolean => /^[0-9]{4}$/.test(cvvT);
-
-
-  const loadCart = async () => {
-    const uid = await AsyncStorage.getItem('userUID');
-    const savedCart = await AsyncStorage.getItem(`cart_${uid}`);
-    if (savedCart) {
-      const parsedCart: CartItem[] = JSON.parse(savedCart);
-      console.log('Parsed Cart:', parsedCart);
-      setCartItems(parsedCart);
-      calculateTotals(parsedCart);
-    }
-  };
-
-  useEffect(() => {
-    loadCart();
-  }, []);
-
-  const calculateTotals = (items: CartItem[]) => {
-    let totalPrecio = 0;
-
-    items.forEach(item => {
-      console.log('Item:', item);
-      if (item.precio != null) {
-        totalPrecio += item.precio;
-      }
-    });
-
-    setTotalPrice(totalPrecio);
-  };
 
   const handlePago = async () => {
     if (!nombreTarjeta || !numeroTarjeta || !diaTarjeta || !mesTarjeta || !cvvTarjeta) {
@@ -111,26 +78,30 @@ const PagoCliente: React.FC<Props> = ({ navigation }) => {
     }
 
     if (!validarNombreTarjeta(nombreTarjeta)) {
-      setErrorMessageTarjeta('No se puede ingresar número o carácteres especiales');
+      setErrorMessageTarjeta('No se puede ingresar número o caracteres especiales');
       return;
     }
 
-    if (!validarNumeroTarjeta(numeroTarjeta)) {
-      setErrorMessageTarjeta('Se deben de ingresar los 16 números');
+    if (numeroTarjeta.length !== 16) {
+      setErrorMessageTarjeta('Se deben ingresar 16 números');
       return;
     }
-    if (!validarDiaTarjeta(diaTarjeta)) {
-      setErrorMessageTarjeta('Se debe ingresar máximo dos digitos');
+
+    if (diaTarjeta.length !== 2) {
+      setErrorMessageTarjeta('Se debe ingresar máximo dos dígitos');
       return;
     }
-    if (!validarMesTarjeta(mesTarjeta)) {
-      setErrorMessageTarjeta('Se debe ingresar máximo dos digitos');
+
+    if (mesTarjeta.length !== 2) {
+      setErrorMessageTarjeta('Se debe ingresar máximo dos dígitos');
       return;
     }
-    if (!validarCvvTarjeta(cvvTarjeta)) {
-      setErrorMessageTarjeta('Dependiendo de tu tarjeta se puede ingresar máximo ente 3 a 4 digitos');
+
+    if (cvvTarjeta.length < 3 || cvvTarjeta.length > 4) {
+      setErrorMessageTarjeta('Dependiendo de tu tarjeta, se pueden ingresar de 3 a 4 dígitos');
       return;
     }
+
     try {
       const docRef = doc(db, 'datospagocliente', usuarioId!);
       await setDoc(docRef, {
@@ -142,18 +113,18 @@ const PagoCliente: React.FC<Props> = ({ navigation }) => {
         usuarioId,
       });
       navigation.navigate('DatosCompra');
-      Alert.alert('Éxitosamente', 'Se ha realizado su pago con éxito.');
+      Alert.alert('Éxito', 'Se ha realizado su pago con éxito.');
     } catch (error) {
       Alert.alert('Error', 'Hubo un problema al crear su boleta.');
       console.error('Error con su boleta: ', error);
     }
   };
-  const InfoAlerta = () => {
-    Alert.alert('¿Que es CVV?', 'El CVV es un código de seguridad que se encuentra al reveso de la tarjeta', [
-      { text: 'OK', onPress: () => console.log('OK Pressed') },
-    ])
-  };
 
+  const InfoAlerta = () => {
+    Alert.alert('¿Qué es CVV?', 'El CVV es un código de seguridad que se encuentra al reverso de la tarjeta', [
+      { text: 'OK', onPress: () => console.log('OK Pressed') },
+    ]);
+  };
 
   return (
     <View style={styles.fondoView2}>
@@ -164,49 +135,65 @@ const PagoCliente: React.FC<Props> = ({ navigation }) => {
         </TouchableOpacity>
       </View>
 
-      <View style={styles.textPago} >
+      <View style={styles.textPago}>
         <FontAwesome name="credit-card" size={22} color="black" style={styles.iconPago} />
         <Text style={styles.textPagoCli}>Añadir Tarjeta de Débito / Crédito</Text>
       </View>
 
       <View style={styles.contenedorPagoCli1}>
-        <TextInput style={styles.itemPagoCli1}
+        <TextInput
+          style={styles.itemPagoCli1}
           placeholder='Nombre Titular'
           value={nombreTarjeta}
-          editable={true}
-          onChangeText={(nomT) => { if (validarNombreTarjeta(nomT) || nomT === '') { setNombreTarjeta(nomT); setErrorMessageTarjeta(''); } else { setErrorMessageTarjeta('No se pueden ingresar números o letras.') } }}
+          onChangeText={setNombreTarjeta}
         />
-        <TextInput style={styles.itemPagoCli1}
+        <TextInput
+          style={styles.itemPagoCli1}
           placeholder='Número Tarjeta'
           value={numeroTarjeta}
-          editable={true}
+          onChangeText={(numT) => {
+            const sanitized = numT.replace(/[^0-9]/g, '');
+            setNumeroTarjeta(sanitized);
+          }}
+          keyboardType="numeric"
           maxLength={16}
-          onChangeText={(numT) => { if (validarNumeroTarjeta(numT) || numT === '') { setNumeroTarjeta(numT); setErrorMessageTarjeta(''); } else { setErrorMessageTarjeta('No se pueden ingresar letras o caracteres especiales.') } }}
         />
       </View>
 
       <View style={styles.contenedorPagoCli2}>
-        <TextInput style={styles.itemPagoCli2}
+        <TextInput
+          style={styles.itemPagoCli2}
           placeholder='Día'
           value={diaTarjeta}
-          editable={true}
+          onChangeText={(diaT) => {
+            const sanitized = diaT.replace(/[^0-9]/g, '');
+            setDiaTarjeta(sanitized);
+          }}
+          keyboardType="numeric"
           maxLength={2}
-          onChangeText={(diaT) => { if (validarDiaTarjeta(diaT) || diaT === '') { setDiaTarjeta(diaT); setErrorMessageTarjeta(''); } else { setErrorMessageTarjeta('Solo se pueden ingresar números de máximo 2 caracteres.') } }}
         />
-        <TextInput style={styles.itemPagoCli2}
+        <TextInput
+          style={styles.itemPagoCli2}
           placeholder='Mes'
           value={mesTarjeta}
-          editable={true}
+          onChangeText={(mesT) => {
+            const sanitized = mesT.replace(/[^0-9]/g, '');
+            setMesTarjeta(sanitized);
+          }}
+          keyboardType="numeric"
           maxLength={2}
-          onChangeText={(mesT) => { if (validarMesTarjeta(mesT) || mesT === '') { setMesTarjeta(mesT); setErrorMessageTarjeta(''); } else { setErrorMessageTarjeta('Solo se pueden ingresar números de máximo 2 caracteres.') } }}
         />
         <View style={styles.contenedorCvv}>
-          <TextInput style={styles.itemPagoCli2}
+          <TextInput
+            style={styles.itemPagoCli2}
             placeholder='CVV'
             value={cvvTarjeta}
-            editable={true}
+            onChangeText={(cvvT) => {
+              const sanitized = cvvT.replace(/[^0-9]/g, '');
+              setCvvTarjeta(sanitized);
+            }}
+            keyboardType="numeric"
             maxLength={4}
-            onChangeText={(cvvT) => { if (validarCvvTarjeta(cvvT) || cvvT === '') { setCvvTarjeta(cvvT); setErrorMessageTarjeta(''); } else { setErrorMessageTarjeta('Solo se pueden ingresar números de máximo 3 a 4 caracteres, dependiendo de su tarjeta.') } }}
           />
           <TouchableOpacity onPress={InfoAlerta} style={styles.infoPago}>
             <Ionicons name="information-circle-outline" size={40} color="#FA7929" />
@@ -214,14 +201,14 @@ const PagoCliente: React.FC<Props> = ({ navigation }) => {
         </View>
       </View>
 
-
       <View style={styles.fondoView}>
-        <Text style={{ fontSize: 16, fontWeight: 'bold', marginTop: 20, marginLeft: 20, marginBottom: 20, }}>Total: ${totalPrice}</Text>
-
-        <TouchableOpacity style={[styles.button, { alignContent: 'center', justifyContent: 'center', marginLeft: 80 }]} onPress={(handlePago)}>
+        <Text style={{ fontSize: 16, fontWeight: 'bold', marginTop: 20, marginLeft: 20, marginBottom: 20 }}>Total: ${totalPrice}</Text>
+        <TouchableOpacity
+          style={[styles.button, { alignContent: 'center', justifyContent: 'center', marginLeft: 80 }]}
+          onPress={handlePago}
+        >
           <Text style={styles.buttonText}>Pagar</Text>
         </TouchableOpacity>
-
       </View>
     </View>
   );
