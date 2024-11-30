@@ -109,6 +109,9 @@ const ReseñasClienteScreen: React.FC<Props> = ({ navigation }) => {
   return (
     <View style={{ flex: 1 }}>
       <FlatList
+      style={{
+        height: 850,
+      }}
         data={filteredReviews}
         ListHeaderComponent={
           <View style={{ padding: 20, marginTop: 20 }}>
@@ -132,8 +135,11 @@ const ReseñasClienteScreen: React.FC<Props> = ({ navigation }) => {
             }}>
               
             </View>
+            
           </View>
+          
         }
+        
         renderItem={renderReseña}
         keyExtractor={item => item.id}
         ListEmptyComponent={() => (
@@ -141,9 +147,12 @@ const ReseñasClienteScreen: React.FC<Props> = ({ navigation }) => {
             <Image source={require('../assets/ReseñaOptica.png')} style={styles.emptyImage} />
             <Text style={styles.emptyText}>No tienes reseñas creadas.</Text>
           </View>
+          
         )}
+        
       />
     </View>
+    
   );
 };
 

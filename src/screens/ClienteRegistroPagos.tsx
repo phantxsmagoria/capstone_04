@@ -84,19 +84,27 @@ export default function ClienteRegistroPagos({ navigation }: Props) {
   );
 
   return (
+    
     <View>
+      
       <TouchableOpacity style={styles.nomProfile} onPress={() => navigation.navigate('Perfil')}>
         <MaterialIcons name="arrow-back-ios" size={25} color="#FA7929" />
         <Text style={styles.tituloMenusOptica}>Mis Pagos</Text>
       </TouchableOpacity>
+      
 
       {purchasedProducts.length === 0 ? (
         <View style={styles.imagenOpticaContainer}>
           <Image source={require('../assets/ClientePago.png')} style={{width: 300, height: 300}}/>
           <Text style={styles.textoOptica}>Sin pagos existentes</Text>
+          
         </View>
+        
       ) : (
         <FlatList
+        style={{
+          height: 850,
+        }}
           data={purchasedProducts}
           renderItem={renderItem}
           keyExtractor={item => item.id}
