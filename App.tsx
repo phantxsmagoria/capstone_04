@@ -40,6 +40,10 @@ import OlvidarContraseña from './src/screens/OlvidarContraseña';
 import ClienteConfiguracion from './src/screens/ClienteConfiguracion';
 import OpticaNotificarError from './src/screens/OpticaNotificarError';
 import DireccionCliente from './src/screens/DireccionCliente';
+import AgregarReseñaScreen from './src/screens/AgregarReseñaScreen'; 
+import ReseñasClienteScreen from './src/screens/ReseñasClienteScreen'; 
+
+
 
 // Aquí están los roots, siempre hay que declararlos!!!!!!!
 type RootStackParamList = {
@@ -84,6 +88,8 @@ type RootStackParamList = {
   ClienteConfiguracion: undefined;
   OpticaNotificarError: undefined;
   DireccionCliente: undefined;
+  ReseñasClienteScreen: undefined;
+  AgregarReseñaScreen: { productId: string };
 };
 
 interface AuthContextType {
@@ -204,6 +210,8 @@ export default function App() {
           <Stack.Screen name="ClienteConfiguracion" component={ClienteConfiguracion} options={{headerShown:false}}/>
           <Stack.Screen name="OpticaNotificarError" component={OpticaNotificarError} options={{headerShown:false}}/>
           <Stack.Screen name="DireccionCliente" component={DireccionCliente} options={{headerShown:false}}/>
+          <Stack.Screen name="AgregarReseñaScreen" component={AgregarReseñaScreen} options={{headerShown:false}}/>
+          <Stack.Screen name="ReseñasClienteScreen" component={ReseñasClienteScreen} options={{headerShown:false}}/>
         </Stack.Navigator>
       </NavigationContainer>
     </AuthContext.Provider>

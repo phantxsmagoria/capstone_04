@@ -9,7 +9,7 @@ import { db, auth } from '../firebaseConfig';
 import styles from '../styles/styles';
 import styles2 from '../styles/styles2';
 
-type RootStackParamList = { Usuario: undefined; Buscar: undefined; Carrito: undefined; Home: undefined; ProductoCliente: undefined; };
+type RootStackParamList = { Usuario: undefined; Buscar: undefined; Carrito: undefined; Home: undefined; ProductoCliente: undefined;AgregarReseñaScreen: { productId: string } };
 type UserScreenNavigationProp = StackNavigationProp<RootStackParamList, 'Usuario'>;
 type UserScreenRouteProp = RouteProp<RootStackParamList, 'Usuario'>;
 type Props = { navigation: UserScreenNavigationProp; route: UserScreenRouteProp; };
@@ -177,6 +177,13 @@ export default function UserScreen({ navigation }: Props) {
                 <Ionicons name="cart" size={24} color="white" />
                 <Text style={styles2.addButtonText}>Agregar al carrito</Text>
               </TouchableOpacity>
+              <TouchableOpacity
+              style={styles.editButton}
+              onPress={() => navigation.navigate('AgregarReseñaScreen', { productId: item.id })}
+>
+              <Text style={styles.editButtonText}>Agregar Reseña</Text>
+              </TouchableOpacity>
+
             </View>
           );
         }}

@@ -615,4 +615,20 @@ export default StyleSheet.create({
         resizeMode: 'cover', 
         justifyContent: 'center',
     },
+    // ReseñaCliente
+    pickerContainer: { marginVertical: 20, },
+    label: { fontSize: 18, marginBottom: 10, },
+    reseñaContainer: { padding: 10, borderBottomWidth: 1, borderBottomColor: '#ccc', }, 
+    reseñaTitle: { fontWeight: 'bold', fontSize: 16, }, 
+    emptyContainer: { justifyContent: 'center', alignItems: 'center', marginTop: 20, }, 
+    emptyImage: { width: 200, height: 200, resizeMode: 'contain', }, 
+    emptyText: { marginTop: 20, fontSize: 18, color: '#555', },
+    editButton: { backgroundColor: '#ffcc00', padding: 10, alignItems: 'center', borderRadius: 5, marginTop: 10, }, 
+    editButtonText: { color: '#000', fontSize: 16, },
+    reviewButton: { backgroundColor: '#007BFF', padding: 10, alignItems: 'center', borderRadius: 5, marginTop: 10, }, reviewButtonText: { color: 'white', fontSize: 16, },
+    productContainer: { alignItems: 'center', marginBottom: 20, },
+    starContainer: { flexDirection: 'row', justifyContent: 'center', marginBottom: 20, },
+    cancelButton: { backgroundColor: '#d9534f',fontSize: 14,fontWeight: 'bold', padding: 10, alignItems: 'center', borderRadius: 5, marginTop: 10, }, cancelButtonText: { color: 'white', fontSize: 18, },
+    ratingContainer: { flexDirection: 'row', marginBottom: 10, },
+    
 });
