@@ -21,6 +21,7 @@ type RootStackParamList = {
   ReportErrorScreen: undefined;
   ClienteConfiguracion: undefined;
   ReseñasClienteScreen: undefined;
+  ReseñaProductoScreen:undefined;
 };
 
 type ProfileClienteScreenNavigationProp = StackNavigationProp<RootStackParamList, 'Perfil'>;
@@ -76,39 +77,41 @@ export default function ProfileClienteScreen({ navigation }: Props) {
         <Text style={{padding: 20, fontSize: 25}}>Mis Pedidos</Text>
         <View style={{ flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'center' }}>
           <TouchableOpacity style={styles.itemProfile} onPress={() => navigation.navigate('ClienteRegistroPagos')}> 
-            <Ionicons name="wallet-outline" size={24} color="black" />
+            <Ionicons name="wallet-outline" size={30} color="black" />
             <Text style={styles.textProfile}>Mis Pagos</Text> 
           </TouchableOpacity> 
           <TouchableOpacity style={styles.itemProfile} onPress={() => navigation.navigate('ClienteRegistroBoletas')}> 
-            <Ionicons name="receipt-outline" size={24} color="black" />
+            <Ionicons name="receipt-outline" size={30} color="black" />
             <Text style={styles.textProfile}>Mis Boletas</Text> 
           </TouchableOpacity> 
           <TouchableOpacity style={styles.itemProfile} onPress={() => navigation.navigate('RecetaScreen')}> 
-            <FontAwesome5 name="glasses" size={24} color="black" />
+            <FontAwesome5 name="glasses" size={30} color="black" />
             <Text style={styles.textProfile}>Mi Receta</Text> 
           </TouchableOpacity>
 
-          <TouchableOpacity style={styles.itemProfile} onPress={() => navigation.navigate('ReseñasClienteScreen')}>
-            <Feather name="edit" size={24} color="black" />
-            <Text style={styles.textProfile}>Reseñas</Text>
-          </TouchableOpacity> 
-
+          
           <TouchableOpacity style={styles.itemProfile} onPress={() => navigation.navigate('ReportErrorScreen')}> 
-            <Feather name="alert-circle" size={24} color="black" />
+            <Feather name="alert-circle" size={30} color="black" />
             <Text style={styles.textProfile}>Notificar un error</Text> 
           </TouchableOpacity> 
           <TouchableOpacity style={styles.itemProfile} onPress={() => navigation.navigate('ClienteConfiguracion')}> 
-          <Feather name="tool" size={24} color="black" />
+          <Feather name="tool" size={30} color="black" />
           <Text style={styles.textProfile}>Configuración y Soporte</Text> 
         </TouchableOpacity> 
         </View>
       </View>
 
       <View style={{ flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'flex-start' }}>
+      <TouchableOpacity style={styles.itemProfile} onPress={() => navigation.navigate('ReseñasClienteScreen')}>
+            <Feather name="edit" size={30} color="black" />
+            <Text style={styles.textProfile}>Reseñas</Text>
+          </TouchableOpacity> 
+
         <TouchableOpacity style={styles.itemProfile} onPress={handleLogout}> 
-          <Feather name="log-out" size={24} color="black" />
+          <Feather name="log-out" size={23} color="black" />
           <Text style={styles.textProfile}>Cerrar Sesión</Text> 
         </TouchableOpacity>
+        
       </View>
     </View>
   );

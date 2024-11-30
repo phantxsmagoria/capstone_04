@@ -45,6 +45,7 @@ import ReseñasClienteScreen from './src/screens/ReseñasClienteScreen';
 
 
 
+
 // Aquí están los roots, siempre hay que declararlos!!!!!!!
 type RootStackParamList = {
   MainTabs: undefined;
@@ -90,6 +91,7 @@ type RootStackParamList = {
   DireccionCliente: undefined;
   ReseñasClienteScreen: undefined;
   AgregarReseñaScreen: { productId: string };
+
 };
 
 interface AuthContextType {
@@ -212,6 +214,7 @@ export default function App() {
           <Stack.Screen name="DireccionCliente" component={DireccionCliente} options={{headerShown:false}}/>
           <Stack.Screen name="AgregarReseñaScreen" component={AgregarReseñaScreen} options={{headerShown:false}}/>
           <Stack.Screen name="ReseñasClienteScreen" component={ReseñasClienteScreen} options={{headerShown:false}}/>
+
         </Stack.Navigator>
       </NavigationContainer>
     </AuthContext.Provider>

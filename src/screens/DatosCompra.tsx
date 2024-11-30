@@ -70,18 +70,29 @@ const DatosCompra: React.FC<Props> = ({ navigation }) => {
       return;
     }
     try {
+      const user = auth.currentUser;
+      if (!user) {
+        Alert.alert('Error', 'No se ha iniciado sesión');
+        return;
+      }
+  
       await addDoc(collection(db, 'boletacliente'), {
+        uid: user.uid,
+        email: user.email,
         name,
         address,
-        cartItems,
+        cartItems: cartItems.map(item => ({ ...item, productoId: item.id })), // Incluimos productoId en los items del carrito
         totalPrice,
       });
+  
       Alert.alert('Guardado con Éxito', 'Su boleta ha sido creada con éxito.');
+      navigation.navigate('MainTabs'); // Navegamos a la pantalla de pestañas principales
     } catch (error) {
       Alert.alert('Error', 'Hubo un problema al crear su boleta.');
       console.error('Error con su boleta: ', error);
     }
   };
+  
 
   return (
     <View style={styles.fondoView2}>

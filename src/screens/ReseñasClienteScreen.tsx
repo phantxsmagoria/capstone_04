@@ -14,6 +14,7 @@ type RootStackParamList = {
   SubirReseñaScreen: undefined;
   AgregarReseñaScreen: { productId: string };
   Perfil: undefined;
+  ReseñaProductoScreen: undefined;
 };
 
 type ReseñasClienteScreenNavigationProp = StackNavigationProp<RootStackParamList, 'ReseñasClienteScreen'>;
