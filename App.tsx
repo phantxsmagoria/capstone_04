@@ -80,6 +80,7 @@ type RootStackParamList = {
     precio: number;
     imagenURL: string;
     categoria: string;
+    quantity: number;
   };
   ReportErrorScreen: undefined;
   Pago: undefined;

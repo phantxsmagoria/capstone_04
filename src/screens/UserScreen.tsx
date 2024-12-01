@@ -22,6 +22,7 @@ interface ProductoData {
   precio: number;
   imagenURL: string;
   categoria: string;
+  quantity: number;
 }
 
 export default function UserScreen({ navigation }: Props) {

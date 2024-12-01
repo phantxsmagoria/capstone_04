@@ -740,5 +740,21 @@ export default StyleSheet.create({
         alignContent: 'center',
         height: 0,
     },
+
+    //CartScreen
+    quantityContainer: { 
+        flexDirection: 'row', 
+        alignItems: 'center', 
+        marginTop: 10, 
+    }, 
+    quantityText: { 
+        marginHorizontal: 10, 
+        fontSize: 16, 
+        fontWeight: 'bold', 
+    },
+    stockText: { 
+        marginLeft: 10, 
+        color: 'gray', 
+    },
     
 });

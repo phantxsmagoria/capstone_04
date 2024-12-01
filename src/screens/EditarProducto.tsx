@@ -18,6 +18,7 @@ type RootStackParamList = {
     precio: number;
     imagenURL: string;
     categoria: string;
+    quantity: number;
   };
 };
 
@@ -30,13 +31,23 @@ type Props = {
 };
 
 const EditarProducto: React.FC<Props> = ({ navigation, route }) => {
-  const { id, nombre, descripcion, precio, imagenURL, categoria } = route.params;
+  const { id, nombre, descripcion, precio, imagenURL, categoria, quantity } = route.params;
+
+  // Comprobemos que los parámetros están correctamente pasados
+  console.log('ID:', id);
+  console.log('Nombre:', nombre);
+  console.log('Descripción:', descripcion);
+  console.log('Precio:', precio);
+  console.log('Imagen URL:', imagenURL);
+  console.log('Categoría:', categoria);
+  console.log('Cantidad:', quantity);
 
   const [nombreState, setNombre] = useState(nombre);
   const [descripcionState, setDescripcion] = useState(descripcion);
   const [precioState, setPrecio] = useState(String(precio));
   const [imagenURLState, setImagenURL] = useState(imagenURL);
   const [categoriaState, setCategoria] = useState(categoria);
+  const [quantityState, setQuantity] = useState(String(quantity));
   const [errorMessage, setErrorMessage] = useState('');
   const [successMessage, setSuccessMessage] = useState('');
   const [selectedImage, setSelectedImage] = useState<Asset | null>(null);
@@ -51,20 +62,23 @@ const EditarProducto: React.FC<Props> = ({ navigation, route }) => {
       }
     }
   };
-  const handlePriceChange = (text: string) => { // Permitir solo dígitos y punto decimal 
+
+  const handlePriceChange = (text: string) => { 
     const formattedText = text.replace(/[^0-9.]/g, '');
-
-    // Asegurarse de que solo hay un punto decimal 
     const validText = formattedText.split('.').length > 2 ? formattedText.split('.').slice(0, 2).join('.') : formattedText;
+    setPrecio(validText); 
+  };
 
-    setPrecio(validText); // Actualiza el estado con el texto validado 
-    };
+  const handleQuantityChange = (text: string) => { 
+    const formattedText = text.replace(/[^0-9]/g, '');
+    setQuantity(formattedText); 
+  };
 
   const handleUpdateProduct = async () => {
     setErrorMessage('');
     setSuccessMessage('');
 
-    if (!nombreState || !descripcionState || !precioState || !imagenURLState || !categoriaState) {
+    if (!nombreState || !descripcionState || !precioState || !imagenURLState || !categoriaState || !quantityState) {
       setErrorMessage('Todos los campos son obligatorios.');
       return;
     }
@@ -77,6 +91,7 @@ const EditarProducto: React.FC<Props> = ({ navigation, route }) => {
         precio: parseFloat(precioState),
         imagenURL: imagenURLState,
         categoria: categoriaState,
+        quantity: parseInt(quantityState),
       });
       setSuccessMessage('Producto actualizado con éxito.');
       navigation.goBack();  // Regresa a la pantalla anterior después de actualizar el producto
@@ -105,7 +120,7 @@ const EditarProducto: React.FC<Props> = ({ navigation, route }) => {
         marginBottom: 50,
         color: '#000',
         marginLeft: 30,
-      }}>Añadir nuevo producto</Text>
+      }}>Editar producto</Text>
       <TextInput
         placeholder="Nombre del producto"
         style={styles.inputLine}
@@ -118,8 +133,6 @@ const EditarProducto: React.FC<Props> = ({ navigation, route }) => {
         value={descripcionState}
         onChangeText={setDescripcion}
       />
-
-      
       <TextInput
         placeholder="Precio del producto"
         style={styles.inputLine}
@@ -127,10 +140,17 @@ const EditarProducto: React.FC<Props> = ({ navigation, route }) => {
         value={precioState}
         onChangeText={handlePriceChange}
       />
+      <TextInput
+        placeholder="Cantidad"
+        style={styles.inputLine}
+        keyboardType="numeric"
+        value={quantityState}
+        onChangeText={handleQuantityChange}
+      />
       <Text>Categorias</Text>
       <Text> </Text>
       <Picker
-        selectedValue={categoria}
+        selectedValue={categoriaState}
         style={styles.inputLine}
         onValueChange={(itemValue) => setCategoria(itemValue)}
       >
@@ -139,7 +159,6 @@ const EditarProducto: React.FC<Props> = ({ navigation, route }) => {
         <Picker.Item label="Lentes de sol" value="Lentes de sol" />
         <Picker.Item label="Otros" value="Otros" />
       </Picker>
-
       <TouchableOpacity style={styles.button} onPress={pickImage}>
         <Text style={styles.buttonText}>Seleccionar Imagen</Text>
       </TouchableOpacity>
@@ -149,7 +168,6 @@ const EditarProducto: React.FC<Props> = ({ navigation, route }) => {
           style={{ width: 200, height: 200, marginVertical: 20 }}
         />
       )}
-
       {errorMessage ? <Text style={styles.errorText}>{errorMessage}</Text> : null}
       {successMessage ? <Text style={styles.successText}>{successMessage}</Text> : null}
       <TouchableOpacity style={styles.button} onPress={handleUpdateProduct}>
