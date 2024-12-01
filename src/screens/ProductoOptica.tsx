@@ -1,13 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity, Image, Alert } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, Image } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RouteProp } from '@react-navigation/native';
 import { auth, db } from '../firebaseConfig';
 import { collection, addDoc, query, where, getDocs } from 'firebase/firestore';
 import { launchImageLibrary, Asset } from 'react-native-image-picker';
-import styles from '../styles/styles';
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
-import styles2 from '../styles/styles2';
 import { Picker } from '@react-native-picker/picker';
 
 type RootStackParamList = {
@@ -31,6 +29,7 @@ type Product = {
   precio: number;
   imagenURL: string;
   categoria: string;
+  quantity: number;
 };
 
 export default function ProductoOptica({ navigation }: Props) {
@@ -39,6 +38,7 @@ export default function ProductoOptica({ navigation }: Props) {
   const [precio, setPrecio] = useState('');
   const [imagenURL, setImagenURL] = useState('');
   const [categoria, setCategoria] = useState('Marcos');
+  const [quantity, setQuantity] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
   const [successMessage, setSuccessMessage] = useState('');
   const [products, setProducts] = useState<Product[]>([]);
@@ -62,8 +62,8 @@ export default function ProductoOptica({ navigation }: Props) {
     if (result.assets) {
       const image = result.assets[0];
       if (image.uri) {
-        setSelectedImage(image); // Guardamos el objeto de la imagen seleccionada
-        setImagenURL(image.uri); // Guardamos la URI de la imagen seleccionada
+        setSelectedImage(image);
+        setImagenURL(image.uri);
       }
     }
   };
@@ -72,7 +72,7 @@ export default function ProductoOptica({ navigation }: Props) {
     setErrorMessage('');
     setSuccessMessage('');
 
-    if (!nombre || !descripcion || !precio || !imagenURL || !categoria) {
+    if (!nombre || !descripcion || !precio || !imagenURL || !categoria || !quantity) {
       setErrorMessage('Todos los campos son obligatorios.');
       return;
     }
@@ -84,7 +84,8 @@ export default function ProductoOptica({ navigation }: Props) {
         precio: parseFloat(precio),
         imagenURL,
         categoria,
-        usuarioId: auth.currentUser?.uid, // Asegúrate de que el usuario está autenticado
+        quantity: parseInt(quantity),
+        usuarioId: auth.currentUser?.uid, 
       });
       const newProduct = {
         id: docRef.id,
@@ -93,6 +94,7 @@ export default function ProductoOptica({ navigation }: Props) {
         precio: parseFloat(precio),
         imagenURL,
         categoria,
+        quantity: parseInt(quantity),
         usuarioId: auth.currentUser?.uid,
       };
       setProducts([...products, newProduct]);
@@ -102,6 +104,7 @@ export default function ProductoOptica({ navigation }: Props) {
       setPrecio('');
       setImagenURL('');
       setCategoria('Marcos');
+      setQuantity('');
       setSelectedImage(null);
     } catch (error) {
       console.error('Error añadiendo producto: ', error);
@@ -117,74 +120,74 @@ export default function ProductoOptica({ navigation }: Props) {
     setPrecio(validText);
   };
 
+  const handleQuantityChange = (text: string) => {
+    const formattedText = text.replace(/[^0-9]/g, '');
+    setQuantity(formattedText);
+  };
+
   return (
-    <View style={styles2.container}>
-      <TouchableOpacity style={{
-        position: 'absolute',
-        top: 21.5,
-        left: 0.2,
-        padding: 20,
-        display: 'flex',
-        flexDirection: 'row',
-        alignItems: 'center',
-      }} onPress={() => navigation.navigate('VerProducto')}>
+    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: '#fff', marginTop: -200 }}>
+      <TouchableOpacity onPress={() => navigation.navigate('VerProducto')} style={{ alignSelf: 'flex-start', marginLeft: 10, marginBottom: -30 }}>
         <MaterialIcons name="arrow-back-ios" size={30} color="#FA7929" />
       </TouchableOpacity>
-      <Text style={{
-        fontSize: 30,
-        marginTop: 20,
-        marginBottom: 50,
-        color: '#000',
-        marginLeft: 30,
-      }}>Añadir nuevo producto</Text>
-      <TextInput
-        placeholder="Nombre del producto"
-        style={styles.inputLine}
-        placeholderTextColor="#aaa"
-        value={nombre}
-        onChangeText={setNombre}
-      />
-      <TextInput
-        placeholder="Descripción del producto"
-        style={styles.inputLine}
-        placeholderTextColor="#aaa"
-        value={descripcion}
-        onChangeText={setDescripcion}
-      />
-      <TextInput
-        placeholder="Precio del producto"
-        style={styles.inputLine}
-        keyboardType="numeric"
-        placeholderTextColor="#aaa"
-        value={precio}
-        onChangeText={handlePriceChange}
-      />
-      <Text>Categorias</Text>
-      <Text> </Text>
-      <Picker
-        selectedValue={categoria}
-        style={styles.inputLine}
-        onValueChange={(itemValue) => setCategoria(itemValue)}
-      >
-        <Picker.Item label="Marcos" value="Marcos" />
-        <Picker.Item label="Cristales" value="Cristales" />
-        <Picker.Item label="Lentes de sol" value="Lentes de sol" />
-        <Picker.Item label="Otros" value="Otros" />
-      </Picker>
-      {errorMessage ? <Text style={styles.errorText}>{errorMessage}</Text> : null}
-      {successMessage ? <Text style={styles.successText}>{successMessage}</Text> : null}
-      <TouchableOpacity style={styles.button} onPress={pickImage}>
-        <Text style={styles.buttonText}>Seleccionar Imagen</Text>
-      </TouchableOpacity>
-      {selectedImage && (
-        <Image
-          source={{ uri: selectedImage.uri }}
-          style={{ width: 200, height: 200, marginVertical: 20 }}
+      <Text style={{ fontSize: 25, marginRight: 90, paddingBottom: 100 }}>Añadir nuevo producto</Text>
+      <View style={{ alignItems: 'center', width: '85%' }}>
+        <TextInput
+          placeholder="Nombre del producto"
+          style={{ height: 30, borderBottomColor: '#FA7929', borderBottomWidth: 1, marginBottom: 30, backgroundColor: 'transparent', fontSize: 12, width: '100%' }}
+          placeholderTextColor="#aaa"
+          value={nombre}
+          onChangeText={setNombre}
         />
-      )}
-      <TouchableOpacity style={styles.button} onPress={handleAddProduct}>
-        <Text style={styles.buttonText}>Añadir Producto</Text>
-      </TouchableOpacity>
+        <TextInput
+          placeholder="Descripción del producto"
+          style={{ height: 30, borderBottomColor: '#FA7929', borderBottomWidth: 1, marginBottom: 30, backgroundColor: 'transparent', fontSize: 12, width: '100%' }}
+          placeholderTextColor="#aaa"
+          value={descripcion}
+          onChangeText={setDescripcion}
+        />
+        <TextInput
+          placeholder="Precio del producto"
+          style={{ height: 30, borderBottomColor: '#FA7929', borderBottomWidth: 1, marginBottom: 30, backgroundColor: 'transparent', fontSize: 12, width: '100%' }}
+          keyboardType="numeric"
+          placeholderTextColor="#aaa"
+          value={precio}
+          onChangeText={handlePriceChange}
+        />
+        <TextInput
+          placeholder="Cantidad en stock"
+          style={{ height: 30, borderBottomColor: '#FA7929', borderBottomWidth: 1, marginBottom: 30, backgroundColor: 'transparent', fontSize: 12, width: '100%' }}
+          keyboardType="numeric"
+          placeholderTextColor="#aaa"
+          value={quantity}
+          onChangeText={handleQuantityChange}
+        />
+        <Text style={{ textAlign: 'left', width: '100%', marginBottom: 10 }}>Categorías</Text>
+        <Picker
+          selectedValue={categoria}
+          style={{ height: 30, borderBottomColor: '#FA7929', borderBottomWidth: 1, marginBottom: 30, backgroundColor: 'transparent', fontSize: 12, width: '100%' }}
+          onValueChange={(itemValue) => setCategoria(itemValue)}
+        >
+          <Picker.Item label="Marcos" value="Marcos" />
+          <Picker.Item label="Cristales" value="Cristales" />
+          <Picker.Item label="Lentes de sol" value="Lentes de sol" />
+          <Picker.Item label="Otros" value="Otros" />
+        </Picker>
+        <TouchableOpacity style={{ width: '63%', height: 40, backgroundColor: '#FA7929', justifyContent: 'center', alignItems: 'center', borderRadius: 4, marginTop: 10 }} onPress={pickImage}>
+          <Text style={{ color: '#fff', fontSize: 14, fontWeight: 'bold' }}>Seleccionar Imagen</Text>
+        </TouchableOpacity>
+        {selectedImage && (
+          <Image
+            source={{ uri: selectedImage.uri }}
+            style={{ width: 200, height: 200, marginVertical: 20 }}
+          />
+        )}
+        <TouchableOpacity style={{ width: '63%', height: 40, backgroundColor: '#FA7929', justifyContent: 'center', alignItems: 'center', borderRadius: 4, marginTop: 10 }} onPress={handleAddProduct}>
+          <Text style={{ color: '#fff', fontSize: 14, fontWeight: 'bold' }}>Añadir Producto</Text>
+        </TouchableOpacity>
+        {errorMessage ? <Text style={{ color: 'red', marginTop: 10, textAlign: 'center' }}>{errorMessage}</Text> : null}
+        {successMessage ? <Text style={{ color: 'green', fontSize: 16, fontWeight: 'bold', textAlign: 'center', marginVertical: 10 }}>{successMessage}</Text> : null}
+      </View>
     </View>
   );
 }

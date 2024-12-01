@@ -7,6 +7,7 @@ export default StyleSheet.create({
         alignItems: 'center',
         backgroundColor: '#ffffff',
     },
+    
     title: {
         fontSize: 28,
         fontWeight: 'bold',
@@ -245,7 +246,6 @@ export default StyleSheet.create({
     // Style Perfil de usuario
     nomProfile: {
         padding: 20, 
-        marginTop: 60,
         display: 'flex',
         flexDirection: 'row',
         alignItems: 'center',
@@ -254,6 +254,11 @@ export default StyleSheet.create({
 
     tituloMenusOptica: {
         fontSize:25,
+        flex: 1,
+    },
+    tituloMenusOptica2: {
+        fontSize:25,
+        marginTop:10,
     },
 
     filasMenu:{
@@ -363,7 +368,7 @@ export default StyleSheet.create({
     },
     cargardatosreceta: {
         flex: 1,
-    justifyContent: 'center',
+        justifyContent: 'center',
     },
 
     input: { 
@@ -390,6 +395,7 @@ export default StyleSheet.create({
     columnWrapper:{
         justifyContent: 'space-between'
     },
+
     productoContainer: {
         flex: 1, 
         padding: 10, 
@@ -403,16 +409,18 @@ export default StyleSheet.create({
         shadowRadius: 3.5, 
         elevation: 5,
     },
+
     singleColumnItem: {
-        flex: 0.5,
-        
+        flex: 0.5,        
     },
+
     selectedItem: {
         backgroundColor: '#ddd', // Color de fondo para items seleccionados, o el hover, como le digas ustds ntp!!
       },
-      unselectedItem: {
+
+    unselectedItem: {
         backgroundColor: '#fff', // Color de fondo para items no seleccionados!!!!
-      },
+    },
 
       // Ajuste imagen optica
     imagenOpticaContainer: {
@@ -421,6 +429,7 @@ export default StyleSheet.create({
         justifyContent: 'center', 
         alignItems: 'center', 
     },
+
     textoOptica:{
         textAlign:'center', 
         fontSize: 18, 
@@ -453,6 +462,7 @@ export default StyleSheet.create({
         flex: 1,
         marginTop:30,
     },
+    
     confi: {
         padding: 15,
         backgroundColor: '#f9f9f9',
@@ -460,11 +470,13 @@ export default StyleSheet.create({
         marginBottom: 20,
         alignItems: 'center',
     },
+
     confiTitle: {
         fontSize: 16,
         fontWeight: 'semibold',
         marginBottom: 10,
     },
+
     // Esto es para Direccion Cliente
     contendorDireccionCli: {
         marginTop: 20,
@@ -474,6 +486,7 @@ export default StyleSheet.create({
         height: '24%',
         borderRadius: 10,
     },
+
     itemDireccionCli: {
         borderColor: '#EEEFF0',
         borderWidth: 1, 
@@ -498,6 +511,7 @@ export default StyleSheet.create({
         margin: 10, 
         backgroundColor: '#ffffff',
     },
+
     telefonoIdi:{
         padding: 15,
         color:'#888',
@@ -517,6 +531,7 @@ export default StyleSheet.create({
     contenedorIcon1: {
         marginLeft: 5,
     },
+
     containerIcon: {
         width: 35, 
         height: 35, 
@@ -549,10 +564,12 @@ export default StyleSheet.create({
         justifyContent: 'center',
         
     },
+
     iconPago: {
         marginRight: 5,
         marginTop: 5,
     },
+
     textPagoCli:{
         paddingTop: 5, 
         fontSize: 20, 
@@ -560,6 +577,7 @@ export default StyleSheet.create({
         marginVertical: 10, 
         paddingHorizontal: 15,
     },
+
     contenedorPagoCli1: {
         backgroundColor:'#e9ecef',
         marginTop: 20,
@@ -602,33 +620,125 @@ export default StyleSheet.create({
         fontWeight: 'semibold',
         fontSize: 14,
     },
+     
     infoPago:{
         marginLeft:35,
         justifyContent:'center',
     },
+
     contenedorCvv:{
         flexDirection:'row',
         alignItems:'center',
     },
+
     fondoHome:{
         flex: 1, 
         resizeMode: 'cover', 
         justifyContent: 'center',
     },
+
     // ReseñaCliente
-    pickerContainer: { marginVertical: 20, },
-    label: { fontSize: 18, marginBottom: 10, },
-    reseñaContainer: { padding: 10, borderBottomWidth: 1, borderBottomColor: '#ccc', }, 
-    reseñaTitle: { fontWeight: 'bold', fontSize: 16, }, 
-    emptyContainer: { justifyContent: 'center', alignItems: 'center', marginTop: 20, }, 
-    emptyImage: { width: 200, height: 200, resizeMode: 'contain', }, 
-    emptyText: { marginTop: 20, fontSize: 18, color: '#555', },
-    editButton: { backgroundColor: '#ffcc00', padding: 10, alignItems: 'center', borderRadius: 5, marginTop: 10, }, 
-    editButtonText: { color: '#000', fontSize: 16, },
-    reviewButton: { backgroundColor: '#007BFF', padding: 10, alignItems: 'center', borderRadius: 5, marginTop: 10, }, reviewButtonText: { color: 'white', fontSize: 16, },
-    productContainer: { alignItems: 'center', marginBottom: 20, },
-    starContainer: { flexDirection: 'row', justifyContent: 'center', marginBottom: 20, },
-    cancelButton: { backgroundColor: '#d9534f',fontSize: 14,fontWeight: 'bold', padding: 10, alignItems: 'center', borderRadius: 5, marginTop: 10, }, cancelButtonText: { color: 'white', fontSize: 18, },
-    ratingContainer: { flexDirection: 'row', marginBottom: 10, },
+    pickerContainer: { 
+        marginVertical: 20, 
+    },
+
+    label: { 
+        fontSize: 18, 
+        marginBottom: 10, 
+    },
+
+    reseñaContainer: { 
+        padding: 10, 
+        borderBottomWidth: 1, 
+        borderBottomColor: '#ccc', 
+    }, 
+
+    reseñaTitle: { 
+        fontWeight: 'bold', 
+        fontSize: 16, 
+    }, 
+
+    emptyContainer: { 
+        justifyContent: 'center', 
+        alignItems: 'center', 
+        marginTop: 20, 
+    }, 
+
+    emptyImage: { 
+        width: 200, 
+        height: 200, 
+        resizeMode: 'contain', 
+    }, 
+
+    emptyText: { 
+        marginTop: 20, 
+        fontSize: 18, 
+        color: '#555', 
+    },
+
+    editButton: { 
+        backgroundColor: '#ffcc00', 
+        padding: 10, 
+        alignItems: 'center', 
+        borderRadius: 5, 
+        marginTop: 10, 
+    },
+
+    editButtonText: { 
+        color: '#000', 
+        fontSize: 16, 
+    },
+
+    reviewButton: { 
+        backgroundColor: '#007BFF', 
+        padding: 10, 
+        alignItems: 'center', 
+        borderRadius: 5, 
+        marginTop: 10, 
+    },
+
+    reviewButtonText: { 
+        color: 'white', 
+        fontSize: 16, 
+    },
+
+    productContainer: { 
+        alignItems: 'center', 
+        marginBottom: 20, 
+    },
+
+    starContainer: { 
+        flexDirection: 'row', 
+        justifyContent: 'center', 
+        marginBottom: 20, 
+    },
+
+    cancelButton: { 
+        backgroundColor: '#d9534f',
+        fontSize: 14,
+        fontWeight: 'bold', 
+        padding: 10, 
+        alignItems: 'center', 
+        borderRadius: 5, 
+        marginTop: 10, 
+    },
+
+    cancelButtonText: { 
+        color: 'white', 
+        fontSize: 18, 
+    },
+
+    ratingContainer: { 
+        flexDirection: 'row', 
+        marginBottom: 10, 
+    },
+
+    fondoAgregarProducto: {
+        backgroundColor: '#fff',
+        flex: 1,
+        justifyContent: 'center',
+        alignContent: 'center',
+        height: 0,
+    },
     
 });

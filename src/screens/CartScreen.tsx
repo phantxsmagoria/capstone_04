@@ -83,7 +83,7 @@ const CartScreen: React.FC<Props> = ({ navigation }) => {
 
   return (
     <View style={{ flex: 1, justifyContent: 'space-between', padding: 20, paddingTop: 40 }}>
-      <Text style={[styles.title, { textAlign: 'center', marginTop: 0 }]}>Carrito</Text>
+      <Text style={[styles.title, { textAlign: 'center', marginTop: 0, marginBottom: 20, }]}>Carrito</Text>
 
       <FlatList
         data={cartItems}
@@ -119,9 +119,9 @@ const CartScreen: React.FC<Props> = ({ navigation }) => {
       />
 
       <View style={styles.card}>
-        <Text style={styles.cardTitle}>Total de Orden</Text>
+        <Text style={styles.cardTitle}>Orden total</Text>
         <Text style={{ fontSize: 16, marginBottom: 5 }}>Costo de Envío: Gratis</Text>
-        <Text style={{ fontSize: 16, marginBottom: 5 }}>Costo Total: ${calculateTotalPrice()}</Text>
+        <Text style={{ fontSize: 16, marginBottom: 5,fontWeight:'bold', }}>Costo Total: ${calculateTotalPrice()}</Text>
         <Text style={{ fontSize: 16, marginBottom: 5 }}>Tiempo de entrega: 10 días hábiles</Text>
         <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('DireccionCliente')}>
           <Text style={styles.buttonText}>Pagar</Text>
