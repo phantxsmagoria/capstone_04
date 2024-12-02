@@ -104,8 +104,9 @@ export default function UserScreen({ navigation }: Props) {
   };
 
   const filteredProducts = productoList.filter(product =>
-    product.nombre.toLowerCase().includes(searchQuery.toLowerCase())
+    product.nombre.toLowerCase().includes(searchQuery.toLowerCase()) && product.quantity > 0
   );
+  
   
 
   return (
