@@ -131,7 +131,7 @@ const CartScreen: React.FC<Props> = ({ navigation }) => {
         await updateDoc(productRef, { quantity: item.maxQuantity - item.quantity });
       }
       // Aquí puedes navegar a la pantalla de pago o mostrar un mensaje de confirmación
-      navigation.navigate('Pago');
+      navigation.navigate('DireccionCliente');
     } catch (error) {
       console.error('Error al confirmar el pedido:', error);
       // Muestra un mensaje de error al usuario
