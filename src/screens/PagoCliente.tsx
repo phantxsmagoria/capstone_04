@@ -15,7 +15,6 @@ type RootStackParamList = {
   DatosCompra: undefined;
   Carrito: undefined,
   MainTabs: undefined;
-  DireccionCliente: undefined;
 };
 
 type PagoClienteNavigationProp = StackNavigationProp<RootStackParamList, 'Pago'>;
@@ -26,18 +25,8 @@ type Props = {
   route: PagoClienteRouteProp;
 };
 
-type CartItem = {
-  id: string;
-  nombre: string;
-  descripcion: string;
-  precio: number | null;
-  imagenURL: string | null;
-  quantity: number;
-};
 
 const PagoCliente: React.FC<Props> = ({ navigation }) => {
-  const [cartItems, setCartItems] = useState<CartItem[]>([]);
-  const [totalPrice, setTotalPrice] = useState<number>(0);
   const [nombreTarjeta, setNombreTarjeta] = useState('');
   const [numeroTarjeta, setNumeroTarjeta] = useState('');
   const [diaTarjeta, setDiaTarjeta] = useState('');
@@ -129,7 +118,7 @@ const PagoCliente: React.FC<Props> = ({ navigation }) => {
   return (
     <View style={styles.fondoView2}>
       <View>
-        <TouchableOpacity style={styles.nomProfile} onPress={() => navigation.navigate('DireccionCliente')}>
+        <TouchableOpacity style={styles.nomProfile} onPress={() => navigation.navigate('Carrito')}>
           <MaterialIcons name="arrow-back-ios" size={35} color="#FA7929" />
           <Text style={styles.tituloMenusOptica}>Pago</Text>
         </TouchableOpacity>
@@ -202,7 +191,6 @@ const PagoCliente: React.FC<Props> = ({ navigation }) => {
       </View>
 
       <View style={styles.fondoView}>
-        <Text style={{ fontSize: 16, fontWeight: 'bold', marginTop: 20, marginLeft: 20, marginBottom: 20 }}>Total: ${totalPrice}</Text>
         <TouchableOpacity
           style={[styles.button, { alignContent: 'center', justifyContent: 'center', marginLeft: 80 }]}
           onPress={handlePago}

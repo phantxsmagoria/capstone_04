@@ -41,7 +41,8 @@ import ClienteConfiguracion from './src/screens/ClienteConfiguracion';
 import OpticaNotificarError from './src/screens/OpticaNotificarError';
 import DireccionCliente from './src/screens/DireccionCliente';
 import AgregarReseñaScreen from './src/screens/AgregarReseñaScreen'; 
-import ReseñasClienteScreen from './src/screens/ReseñasClienteScreen'; 
+import ReseñasClienteScreen from './src/screens/ReseñasClienteScreen';
+import CompartirReceta from './src/screens/CompartirReceta'; 
 
 type RootStackParamList = {
   MainTabs: undefined;
@@ -88,6 +89,7 @@ type RootStackParamList = {
   DireccionCliente: undefined;
   ReseñasClienteScreen: undefined;
   AgregarReseñaScreen: { productId: string };
+  Compartir: undefined;
 };
 
 interface AuthContextType {
@@ -119,6 +121,16 @@ function MainTabs() {
         options={{ 
           tabBarIcon: ({ color }) => (
             <Feather name="shopping-cart" size={24} color={color} />
+          ), 
+          headerShown: false 
+        }} 
+      />
+      <Tab.Screen 
+        name="Compartir" 
+        component={CompartirReceta} 
+        options={{ 
+          tabBarIcon: ({ color }) => (
+            <Feather name="share" size={24} color={color} />
           ), 
           headerShown: false 
         }} 

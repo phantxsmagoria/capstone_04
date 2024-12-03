@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, TextInput, TouchableOpacity, Alert, FlatList } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, Alert, FlatList , ScrollView} from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RouteProp } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { collection, addDoc } from 'firebase/firestore';
+import { collection, addDoc, getDocs } from 'firebase/firestore';
 import { db, auth } from '../firebaseConfig';
 import styles from '../styles/styles';
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
+import RNPinckerSelect from 'react-native-picker-select';
 
 type RootStackParamList = {
   Pago: undefined;
@@ -32,11 +33,20 @@ type CartItem = {
   quantity: number;
 };
 
+type SeleccionItem = {
+  label: string;
+  value: string;
+};
+
 const DatosCompra: React.FC<Props> = ({ navigation }) => {
   const [cartItems, setCartItems] = useState<CartItem[]>([]);
   const [name, setName] = useState<string>('');
   const [address, setAddress] = useState<string>('');
   const [totalPrice, setTotalPrice] = useState<number>(0);
+  const [comuna, setComuna] = useState<SeleccionItem[]>([]);
+  const [ciudad, setCiudad] = useState<SeleccionItem[]>([]);
+  const [seleccionarComuna, setSelecionarComuna] = useState<string | null>(null);
+  const [seleccionarCiudad, setSelecionarCiudad] = useState<string | null>(null);
 
   const loadCart = async () => {
     const uid = await AsyncStorage.getItem('userUID');
@@ -50,6 +60,7 @@ const DatosCompra: React.FC<Props> = ({ navigation }) => {
 
   useEffect(() => {
     loadCart();
+    fetchLocalidadData();
   }, []);
 
   const calculateTotals = (items: CartItem[]) => {
@@ -64,6 +75,22 @@ const DatosCompra: React.FC<Props> = ({ navigation }) => {
     setTotalPrice(totalPrecio);
   };
 
+  const fetchLocalidadData = async () => {
+    const comunaSnapshot = await getDocs(collection(db, 'comuna'));
+    const comunaList = comunaSnapshot.docs.map(doc => ({
+      label: doc.data().nom_comuna,
+      value: doc.data().nom_comuna,
+    }));
+    setComuna(comunaList);
+
+    const ciudadSnapshot = await getDocs(collection(db, 'ciudad'));
+    const ciudadList = ciudadSnapshot.docs.map(doc => ({
+      label: doc.data().nom_ciudad,
+      value: doc.data().nom_ciudad,
+    }));
+    setCiudad(ciudadList);
+  };
+
   const confirmOrder = async () => {
     if (name.trim() === '' || address.trim() === '') {
       Alert.alert('Error', 'Por favor ingresa tu nombre y una dirección de entrega');
@@ -75,16 +102,18 @@ const DatosCompra: React.FC<Props> = ({ navigation }) => {
         Alert.alert('Error', 'No se ha iniciado sesión');
         return;
       }
-  
+
       await addDoc(collection(db, 'boletacliente'), {
         uid: user.uid,
         email: user.email,
         name,
         address,
+        comuna: seleccionarComuna,
+        ciudad: seleccionarCiudad,
         cartItems: cartItems.map(item => ({ ...item, productoId: item.id })), // Incluimos productoId en los items del carrito
         totalPrice,
       });
-  
+
       Alert.alert('Guardado con Éxito', 'Su boleta ha sido creada con éxito.');
       navigation.navigate('MainTabs'); // Navegamos a la pantalla de pestañas principales
     } catch (error) {
@@ -92,7 +121,7 @@ const DatosCompra: React.FC<Props> = ({ navigation }) => {
       console.error('Error con su boleta: ', error);
     }
   };
-  
+
 
   return (
     <View style={styles.fondoView2}>
@@ -114,7 +143,7 @@ const DatosCompra: React.FC<Props> = ({ navigation }) => {
         )}
       />
 
-      <View style={styles.fondoView}>
+      <ScrollView style={styles.fondoView}>
         <Text style={{ fontSize: 16, fontWeight: 'bold', marginTop: 20, marginLeft: 20 }}>Total: ${totalPrice}</Text>
 
         <TextInput
@@ -131,11 +160,25 @@ const DatosCompra: React.FC<Props> = ({ navigation }) => {
           onChangeText={setAddress}
         />
 
+        <RNPinckerSelect
+          style={{ inputAndroid: styles.itemDireccionCli }}
+          onValueChange={(value) => setSelecionarComuna(value)}
+          items={comuna}
+          placeholder={{ label: 'Selecciona una comuna', value: null }}
+        />
+
+        <RNPinckerSelect
+          style={{ inputAndroid: styles.itemDireccionCli }}
+          onValueChange={(value) => setSelecionarCiudad(value)}
+          items={ciudad}
+          placeholder={{ label: 'Selecciona una ciudad', value: null }}
+        />
+
         <TouchableOpacity style={[styles.button, { alignContent: 'center', justifyContent: 'center', marginLeft: 80 }]} onPress={() => { confirmOrder(); navigation.navigate('MainTabs'); }} >
 
           <Text style={styles.buttonText}>Confirmar Pedido</Text>
         </TouchableOpacity>
-      </View>
+      </ScrollView>
     </View>
   );
 };
