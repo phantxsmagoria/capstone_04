@@ -756,5 +756,37 @@ export default StyleSheet.create({
         marginLeft: 10, 
         color: 'gray', 
     },
+    // esto es para datos compra los items
+    SelectItem: {
+        width: 120,
+    },
+
+    // esto es para compartido optica
+    recetaItem: { 
+        padding: 10, 
+        marginVertical: 8, 
+        marginHorizontal: 16, 
+        borderWidth: 1, 
+        borderColor: '#ccc', 
+        borderRadius: 10, 
+    },
+
+    // esto es para detalle compartido
+    textoComentario: {
+        height: 40, 
+        borderColor: 'gray', 
+        borderWidth: 1, 
+        margin: 12, 
+        paddingLeft: 8, 
+        borderRadius: 4,
+    },
+    comentario:{
+        padding: 10, 
+        marginVertical: 8, 
+        marginHorizontal: 16, 
+        borderWidth: 1, 
+        borderColor: '#ccc', 
+        borderRadius: 10,
+    }
     
 });
