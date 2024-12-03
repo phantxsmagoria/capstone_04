@@ -1,4 +1,4 @@
-import { View, Text, TouchableOpacity, ActivityIndicator, TextInput, Alert } from 'react-native'
+import { View, Text, TouchableOpacity, KeyboardAvoidingView, Platform, ScrollView, ActivityIndicator, TextInput, Alert } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RouteProp } from '@react-navigation/native';
@@ -136,7 +136,9 @@ export default function RecetaScreen({ navigation }: Props) {
   };
 
   return (
-    <View>
+    <KeyboardAvoidingView
+    behavior={Platform.OS === 'ios' ? 'padding' : 'height'} style={{ flex: 1 }}>
+    <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
       <View>
         <TouchableOpacity style={styles.nomProfile} onPress={() => navigation.navigate('Perfil')}>
           <MaterialIcons name="arrow-back-ios" size={35} color="#FA7929" />
@@ -230,6 +232,7 @@ export default function RecetaScreen({ navigation }: Props) {
           <Text style={styles.botonTextReceta}>{modificarinfo ? 'Modificar Receta' : 'Guardar Receta'}</Text>
         </TouchableOpacity>
       </View>
-    </View>
+      </ScrollView>
+      </KeyboardAvoidingView>
   )
 }

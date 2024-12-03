@@ -37,12 +37,14 @@ const LoginScreen: React.FC<Props> = ({ navigation }) => {
             const storedUser = await AsyncStorage.getItem('user');
             if (storedUser) {
                 const user = JSON.parse(storedUser);
-                if (user.type === 'cliente') {
-                    navigation?.navigate('Usuario');
-                } else if (user.type === 'optica') {
-                    navigation?.navigate('OpticaScreen');
-                } else {
-                    navigation?.navigate('MainTabs');
+                if (user.isLoggedIn) {
+                    if (user.type === 'cliente') {
+                        navigation?.navigate('Usuario');
+                    } else if (user.type === 'optica') {
+                        navigation?.navigate('OpticaScreen');
+                    } else {
+                        navigation?.navigate('MainTabs');
+                    }
                 }
             }
         };
@@ -58,6 +60,7 @@ const LoginScreen: React.FC<Props> = ({ navigation }) => {
 
             if (!userQuerySnapshot.empty) {
                 const userData = userQuerySnapshot.docs[0].data();
+                userData.isLoggedIn = true; // Establece isLoggedIn a true
                 await AsyncStorage.setItem('user', JSON.stringify(userData));
                 if (userData.type === 'cliente') {
                     navigation?.navigate('Usuario');
@@ -70,6 +73,7 @@ const LoginScreen: React.FC<Props> = ({ navigation }) => {
 
             if (!opticaQuerySnapshot.empty) {
                 const opticaData = opticaQuerySnapshot.docs[0].data();
+                opticaData.isLoggedIn = true; // Establece isLoggedIn a true
                 await AsyncStorage.setItem('user', JSON.stringify(opticaData));
                 if (opticaData.type === 'optica') {
                     navigation?.navigate('OpticaScreen');

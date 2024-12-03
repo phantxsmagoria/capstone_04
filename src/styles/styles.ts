@@ -270,12 +270,12 @@ export default StyleSheet.create({
     itemProfile: { 
         fontSize: 10, 
         backgroundColor: '#fff', 
-        width: 70, 
+        width: 65, 
         height: 90, 
         justifyContent: 'center', 
         alignItems: 'center', 
         marginTop: 0,
-        marginLeft:10,
+        marginLeft:8,
     }, 
     
     textProfile: { 

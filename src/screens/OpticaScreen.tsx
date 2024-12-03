@@ -77,7 +77,7 @@ export default function OpticaScreen({ navigation }: Props) {
 
   return (
     <View style={styles.fondoView}>
-      <View style={styles.nomProfile}>
+      <View style={[styles.nomProfile, {marginTop: 30,}]}>
         <FontAwesome5 name="user-circle" size={33} color="black" />
         <Text style={{ fontSize: 35 }}>{nombreOptica}</Text>
       </View>
@@ -105,7 +105,9 @@ export default function OpticaScreen({ navigation }: Props) {
             <Ionicons name="bag-outline" size={24} color="black" />
             <Text style={styles.textProfile}>Pedidos en cola</Text>
           </TouchableOpacity>
+          
         </View>
+        
         <View style={{ flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'center' }}>
           <TouchableOpacity style={styles.itemProfile} onPress={() => navigation.navigate('VerProducto')}>
             <FontAwesome5 name="glasses" size={24} color="black" />

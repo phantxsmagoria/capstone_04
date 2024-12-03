@@ -33,7 +33,7 @@ import ClienteRegistroBoletas from './src/screens/ClienteRegistroBoletas';
 import ClienteRegistroPagos from './src/screens/ClienteRegistroPagos';
 import EditarPerfilCliente from './src/screens/EditarPerfilCliente';
 import ReportErrorScreen from './src/screens/ReportErrorScreen';
-import PagoCliente from './src/screens/PagoCliente';  // Importamos la nueva pantalla de pago
+import PagoCliente from './src/screens/PagoCliente';
 import DatosCompra from './src/screens/DatosCompra';
 import ReciboBoletaCliente from './src/screens/ReciboBoletaCliente';
 import OlvidarContraseña from './src/screens/OlvidarContraseña';
@@ -43,10 +43,6 @@ import DireccionCliente from './src/screens/DireccionCliente';
 import AgregarReseñaScreen from './src/screens/AgregarReseñaScreen'; 
 import ReseñasClienteScreen from './src/screens/ReseñasClienteScreen'; 
 
-
-
-
-// Aquí están los roots, siempre hay que declararlos!!!!!!!
 type RootStackParamList = {
   MainTabs: undefined;
   Home: { showPopup?: boolean };
@@ -92,11 +88,11 @@ type RootStackParamList = {
   DireccionCliente: undefined;
   ReseñasClienteScreen: undefined;
   AgregarReseñaScreen: { productId: string };
-
 };
 
 interface AuthContextType {
   checkUserSession: () => Promise<void>;
+  logout: () => Promise<void>;
 }
 
 const AuthContext = createContext<AuthContextType | null>(null);
@@ -152,12 +148,16 @@ export default function App() {
       if (storedUser) {
         const user = JSON.parse(storedUser);
         console.log('User:', user);
-        if (user.type === 'cliente') {
-          setInitialRouteName('Usuario');
-        } else if (user.type === 'optica') {
-          setInitialRouteName('OpticaScreen');
+        if (user.isLoggedIn !== false) { // Verifica si el usuario está marcado como logueado
+          if (user.type === 'cliente') {
+            setInitialRouteName('Usuario');
+          } else if (user.type === 'optica') {
+            setInitialRouteName('OpticaScreen');
+          } else {
+            setInitialRouteName('MainTabs');
+          }
         } else {
-          setInitialRouteName('MainTabs');
+          setInitialRouteName('Home');
         }
       } else {
         setInitialRouteName('Home');
@@ -170,6 +170,20 @@ export default function App() {
     }
   };
 
+  const logout = async () => {
+    try {
+        const user = await AsyncStorage.getItem('user');
+        if (user) {
+            const parsedUser = JSON.parse(user);
+            parsedUser.isLoggedIn = false; // Marcamos que el usuario ha cerrado sesión.
+            await AsyncStorage.setItem('user', JSON.stringify(parsedUser)); // Guardamos el estado actualizado del usuario.
+        }
+        setInitialRouteName('Home'); // Redirigimos a la pantalla de inicio.
+    } catch (error) {
+        console.error("Error logging out: ", error);
+    }
+  };
+
   useEffect(() => {
     checkUserSession();
   }, []);
@@ -179,7 +193,7 @@ export default function App() {
   }
 
   return (
-    <AuthContext.Provider value={{ checkUserSession }}>
+    <AuthContext.Provider value={{ checkUserSession, logout }}>
       <NavigationContainer>
         <Stack.Navigator initialRouteName={initialRouteName || 'Home'}>
           <Stack.Screen name="Home" component={HomeScreen} options={{ headerShown: false }} />
@@ -215,7 +229,6 @@ export default function App() {
           <Stack.Screen name="DireccionCliente" component={DireccionCliente} options={{headerShown:false}}/>
           <Stack.Screen name="AgregarReseñaScreen" component={AgregarReseñaScreen} options={{headerShown:false}}/>
           <Stack.Screen name="ReseñasClienteScreen" component={ReseñasClienteScreen} options={{headerShown:false}}/>
-
         </Stack.Navigator>
       </NavigationContainer>
     </AuthContext.Provider>

@@ -68,9 +68,9 @@ export default function ProfileClienteScreen({ navigation }: Props) {
 
   return (
     <View style={styles.fondoView}>
-      <View style={styles.nomProfile}>
+      <View style={[styles.nomProfile, {marginTop: 30,}]}>
         <FontAwesome5 name="user-circle" size={40} color="black" />
-        <Text style={{ fontSize: 35 }}>{userName}</Text>
+        <Text style={{ fontSize: 35, }}>{userName}</Text>
       </View>           
 
       <View style={styles.containerOptica}> 
@@ -88,20 +88,19 @@ export default function ProfileClienteScreen({ navigation }: Props) {
             <FontAwesome5 name="glasses" size={30} color="black" />
             <Text style={styles.textProfile}>Mi Receta</Text> 
           </TouchableOpacity>
-
-          
-          <TouchableOpacity style={styles.itemProfile} onPress={() => navigation.navigate('ReportErrorScreen')}> 
-            <Feather name="alert-circle" size={30} color="black" />
-            <Text style={styles.textProfile}>Notificar un error</Text> 
-          </TouchableOpacity> 
           <TouchableOpacity style={styles.itemProfile} onPress={() => navigation.navigate('ClienteConfiguracion')}> 
           <Feather name="tool" size={30} color="black" />
           <Text style={styles.textProfile}>Configuración y Soporte</Text> 
         </TouchableOpacity> 
+          <TouchableOpacity style={styles.itemProfile} onPress={() => navigation.navigate('ReportErrorScreen')}> 
+            <Feather name="alert-circle" size={30} color="black" />
+            <Text style={styles.textProfile}>Notificar un error</Text> 
+          </TouchableOpacity> 
         </View>
       </View>
 
       <View style={{ flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'flex-start' }}>
+     
       <TouchableOpacity style={styles.itemProfile} onPress={() => navigation.navigate('ReseñasClienteScreen')}>
             <Feather name="edit" size={30} color="black" />
             <Text style={styles.textProfile}>Reseñas</Text>
