@@ -53,46 +53,53 @@ const LoginScreen: React.FC<Props> = ({ navigation }) => {
 
     const handleLogin = async () => {
         try {
-            const userCredential = await signInWithEmailAndPassword(auth, email, password);
-
-            const userQuery = query(collection(db, 'users'), where('uid', '==', userCredential.user.uid));
-            const userQuerySnapshot = await getDocs(userQuery);
-
-            if (!userQuerySnapshot.empty) {
-                const userData = userQuerySnapshot.docs[0].data();
-                userData.isLoggedIn = true; // Establece isLoggedIn a true
-                await AsyncStorage.setItem('user', JSON.stringify(userData));
-                if (userData.type === 'cliente') {
-                    navigation?.navigate('Usuario');
-                    return;
-                }
+          const userCredential = await signInWithEmailAndPassword(auth, email, password);
+          console.log('User Credential:', userCredential);
+      
+          const userQuery = query(collection(db, 'users'), where('uid', '==', userCredential.user.uid));
+          const userQuerySnapshot = await getDocs(userQuery);
+          console.log('User Query Snapshot:', userQuerySnapshot);
+      
+          if (!userQuerySnapshot.empty) {
+            const userData = userQuerySnapshot.docs[0].data();
+            console.log('User Data:', userData);
+            userData.isLoggedIn = true; // Establece isLoggedIn a true
+            await AsyncStorage.setItem('user', JSON.stringify(userData));
+            if (userData.type === 'cliente') {
+              navigation?.navigate('Usuario');
+              return;
             }
-
-            const opticaQuery = query(collection(db, 'opticas'), where('uid', '==', userCredential.user.uid));
-            const opticaQuerySnapshot = await getDocs(opticaQuery);
-
-            if (!opticaQuerySnapshot.empty) {
-                const opticaData = opticaQuerySnapshot.docs[0].data();
-                opticaData.isLoggedIn = true; // Establece isLoggedIn a true
-                await AsyncStorage.setItem('user', JSON.stringify(opticaData));
-                if (opticaData.type === 'optica') {
-                    navigation?.navigate('OpticaScreen');
-                } else {
-                    navigation?.navigate('MainTabs');
-                }
+          }
+      
+          const opticaQuery = query(collection(db, 'opticas'), where('uid', '==', userCredential.user.uid));
+          const opticaQuerySnapshot = await getDocs(opticaQuery);
+          console.log('Optica Query Snapshot:', opticaQuerySnapshot);
+      
+          if (!opticaQuerySnapshot.empty) {
+            const opticaData = opticaQuerySnapshot.docs[0].data();
+            console.log('Optica Data:', opticaData);
+            opticaData.isLoggedIn = true; // Establece isLoggedIn a true
+            await AsyncStorage.setItem('user', JSON.stringify(opticaData));
+            if (opticaData.type === 'optica') {
+              navigation?.navigate('OpticaScreen');
             } else {
-                navigation?.navigate('MainTabs');
+              navigation?.navigate('MainTabs');
             }
+          } else {
+            navigation?.navigate('MainTabs');
+          }
         } catch (error) {
-            if (error instanceof Error) {
-                console.error('Error al iniciar sesión: ', error.message);
-                alert(`Error al iniciar sesión: ${error.message}`);
-            } else {
-                console.error('Error al iniciar sesión: ', error);
-                alert('Error desconocido al iniciar sesión');
-            }
+          if (error instanceof Error) {
+            console.error('Error al iniciar sesión: ', error.message);
+            alert(`Error al iniciar sesión: ${error.message}`);
+          } else {
+            console.error('Error al iniciar sesión: ', error);
+            alert('Error desconocido al iniciar sesión');
+          }
         }
-    };
+      };
+      
+      
 
     return (
         <View style={styles.container}>

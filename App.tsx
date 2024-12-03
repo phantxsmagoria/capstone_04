@@ -43,6 +43,8 @@ import DireccionCliente from './src/screens/DireccionCliente';
 import AgregarReseñaScreen from './src/screens/AgregarReseñaScreen'; 
 import ReseñasClienteScreen from './src/screens/ReseñasClienteScreen';
 import CompartirReceta from './src/screens/CompartirReceta'; 
+import { auth } from './src/firebaseConfig'; 
+
 
 type RootStackParamList = {
   MainTabs: undefined;
@@ -181,28 +183,64 @@ export default function App() {
       setLoading(false);
     }
   };
-
+  
+  
+  
   const logout = async () => {
     try {
-        const user = await AsyncStorage.getItem('user');
-        if (user) {
-            const parsedUser = JSON.parse(user);
-            parsedUser.isLoggedIn = false; // Marcamos que el usuario ha cerrado sesión.
-            await AsyncStorage.setItem('user', JSON.stringify(parsedUser)); // Guardamos el estado actualizado del usuario.
-        }
-        setInitialRouteName('Home'); // Redirigimos a la pantalla de inicio.
+      const user = await AsyncStorage.getItem('user');
+      if (user) {
+        const parsedUser = JSON.parse(user);
+        parsedUser.isLoggedIn = false; // Marcamos que el usuario ha cerrado sesión.
+        await AsyncStorage.setItem('user', JSON.stringify(parsedUser)); // Guardamos el estado actualizado del usuario.
+      }
+      setInitialRouteName('Home'); // Redirigimos a la pantalla de inicio.
     } catch (error) {
-        console.error("Error logging out: ", error);
+      console.error("Error logging out: ", error);
     }
   };
+  
 
   useEffect(() => {
-    checkUserSession();
+    const unsubscribe = auth.onAuthStateChanged(async (user) => {
+      console.log("onAuthStateChanged user:", user); // Añade un log para verificar el estado del usuario
+      if (user) {
+        try {
+          const storedUser = await AsyncStorage.getItem('user');
+          if (storedUser) {
+            const parsedUser = JSON.parse(storedUser);
+            console.log("parsedUser:", parsedUser); // Añade un log para verificar los datos del usuario
+            if (parsedUser.type === 'cliente') {
+              setInitialRouteName('Usuario');
+            } else if (parsedUser.type === 'optica') {
+              setInitialRouteName('OpticaScreen');
+            } else {
+              setInitialRouteName('MainTabs');
+            }
+          } else {
+            setInitialRouteName('MainTabs');
+          }
+        } catch (error) {
+          console.error("Error parsing stored user: ", error);
+          setInitialRouteName('Home');
+        }
+      } else {
+        console.error("No user is logged in");
+        setInitialRouteName('Home');
+      }
+      setLoading(false);
+    });
+  
+    return () => unsubscribe();
   }, []);
+  
+  
+  
 
   if (loading) {
     return <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}><Text>Cargando...</Text></View>;
   }
+  
 
   return (
     <AuthContext.Provider value={{ checkUserSession, logout }}>

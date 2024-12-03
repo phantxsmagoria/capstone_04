@@ -7,6 +7,8 @@ import { collection, getDocs, doc, getDoc, setDoc } from 'firebase/firestore';
 import { db, auth } from '../firebaseConfig';
 import styles from '../styles/styles';
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
+import Popup from '../components/Popup'; // esto es para las notisss!!!
+
 
 type RootStackParamList = {
     DireccionCliente: undefined;
@@ -36,6 +38,9 @@ export default function DireccionCliente({ navigation }: Props) {
     const [comunas, setComunas] = useState<PickerItem[]>([]);
     const [ciudades, setCiudades] = useState<PickerItem | null>(null);
     const [errorMessageCli, setErrorMessageCli] = useState('');
+    const [popupVisible, setPopupVisible] = useState(false);
+    const [popupMessage, setPopupMessage] = useState('');
+
 
     const usuarioId = auth.currentUser?.uid;
 
@@ -85,55 +90,62 @@ export default function DireccionCliente({ navigation }: Props) {
 
     const handleDireccion = async () => {
         setErrorMessageCli('');
-
+      
         if (!nombre || !telefono || !correo || !direccion || !comuna || !ciudad) {
-            setErrorMessageCli('Todos los campos son obligatorios');
-            return;
+          setPopupMessage('Todos los campos son obligatorios');
+          setPopupVisible(true);
+          return;
         }
-
+      
         if (!validarNombre(nombre)) { 
-            setErrorMessageCli('No se puede ingresar número o carácteres especiales'); 
-            return; 
+          setPopupMessage('No se puede ingresar número o carácteres especiales'); 
+          setPopupVisible(true);
+          return; 
         }
-
+      
         if (!validarTelefono(telefono)) { 
-            setErrorMessageCli('El teléfono debe tener 9 dígitos numéricos'); 
-            return; 
+          setPopupMessage('El teléfono debe tener 9 dígitos numéricos'); 
+          setPopupVisible(true);
+          return; 
         }
         if (!validarCorreo(correo)) { 
-            setErrorMessageCli('El correo debe terminar en @gmail.com, @yahoo.com, @hotmail.com o @outlook.com'); 
-            return; 
+          setPopupMessage('El correo debe terminar en @gmail.com, @yahoo.com, @hotmail.com o @outlook.com'); 
+          setPopupVisible(true);
+          return; 
         }
         if (!validarDireccion(direccion)) { 
-            setErrorMessageCli('La dirección solo puede contener letras, números y "#"'); 
-            return; 
+          setPopupMessage('La dirección solo puede contener letras, números y "#"'); 
+          setPopupVisible(true);
+          return; 
         }
-
+      
         try {
-            const docRef = doc(db, 'direccioncliente', usuarioId!);
-            await setDoc(docRef, {
-                nombre,
-                telefono,
-                correo,
-                direccion,
-                comuna,
-                ciudad,
-                usuarioId,
-            });
-            navigation.navigate('Pago');
+          const docRef = doc(db, 'direccioncliente', usuarioId!);
+          await setDoc(docRef, {
+            nombre,
+            telefono,
+            correo,
+            direccion,
+            comuna,
+            ciudad,
+            usuarioId,
+          });
+          navigation.navigate('Pago');
         } catch (error) {
-            console.error('Error añadiendo los datos: ', error);
-            setErrorMessageCli('Error al añadir los datos');
+          console.error('Error añadiendo los datos: ', error);
+          setPopupMessage('Error al añadir los datos');
+          setPopupVisible(true);
         }
-    };
+      };
+      
 
 
     return (
         <ScrollView style={styles.fondoView3}>
             <View>
                 <TouchableOpacity style={styles.nomProfile} onPress={() => navigation.navigate('Carrito')}>
-                    <MaterialIcons name="arrow-back-ios" size={35} color="#FA7929" />
-                    <Text style={styles.tituloMenusOptica}>Dirección</Text>
+                    <MaterialIcons style={{marginTop: 20,}} name="arrow-back-ios" size={32} color="#FA7929" />
+                    <Text style={[styles.tituloMenusOptica, {marginTop:20,}]}>Dirección</Text>
                 </TouchableOpacity>
             </View>
 
@@ -145,34 +157,48 @@ export default function DireccionCliente({ navigation }: Props) {
                 </View>
                 <Text style={{ marginLeft: 2, fontSize: 18 }}>Información del Recibidor</Text>
             </View>
+            
             <View style={styles.contendorDireccionCli}>
-                <TextInput style={styles.itemDireccionCli}
+                <TextInput style={styles.inputLine}
                     placeholder='Nombre y Apellido'
                     value={nombre}
                     editable={true}
                     onChangeText={(nom) => { if (validarNombre(nom) || nom === '') { setNombre(nom); setErrorMessageCli(''); } else { setErrorMessageCli('No se puede ingresar número o carácteres especiales'); } }}
                 />
+
+                
                 <View style={styles.telefonoContainer}>
-                    <Text style={styles.telefonoIdi}>+56</Text>
-                    <TextInput style={styles.telefono}
+                    <Text style={styles.inputLine2}>+56</Text>
+                    <TextInput 
+                        style={styles.inputLine}
                         placeholder='Teléfono'
                         value={telefono}
                         editable={true}
                         keyboardType='numeric'
                         maxLength={9}
-                        onChangeText={(tel) => { if (validarTelefono(tel) || tel === '') { setTelefono(tel); setErrorMessageCli(''); } else { setTelefono(tel); setErrorMessageCli('El teléfono debe tener 9 dígitos numéricos'); } }}
+                        onChangeText={(tel) => { 
+                        if (validarTelefono(tel) || tel === '') { 
+                            setTelefono(tel); 
+                            setErrorMessageCli(''); 
+                        } else { 
+                            setTelefono(tel); 
+                            setErrorMessageCli('El teléfono debe tener 9 dígitos numéricos'); 
+                        } 
+                        }}
                     />
-                </View>
+                    </View>
 
-                <TextInput style={styles.itemDireccionCli}
+
+                <TextInput style={styles.inputLine}
                     placeholder='Email'
                     value={correo}
                     editable={true}
                     onChangeText={(mail) => { if (validarCorreo(mail) || mail === '') { setCorreo(mail); setErrorMessageCli(''); } else { setCorreo(mail); setErrorMessageCli('El correo debe terminar en @gmail.com, @yahoo.com, @hotmail.com o @outlook.com'); } }}
                 />
+
             </View>
 
-            <View style={styles.textReceta}>
+            <View style={[styles.textReceta, {marginTop:40,}]}>
                 <View style={styles.contenedorIcon1}>
                     <View style={styles.containerIcon}>
                         <Text style={styles.numeroIcon}>2</Text>
@@ -180,8 +206,9 @@ export default function DireccionCliente({ navigation }: Props) {
                 </View>
                 <Text style={{ marginLeft: 2, fontSize: 18 }}>Dirección de envío</Text>
             </View>
+
             <View style={styles.contendorDireccionCli}>
-                <TextInput style={styles.itemDireccionCli}
+                <TextInput style={styles.inputLine}
                     placeholder='Dirección'
                     value={direccion}
                     editable={true}
@@ -208,13 +235,18 @@ export default function DireccionCliente({ navigation }: Props) {
                     }}
                 />
             </View>
-            {errorMessageCli ? (
-                <Text style={{ color: 'red', textAlign: 'center', margin: 10 }}>{errorMessageCli}</Text>) : null}
-            <View>
-                <TouchableOpacity style={styles.botonReceta} onPress={handleDireccion}>
-                    <Text style={styles.botonTextReceta}>Continuar</Text>
+            
+
+            <View style={styles.container}>
+                <TouchableOpacity style={styles.button} onPress={handleDireccion}>
+                    <Text style={styles.buttonText}>Continuar</Text>
                 </TouchableOpacity>
             </View>
+            <Popup
+                visible={popupVisible}
+                message={popupMessage}
+                onClose={() => setPopupVisible(false)}
+                />
         </ScrollView>
     )
 }
