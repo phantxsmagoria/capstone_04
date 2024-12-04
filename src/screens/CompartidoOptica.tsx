@@ -74,7 +74,7 @@ export default function CompartidoOptica({navigation}: Props) {
         style={styles.recetaItem}
         onPress={() => navigation.navigate('DetalleCompartido', {recetaId: item.id})}
         >
-        <Text>{item.userName}</Text>
+        <Text>{item.userName}</Text> 
     </TouchableOpacity>
       )}
       />
