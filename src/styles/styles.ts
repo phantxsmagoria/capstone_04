@@ -802,5 +802,21 @@ export default StyleSheet.create({
         fontWeight: 'bold', 
         marginBottom: 5, 
     },
+    // esto es para los comentarios de Compartir Receta
+    comentarios: {
+        margin: 5,
+        backgroundColor: '#ffffff',
+        height: 'auto',
+        borderRadius: 5,
+        display: 'flex',
+        alignItems:'center',
+        justifyContent:'center',
+        textAlign: 'justify',
+        paddingLeft: 10,
+        paddingTop: 1,
+   },
+   fotoComentarios: {
+    alignItems: 'center'
+   }
     
 });

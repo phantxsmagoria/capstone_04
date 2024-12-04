@@ -1,4 +1,4 @@
-import { View, Text, TouchableOpacity, Alert, ScrollView } from 'react-native'
+import { View, Text, TouchableOpacity, Alert, ScrollView, Image } from 'react-native'
 import React, { useState, useEffect, useRef } from 'react'
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RouteProp } from '@react-navigation/native';
@@ -175,27 +175,13 @@ export default function CompartirReceta({ navigation }: Props) {
                 <Text style={[styles.title, { textAlign: 'center', marginTop: 50, marginBottom: 20 }]}>Compartir Receta</Text>
             </View>
             <View>
-                <Text style={{ fontSize: 24, fontWeight: 'bold', marginTop: 20, marginLeft: 15 }}>Mi Receta</Text>
+                <Text style={{ fontSize: 24, fontWeight: 'bold', marginTop: 20, margin: 10, textAlign: 'center' }}>¿Deseas compartir tu receta?</Text>
             </View>
             <View>
-                <Text style={{ marginLeft: 15, fontSize: 14, marginTop: 5 }}>OD: Ojo Derecho</Text>
+                <Text style={{ fontSize: 18, fontWeight: 'semibold', marginTop: 20, margin: 10, textAlign: 'justify' }}>Si compartes tu receta podrás obtener descuentos y/o precios exclusivos por las Ópticas Asociadas.</Text>
             </View>
-            <View style={styles.contenedorReceta}>
-                <Text style={styles.itemReceta} >ESF / SPH: {ODesfera}</Text>
-                <Text style={styles.itemReceta}>CLI / CYL: {ODcilindro}</Text>
-                <Text style={styles.itemReceta}>EJE: {ODeje}</Text>
-            </View>
-            <View>
-                <Text style={{ marginLeft: 15, fontSize: 14, marginTop: 10 }}>OI: Ojo Izquierdo</Text>
-            </View>
-            <View style={styles.contenedorReceta}>
-                <Text style={styles.itemReceta}>ESF / SPH: {OIesfera}</Text>
-                <Text style={styles.itemReceta}>CLI / CYL: {OIcilindro}</Text>
-                <Text style={styles.itemReceta}>EJE: {OIeje}</Text>
-            </View>
-            <View style={styles.contendorReceta2}>
-                <Text style={styles.itemReceta2}>Adición: {adicion}</Text>
-                <Text style={styles.itemReceta2}>Distancia Pupilar: {distanciapupilar}</Text>
+            <View style={styles.fotoComentarios}>
+                <Image source={require('../assets/ComentarioCliente.png')} style={{ width: 300, height: 300 }} />
             </View>
             <View>
                 <TouchableOpacity style={styles.botonReceta} onPress={handleCompartirReceta}>
