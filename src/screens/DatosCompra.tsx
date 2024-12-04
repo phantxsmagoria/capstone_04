@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, TextInput, TouchableOpacity, Alert, FlatList , ScrollView} from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, Alert, FlatList, ScrollView } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RouteProp } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -8,9 +8,10 @@ import { db, auth } from '../firebaseConfig';
 import styles from '../styles/styles';
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 import RNPinckerSelect from 'react-native-picker-select';
+import Ionicons from '@expo/vector-icons/Ionicons';
 
 type RootStackParamList = {
-  Pago: undefined;
+  Carrito: undefined;
   DatosCompra: undefined;
   ReciboBoletaCliente: undefined;
   MainTabs: undefined;
@@ -42,6 +43,12 @@ const DatosCompra: React.FC<Props> = ({ navigation }) => {
   const [cartItems, setCartItems] = useState<CartItem[]>([]);
   const [name, setName] = useState<string>('');
   const [address, setAddress] = useState<string>('');
+  const [phone, setPhone] = useState<string>('');
+  const [nombreTarjeta, setNombreTarjeta] = useState<string>('')
+  const [numeroTarjeta, setNumeroTarjeta] = useState<string>('')
+  const [diaTarjeta, setDiaTarjeta] = useState<string>('')
+  const [mesTarjeta, setMesTarjeta] = useState<string>('')
+  const [cvvTarjeta, setCvvTarjeta] = useState<string>('')
   const [totalPrice, setTotalPrice] = useState<number>(0);
   const [comuna, setComuna] = useState<SeleccionItem[]>([]);
   const [ciudad, setCiudad] = useState<SeleccionItem[]>([]);
@@ -91,9 +98,37 @@ const DatosCompra: React.FC<Props> = ({ navigation }) => {
     setCiudad(ciudadList);
   };
 
+  const validarDatos = () => {
+    if (name.trim() === '') {
+      Alert.alert('Error', 'Por favor ingresa tu nombre.');
+      return false;
+    }
+    if (address.trim() === '') {
+      Alert.alert('Error', 'Por favor ingresa tu dirección.');
+      return false;
+    }
+    if (!/^\d{9}$/.test(phone)) {
+      Alert.alert('Error', 'Por favor ingresa un tu número de teléfono.')
+      return false;
+    }
+
+    if (nombreTarjeta.trim() === '') {
+      Alert.alert('Error', 'Por favor ingresa el nombre del titular de la tarjeta.');
+      return false;
+    }
+    if (!/^\d{16}/.test(numeroTarjeta)) {
+      Alert.alert('Error', 'Por favor ingresa un el número de la tarjeta.')
+      return false;
+    }
+    if (!/^\d{3}$/.test(cvvTarjeta)) {
+      Alert.alert('Error', 'Por favor ingresa el cvv de la tarjeta.')
+      return false;
+    }
+    return true;
+  };
+
   const confirmOrder = async () => {
-    if (name.trim() === '' || address.trim() === '') {
-      Alert.alert('Error', 'Por favor ingresa tu nombre y una dirección de entrega');
+    if (!validarDatos()) {
       return;
     }
     try {
@@ -122,11 +157,41 @@ const DatosCompra: React.FC<Props> = ({ navigation }) => {
     }
   };
 
+  const handleDiaBlur = () => {
+    const num = parseInt(diaTarjeta, 10);
+    if(!isNaN(num) && num >= 1 && num <= 31){
+      const formatearDia = num < 10? `0${num}` : `${num}`;
+      setDiaTarjeta(formatearDia);
+    } else {
+      setDiaTarjeta('');
+      Alert.alert('Error', 'Por favor ingresa el día de la tarjeta.')
+      return
+    }
+  }
+
+  const handleMesBlur = () => {
+    const num = parseInt(mesTarjeta, 10);
+    if(!isNaN(num) && num >= 1 && num <= 12){
+      const formatearMes = num < 10? `0${num}` : `${num}`;
+      setMesTarjeta(formatearMes);
+    } else {
+      setMesTarjeta('');
+      Alert.alert('Error', 'Por favor ingresa el mes de la tarjeta.')
+      return
+    }
+  }
+
+  const InfoAlerta = () => {
+    Alert.alert('¿Qué es CVV?', 'El CVV es un código de seguridad que se encuentra al reverso de la tarjeta', [
+      { text: 'OK', onPress: () => console.log('OK Pressed') },
+    ]);
+  };
+
 
   return (
     <View style={styles.fondoView2}>
       <View>
-        <TouchableOpacity style={styles.nomProfile} onPress={() => navigation.navigate('Pago')}>
+        <TouchableOpacity style={styles.nomProfile} onPress={() => navigation.navigate('Carrito')}>
           <MaterialIcons name="arrow-back-ios" size={35} color="#FA7929" />
           <Text style={styles.tituloMenusOptica}>Datos de Compra</Text>
         </TouchableOpacity>
@@ -146,36 +211,124 @@ const DatosCompra: React.FC<Props> = ({ navigation }) => {
       <ScrollView style={styles.fondoView}>
         <Text style={{ fontSize: 16, fontWeight: 'bold', marginTop: 20, marginLeft: 20 }}>Total: ${totalPrice}</Text>
 
-        <TextInput
-          style={[styles.inputLine, { marginLeft: 20, marginTop: 20 }]}
-          placeholder="Nombre"
-          value={name}
-          onChangeText={setName}
-        />
+        <View style={styles.textReceta}>
+          <View style={styles.contenedorIcon1}>
+            <View style={styles.containerIcon}>
+              <Text style={styles.numeroIcon}>1</Text>
+            </View>
+          </View>
+          <Text style={{ marginLeft: 2, fontSize: 18 }}>Información del Recibidor</Text>
+        </View>
+        <View>
+          <TextInput
+            style={styles.itemDireccionCli}
+            placeholder="Nombre"
+            value={name}
+            onChangeText={setName}
+          />
 
-        <TextInput
-          style={[styles.inputLine, { marginLeft: 20, marginTop: 20 }]}
-          placeholder="Dirección de entrega"
-          value={address}
-          onChangeText={setAddress}
-        />
+          <View style={styles.telefonoContainer}>
+            <Text style={styles.telefonoIdi}>+56</Text>
+            <TextInput style={styles.telefono}
+              placeholder='Teléfono'
+              value={phone}
+              maxLength={9}
+              onChangeText={setPhone}
+              keyboardType='numeric'
+            />
+          </View>
+        </View>
 
-        <RNPinckerSelect
-          style={{ inputAndroid: styles.itemDireccionCli }}
-          onValueChange={(value) => setSelecionarComuna(value)}
-          items={comuna}
-          placeholder={{ label: 'Selecciona una comuna', value: null }}
-        />
+        <View style={styles.textReceta}>
+          <View style={styles.contenedorIcon1}>
+            <View style={styles.containerIcon}>
+              <Text style={styles.numeroIcon}>2</Text>
+            </View>
+          </View>
+          <Text style={{ marginLeft: 2, fontSize: 18 }}>Dirección de envío</Text>
+        </View>
 
-        <RNPinckerSelect
-          style={{ inputAndroid: styles.itemDireccionCli }}
-          onValueChange={(value) => setSelecionarCiudad(value)}
-          items={ciudad}
-          placeholder={{ label: 'Selecciona una ciudad', value: null }}
-        />
+        <View>
+          <TextInput
+            style={styles.itemDireccionCli}
+            placeholder="Dirección de entrega"
+            value={address}
+            onChangeText={setAddress}
+          />
 
-        <TouchableOpacity style={[styles.button, { alignContent: 'center', justifyContent: 'center', marginLeft: 80 }]} onPress={() => { confirmOrder(); navigation.navigate('MainTabs'); }} >
+          <RNPinckerSelect
+            style={{ inputAndroid: styles.itemDireccionCli }}
+            onValueChange={(value) => setSelecionarComuna(value)}
+            items={comuna}
+            placeholder={{ label: 'Selecciona una comuna', value: null }}
+          />
 
+          <RNPinckerSelect
+            style={{ inputAndroid: styles.itemDireccionCli }}
+            onValueChange={(value) => setSelecionarCiudad(value)}
+            items={ciudad}
+            placeholder={{ label: 'Selecciona una ciudad', value: null }}
+          />
+        </View>
+
+        <View style={styles.textReceta}>
+          <View style={styles.contenedorIcon1}>
+            <View style={styles.containerIcon}>
+              <Text style={styles.numeroIcon}>3</Text>
+            </View>
+          </View>
+          <Text style={{ marginLeft: 2, fontSize: 18 }}>Método de Pago</Text>
+        </View>
+
+        <View style={styles.contenedorPagoCli1}>
+          <TextInput
+            style={styles.itemPagoCli1}
+            placeholder='Nombre Titular'
+            value={nombreTarjeta}
+            onChangeText={setNombreTarjeta}
+          />
+          <TextInput style={styles.itemPagoCli1}
+            placeholder='Número Terjeta'
+            value={numeroTarjeta}
+            maxLength={16}
+            onChangeText={setNumeroTarjeta}
+            keyboardType='numeric'
+          />
+        </View>
+
+        <View style={styles.contenedorPagoCli2}>
+          <TextInput style={styles.itemPagoCli2}
+            placeholder='Día'
+            value={diaTarjeta}
+            maxLength={2}
+            onChangeText={setDiaTarjeta}
+            onBlur={handleDiaBlur}
+            keyboardType='numeric'
+          />
+          <TextInput style={styles.itemPagoCli2}
+            placeholder='Mes'
+            value={mesTarjeta}
+            maxLength={2}
+            onChangeText={setMesTarjeta}
+            onBlur={handleMesBlur}
+            keyboardType='numeric'
+          />
+          <View style={styles.contenedorCvv}>
+            <TextInput style={styles.itemPagoCli2}
+              placeholder='CVV'
+              value={cvvTarjeta}
+              maxLength={3}
+              onChangeText={setCvvTarjeta}
+              keyboardType='numeric'
+            />
+            <TouchableOpacity onPress={InfoAlerta} style={styles.infoPago}>
+              <Ionicons name="information-circle-outline" size={40} color="#FA7929" />
+            </TouchableOpacity>
+          </View>
+
+        </View>
+
+        <TouchableOpacity style={[styles.button, { alignContent: 'center', justifyContent: 'center', marginLeft: 80, marginBottom: 50}]} onPress={() => { confirmOrder(); navigation.navigate('MainTabs'); }} >
           <Text style={styles.buttonText}>Confirmar Pedido</Text>
         </TouchableOpacity>
       </ScrollView>

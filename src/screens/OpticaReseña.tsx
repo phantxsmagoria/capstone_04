@@ -111,6 +111,9 @@ const OpticaReseña: React.FC<Props> = ({ navigation }) => {
       ) : (
         <FlatList
           data={reviews}
+          style={{
+            height: 850,
+          }}
           renderItem={renderReseña}
           keyExtractor={(item) => item.id}
           refreshControl={

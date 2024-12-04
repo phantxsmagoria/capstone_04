@@ -26,6 +26,7 @@ type RootStackParamList = {
   OpticaConfiguracion: undefined;
   EditarPerfilOptica: undefined;
   OpticaNotificarError: undefined;
+  CompartidoOptica: undefined;
 };
 
 type OpticaScreenNavigationProp = StackNavigationProp<RootStackParamList, 'OpticaScreen'>;
@@ -112,6 +113,10 @@ export default function OpticaScreen({ navigation }: Props) {
           <TouchableOpacity style={styles.itemProfile} onPress={() => navigation.navigate('VerProducto')}>
             <FontAwesome5 name="glasses" size={24} color="black" />
             <Text style={styles.textProfile}>Mi catálogo</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.itemProfile} onPress={() => navigation.navigate('CompartidoOptica')}>
+            <Feather name="share" size={24} color="black" />
+            <Text style={styles.textProfile}>Compartidos</Text>
           </TouchableOpacity>
           <TouchableOpacity style={styles.itemProfile} onPress={() => navigation.navigate('OpticaNotificarError')}>
             <Feather name="alert-circle" size={24} color="black" />

@@ -13,7 +13,7 @@ type RootStackParamList = {
   Usuario: undefined;
   Home: undefined;
   Pago: undefined;
-  DireccionCliente: undefined;
+  DatosCompra: undefined;
 };
 
 type CartScreenNavigationProp = StackNavigationProp<RootStackParamList, 'Carrito'>;
@@ -131,7 +131,7 @@ const CartScreen: React.FC<Props> = ({ navigation }) => {
         await updateDoc(productRef, { quantity: item.maxQuantity - item.quantity });
       }
       // Aquí puedes navegar a la pantalla de pago o mostrar un mensaje de confirmación
-      navigation.navigate('DireccionCliente');
+      navigation.navigate('DatosCompra');
     } catch (error) {
       console.error('Error al confirmar el pedido:', error);
       // Muestra un mensaje de error al usuario

@@ -43,8 +43,13 @@ import DireccionCliente from './src/screens/DireccionCliente';
 import AgregarReseñaScreen from './src/screens/AgregarReseñaScreen'; 
 import ReseñasClienteScreen from './src/screens/ReseñasClienteScreen';
 import CompartirReceta from './src/screens/CompartirReceta'; 
+<<<<<<< HEAD
 import { auth } from './src/firebaseConfig'; 
 
+=======
+import CompartidoOptica from './src/screens/CompartidoOptica';
+import DetalleCompartido from './src/screens/DetalleCompartido';
+>>>>>>> 3d2f73002bf13a99c4babe6c99e6aeaed648f573
 
 type RootStackParamList = {
   MainTabs: undefined;
@@ -92,6 +97,8 @@ type RootStackParamList = {
   ReseñasClienteScreen: undefined;
   AgregarReseñaScreen: { productId: string };
   Compartir: undefined;
+  CompartidoOptica: undefined;
+  DetalleCompartido: { recetaId: string };
 };
 
 interface AuthContextType {
@@ -279,6 +286,8 @@ export default function App() {
           <Stack.Screen name="DireccionCliente" component={DireccionCliente} options={{headerShown:false}}/>
           <Stack.Screen name="AgregarReseñaScreen" component={AgregarReseñaScreen} options={{headerShown:false}}/>
           <Stack.Screen name="ReseñasClienteScreen" component={ReseñasClienteScreen} options={{headerShown:false}}/>
+          <Stack.Screen name="CompartidoOptica" component={CompartidoOptica} options={{headerShown:false}}/>
+          <Stack.Screen name="DetalleCompartido" component={DetalleCompartido} options={{headerShown:false}}/>
         </Stack.Navigator>
       </NavigationContainer>
     </AuthContext.Provider>
