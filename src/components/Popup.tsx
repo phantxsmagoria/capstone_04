@@ -27,7 +27,7 @@ const Popup: React.FC<PopupProps> = ({ visible, message, onClose }) => {
   );
 };
 
-//Dejé los styles acá para no llenar el styles . ts
+//Dejé los styles acá para no llenar el styles . ts!!
 
 const styles = StyleSheet.create({
   popupContainer: {
