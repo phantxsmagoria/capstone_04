@@ -18,11 +18,8 @@ type RootStackParamList = {
   Home: undefined;
   OpticaScreen: undefined;
   VerProducto: undefined;
-  OpticaCobroPendiente: undefined;
-  OpticaEnvioPendiente: undefined;
   OpticaEnviado: undefined;
   OpticaReseña: undefined;
-  OpticaColaPedidos: undefined;
   OpticaConfiguracion: undefined;
   EditarPerfilOptica: undefined;
   OpticaNotificarError: undefined;
@@ -86,14 +83,6 @@ export default function OpticaScreen({ navigation }: Props) {
       <View style={styles.containerOptica}>
         <Text style={{ padding: 20, fontSize: 25 }}>Mis ventas</Text>
         <View style={{ flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'center' }}>
-          <TouchableOpacity style={styles.itemProfile} onPress={() => navigation.navigate('OpticaCobroPendiente')}>
-            <MaterialCommunityIcons name="credit-card-clock-outline" size={24} color="black" />
-            <Text style={styles.textProfile}>Pendientes de cobro</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.itemProfile} onPress={() => navigation.navigate('OpticaEnvioPendiente')}>
-            <Feather name="package" size={24} color="black" />
-            <Text style={styles.textProfile}>Pendientes de envío</Text>
-          </TouchableOpacity>
           <TouchableOpacity style={styles.itemProfile} onPress={() => navigation.navigate('OpticaEnviado')}>
             <Feather name="truck" size={24} color="black" />
             <Text style={styles.textProfile}>Enviados</Text>
@@ -101,12 +90,7 @@ export default function OpticaScreen({ navigation }: Props) {
           <TouchableOpacity style={styles.itemProfile} onPress={() => navigation.navigate('OpticaReseña')}>
             <Feather name="edit" size={24} color="black" />
             <Text style={styles.textProfile}>Reseñas</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.itemProfile} onPress={() => navigation.navigate('OpticaColaPedidos')}>
-            <Ionicons name="bag-outline" size={24} color="black" />
-            <Text style={styles.textProfile}>Pedidos en cola</Text>
-          </TouchableOpacity>
-          
+          </TouchableOpacity>          
         </View>
         
         <View style={{ flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'center' }}>

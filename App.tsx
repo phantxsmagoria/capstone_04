@@ -20,26 +20,19 @@ import ProfileClienteScreen from './src/screens/ProfileClienteScreen';
 import VerProducto from './src/screens/VerProducto';
 import ProductoOptica from './src/screens/ProductoOptica';
 import RecetaScreen from './src/screens/RecetaScreen';
-import OpticaCobroPendiente from './src/screens/OpticaCobroPendiente';
-import OpticaEnvioPendiente from './src/screens/OpticaEnvioPendiente';
 import OpticaEnviado from './src/screens/OpticaEnviado';
 import OpticaReseña from './src/screens/OpticaReseña';
-import OpticaColaPedidos from './src/screens/OpticaColaPedidos';
 import OpticaConfiguracion from './src/screens/OpticaConfiguracion';
 import EditarProducto from './src/screens/EditarProducto';
-import EditarPerfilOptica from './src/screens/EditarPerfilOptica';
 import ProductoCliente from './src/screens/ProductoCliente';
 import ClienteRegistroBoletas from './src/screens/ClienteRegistroBoletas';
 import ClienteRegistroPagos from './src/screens/ClienteRegistroPagos';
-import EditarPerfilCliente from './src/screens/EditarPerfilCliente';
 import ReportErrorScreen from './src/screens/ReportErrorScreen';
-import PagoCliente from './src/screens/PagoCliente';
 import DatosCompra from './src/screens/DatosCompra';
 import ReciboBoletaCliente from './src/screens/ReciboBoletaCliente';
 import OlvidarContraseña from './src/screens/OlvidarContraseña';
 import ClienteConfiguracion from './src/screens/ClienteConfiguracion';
 import OpticaNotificarError from './src/screens/OpticaNotificarError';
-import DireccionCliente from './src/screens/DireccionCliente';
 import AgregarReseñaScreen from './src/screens/AgregarReseñaScreen'; 
 import ReseñasClienteScreen from './src/screens/ReseñasClienteScreen';
 import CompartirReceta from './src/screens/CompartirReceta'; 
@@ -62,15 +55,10 @@ type RootStackParamList = {
   Perfil: undefined;
   ProductoOptica: undefined;
   VerProducto: undefined;
-  RecetaScreen: undefined;
-  OpticaCobroPendiente: undefined;
-  OpticaEnvioPendiente: undefined;
-  OpticaEnviado: undefined;
   OpticaReseña: undefined;
-  OpticaColaPedidos: undefined;
+  RecetaScreen: undefined;
+  OpticaEnviado: undefined;
   OpticaConfiguracion: undefined;
-  EditarPerfilOptica: undefined;
-  EditarPerfilCliente: undefined;
   ProductoCliente: undefined;
   ClienteRegistroBoletas: undefined;
   ClienteRegistroPagos: undefined;
@@ -84,13 +72,11 @@ type RootStackParamList = {
     quantity: number;
   };
   ReportErrorScreen: undefined;
-  Pago: undefined;
   DatosCompra: undefined;
   ReciboBoletaCliente: undefined;
   OlvidarContraseña: undefined;
   ClienteConfiguracion: undefined;
   OpticaNotificarError: undefined;
-  DireccionCliente: undefined;
   ReseñasClienteScreen: undefined;
   AgregarReseñaScreen: { productId: string };
   Compartir: undefined;
@@ -261,26 +247,19 @@ export default function App() {
           <Stack.Screen name="ProductoOptica" component={ProductoOptica} options={{ headerShown: false }} />
           <Stack.Screen name="VerProducto" component={VerProducto} options={{ headerShown: false }} />
           <Stack.Screen name="RecetaScreen" component={RecetaScreen} options={{ headerShown: false }} />
-          <Stack.Screen name="OpticaCobroPendiente" component={OpticaCobroPendiente} options={{ headerShown: false }} />
-          <Stack.Screen name="OpticaEnvioPendiente" component={OpticaEnvioPendiente} options={{ headerShown: false }} />
           <Stack.Screen name="OpticaReseña" component={OpticaReseña} options={{ headerShown: false }} />
           <Stack.Screen name="OpticaEnviado" component={OpticaEnviado} options={{ headerShown: false }} />
-          <Stack.Screen name="OpticaColaPedidos" component={OpticaColaPedidos} options={{ headerShown: false }} />
           <Stack.Screen name="OpticaConfiguracion" component={OpticaConfiguracion} options={{ headerShown: false }} />
           <Stack.Screen name="EditarProducto" component={EditarProducto} options={{ headerShown: false }} />
-          <Stack.Screen name="EditarPerfilOptica" component={EditarPerfilOptica} options={{ headerShown: false }} />
           <Stack.Screen name="ProductoCliente" component={ProductoCliente} options={{ headerShown: false }} />
           <Stack.Screen name="ClienteRegistroBoletas" component={ClienteRegistroBoletas} options={{ headerShown: false }} />
           <Stack.Screen name="ClienteRegistroPagos" component={ClienteRegistroPagos} options={{ headerShown: false }} />
-          <Stack.Screen name="EditarPerfilCliente" component={EditarPerfilCliente} options={{ headerShown: false }} />
           <Stack.Screen name="ReportErrorScreen" component={ReportErrorScreen} options={{ headerShown: false }} />
-          <Stack.Screen name="Pago" component={PagoCliente} options={{ headerShown: false }} /> 
           <Stack.Screen name="DatosCompra" component={DatosCompra} options={{ headerShown: false }} /> 
           <Stack.Screen name="ReciboBoletaCliente" component={ReciboBoletaCliente} options={{ headerShown: false }} />
           <Stack.Screen name="OlvidarContraseña" component={OlvidarContraseña} options={{ headerShown: false }} />
           <Stack.Screen name="ClienteConfiguracion" component={ClienteConfiguracion} options={{headerShown:false}}/>
           <Stack.Screen name="OpticaNotificarError" component={OpticaNotificarError} options={{headerShown:false}}/>
-          <Stack.Screen name="DireccionCliente" component={DireccionCliente} options={{headerShown:false}}/>
           <Stack.Screen name="AgregarReseñaScreen" component={AgregarReseñaScreen} options={{headerShown:false}}/>
           <Stack.Screen name="ReseñasClienteScreen" component={ReseñasClienteScreen} options={{headerShown:false}}/>
           <Stack.Screen name="CompartidoOptica" component={CompartidoOptica} options={{headerShown:false}}/>

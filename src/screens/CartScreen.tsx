@@ -32,7 +32,6 @@ type CartItem = {
   quantity: number; // Cantidad de productos en stock
   maxQuantity: number; // Cantidad máxima disponible en stock
   cantidadLlevada: number; // Cantidad que el usuario quiere llevar
-  Cantidad: number; // Cantidad restada de quantity
 };
 
 const CartScreen: React.FC<Props> = ({ navigation }) => {
@@ -55,8 +54,7 @@ const CartScreen: React.FC<Props> = ({ navigation }) => {
           const productData = productSnap.data();
           const maxQuantity = productData.quantity; // Cantidad máxima disponible
           const cantidadLlevada = item.cantidadLlevada || 1; // Inicializar con 1 si no está definido
-          const Cantidad = maxQuantity - cantidadLlevada;
-          updatedCart.push({ ...item, quantity: productData.quantity, maxQuantity, cantidadLlevada, Cantidad });
+          updatedCart.push({ ...item, quantity: productData.quantity, maxQuantity, cantidadLlevada });
         } else {
           updatedCart.push(item);
         }
@@ -105,8 +103,7 @@ const CartScreen: React.FC<Props> = ({ navigation }) => {
     const updatedCart = cartItems.map((item) => {
       if (item.id === itemId && item.cantidadLlevada < item.maxQuantity) {
         const newCantidadLlevada = item.cantidadLlevada + 1;
-        const Cantidad = item.maxQuantity - newCantidadLlevada;
-        return { ...item, cantidadLlevada: newCantidadLlevada, Cantidad };
+        return { ...item, cantidadLlevada: newCantidadLlevada };
       }
       return item;
     });
@@ -118,8 +115,7 @@ const CartScreen: React.FC<Props> = ({ navigation }) => {
     const updatedCart = cartItems.map((item) => {
       if (item.id === itemId && item.cantidadLlevada > 1) {
         const newCantidadLlevada = item.cantidadLlevada - 1;
-        const Cantidad = item.maxQuantity - newCantidadLlevada;
-        return { ...item, cantidadLlevada: newCantidadLlevada, Cantidad };
+        return { ...item, cantidadLlevada: newCantidadLlevada };
       }
       return item;
     });
@@ -136,13 +132,11 @@ const CartScreen: React.FC<Props> = ({ navigation }) => {
     try {
       for (const item of cartItems) {
         const productRef = doc(db, 'productos', item.id);
-        await updateDoc(productRef, { quantity: item.Cantidad });
+        await updateDoc(productRef, { quantity: item.quantity - item.cantidadLlevada });
       }
-      // Aquí puedes navegar a la pantalla de pago o mostrar un mensaje de confirmación
       navigation.navigate('DatosCompra');
     } catch (error) {
       console.error('Error al confirmar el pedido:', error);
-      // Muestra un mensaje de error al usuario
     }
   };
 
