@@ -805,6 +805,8 @@ export default StyleSheet.create({
     // esto es para los comentarios de Compartir Receta
     comentarios: {
         margin: 5,
+        marginLeft: 10,
+        marginRight: 10, 
         backgroundColor: '#ffffff',
         height: 'auto',
         borderRadius: 5,
