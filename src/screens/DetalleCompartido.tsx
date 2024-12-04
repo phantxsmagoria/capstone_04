@@ -2,8 +2,8 @@ import { View, Text, FlatList, TouchableOpacity, TextInput } from 'react-native'
 import React, { useState, useEffect } from 'react'
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RouteProp } from '@react-navigation/native';
-import { collection, getDocs, doc, getDoc, addDoc } from 'firebase/firestore'
-import { db } from '../firebaseConfig'
+import { collection, getDocs, doc, getDoc, addDoc, query, where } from 'firebase/firestore'
+import { db, auth } from '../firebaseConfig'
 import styles from '../styles/styles'
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 
@@ -42,6 +42,7 @@ interface Comentario {
     id: string;
     recetaId: string;
     comentario: string;
+    nombreOptica: string;
 }
 
 export default function DetalleCompartido({ navigation, route }: Props) {
@@ -49,6 +50,7 @@ export default function DetalleCompartido({ navigation, route }: Props) {
     const [receta, setReceta] = useState<Receta | null>(null);
     const [comentario, setComentario] = useState('');
     const [comentarios, setComentarios] = useState<Comentario[]>([]);
+    const [nombreOptica,setNombreOptica] = useState<string>('');
 
     const fetchDetalleCompartido = async () => {
         try {
@@ -61,6 +63,23 @@ export default function DetalleCompartido({ navigation, route }: Props) {
             console.error('Error al tratar de obtener los datos de la receta: ', error);
         }
     };
+
+    const fetchNomOptica = async() => {
+        const user = auth.currentUser;
+        if (user) {
+            try {
+                const q = query(collection(db, 'opticas'), where('uid', '==', user.uid));
+                const querySnapshot = await getDocs(q);
+                if(!querySnapshot.empty){
+                    const userData = querySnapshot.docs[0].data();
+                    setNombreOptica(userData?.nombreOptica || '');
+                }
+            } catch (error){ 
+                console.error('Error al obtener el nombre de la optica: ', error)
+            }
+        }
+
+    }
 
     const fetchComentario = async () => {
         try {
@@ -76,7 +95,8 @@ export default function DetalleCompartido({ navigation, route }: Props) {
         try {
             await addDoc(collection(db, 'compartirReceta', recetaId, 'comentarios'), {
                 comentario,
-                recetaId
+                recetaId,
+                nombreOptica
             });
             setComentario('');
             fetchComentario();
@@ -88,6 +108,7 @@ export default function DetalleCompartido({ navigation, route }: Props) {
     useEffect(() => {
         fetchDetalleCompartido();
         fetchComentario();
+        fetchNomOptica();
     }, [recetaId]);
 
     if (!receta) {
@@ -97,6 +118,7 @@ export default function DetalleCompartido({ navigation, route }: Props) {
             </View>
         )
     }
+
 
     return (
         <View style={{ flex: 1 }}>
@@ -138,7 +160,7 @@ export default function DetalleCompartido({ navigation, route }: Props) {
                                 value={comentario}
                                 onChangeText={setComentario}
                             />
-                            <TouchableOpacity style={[styles.botonReceta, {marginBottom: 20}]} onPress={handleComentario}>
+                            <TouchableOpacity style={[styles.botonReceta, { marginBottom: 20 }]} onPress={handleComentario}>
                                 <Text style={styles.botonTextReceta}>Agregar</Text>
                             </TouchableOpacity>
                         </View>
@@ -148,7 +170,7 @@ export default function DetalleCompartido({ navigation, route }: Props) {
                 data={comentarios}
                 renderItem={({ item }) => (
                     <View style={styles.comentario}>
-                        <Text>{item.comentario}</Text>
+                        <Text>{item.nombreOptica}: {item.comentario}</Text>
                     </View>
                 )}
                 keyExtractor={item => item.id}

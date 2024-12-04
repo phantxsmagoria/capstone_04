@@ -2,7 +2,7 @@ import { View, Text, FlatList, TouchableOpacity } from 'react-native'
 import React, {useState, useEffect} from 'react'
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RouteProp } from '@react-navigation/native';
-import { collection, getDocs } from 'firebase/firestore'
+import { collection, getDocs, doc, updateDoc, setDoc } from 'firebase/firestore'
 import { db } from '../firebaseConfig'
 import styles from '../styles/styles'
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
@@ -45,11 +45,12 @@ export default function CompartidoOptica({navigation}: Props) {
     const fetchCompartidoOptica = async () => {
         try {
             const querySnapshot = await getDocs(collection(db, 'compartirReceta'));
-            const recetasArray: Receta[] = querySnapshot.docs.map((doc) => {
-                const data = doc.data() as Omit<Receta, 'id'>;
-                return { id: doc.id, ...data };
-            });
-            setRecetas(recetasArray);
+            const uniqueRecetas: {[key: string]: Receta} = {};
+            querySnapshot.docs.forEach((doc) => {
+              const data = doc.data() as Omit<Receta, 'id'>;
+              uniqueRecetas[data.userId] = {id: doc.id, ...data};
+            })
+            setRecetas(Object.values(uniqueRecetas));
         } catch (error) {
             console.error('Error obteniendo recetas compartidas: ', error);
         }

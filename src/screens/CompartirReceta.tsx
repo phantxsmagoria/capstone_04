@@ -1,8 +1,8 @@
-import { View, Text, TouchableOpacity, Alert } from 'react-native'
-import React, { useState, useEffect } from 'react'
+import { View, Text, TouchableOpacity, Alert, ScrollView } from 'react-native'
+import React, { useState, useEffect, useRef } from 'react'
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RouteProp } from '@react-navigation/native';
-import { doc, getDoc, getDocs, query, collection, where, addDoc } from 'firebase/firestore';
+import { doc, getDoc, getDocs, query, collection, where, setDoc } from 'firebase/firestore';
 import { db, auth } from '../firebaseConfig';
 import styles from '../styles/styles';
 
@@ -19,6 +19,12 @@ type Props = {
     route: CompartirRouteProp;
 };
 
+interface Comentario {
+    comentario: string;
+    nombreOptica: string;
+}
+
+
 export default function CompartirReceta({ navigation }: Props) {
     const [ODesfera, setOdEsfera] = useState<string>('');
     const [ODcilindro, setOdCilindro] = useState<string>('');
@@ -29,7 +35,9 @@ export default function CompartirReceta({ navigation }: Props) {
     const [adicion, setAdicion] = useState<string>('');
     const [distanciapupilar, setDistanciaPupilar] = useState<string>('');
     const [userName, setUserName] = useState<string>('Usuario');
-
+    const [comentariosOptica, setComentariosOptica] = useState<Comentario[]>([]);
+    const prevComentarRef = useRef<string[]>([]);
+    const [hayNuevoComentario, setHayNuevoComentario] = useState<boolean>(false);
 
     const usuarioId = auth.currentUser?.uid;
 
@@ -74,41 +82,95 @@ export default function CompartirReceta({ navigation }: Props) {
     };
     const handleCompartirReceta = async () => {
         try {
-            await addDoc(collection(db, 'compartirReceta'), {
-                ODesfera,
-                ODcilindro,
-                ODeje,
-                OIesfera,
-                OIcilindro,
-                OIeje,
-                adicion,
-                distanciapupilar,
-                userId: usuarioId,
-                userName,
-                compartir: new Date(),
-            });
-            navigation.navigate('CompartidoOptica');
+            const recetaRef = doc(db, 'compartirReceta', usuarioId!);
+            const recetaSnap = await getDoc(recetaRef);
+            if (recetaSnap.exists()) {
+                //Acá actualiza la receta existente
+                await setDoc(recetaRef, {
+                    ODesfera,
+                    ODcilindro,
+                    ODeje,
+                    OIesfera,
+                    OIcilindro,
+                    OIeje,
+                    adicion,
+                    distanciapupilar,
+                    userId: usuarioId,
+                    userName,
+                    compartir: new Date(),
+                }, { merge: true });
+            } else {
+                // acá crea una nueva receta
+                await setDoc(recetaRef, {
+                    ODesfera,
+                    ODcilindro,
+                    ODeje,
+                    OIesfera,
+                    OIcilindro,
+                    OIeje,
+                    adicion,
+                    distanciapupilar,
+                    userId: usuarioId,
+                    userName,
+                    compartir: new Date(),
+                });
+            }
+            Alert.alert('Exitosamente', 'Tu receta ha sido compartida.')
         } catch (error) {
             console.error('Se ha producido una error al compartir la receta: ', error)
             Alert.alert('Error', 'Hubo un problema al compartir tu receta.');
         }
     };
 
+    const fetchComentarioOptica = async () => {
+        try {
+            const comentarioRef = collection(db, 'compartirReceta', usuarioId!, 'comentarios');
+            const querySnapshot = await getDocs(comentarioRef);
+            if (!querySnapshot.empty) {
+                const comentarioData = querySnapshot.docs.map(doc =>
+                    ({
+                        comentario: doc.data().comentario,
+                        nombreOptica: doc.data().nombreOptica,
+                    }) as Comentario);
+                if (JSON.stringify(comentarioData) !== JSON.stringify(prevComentarRef.current)) {
+                    setComentariosOptica(comentarioData);
+                    prevComentarRef.current = comentarioData.map(c => c.comentario);
+                    setHayNuevoComentario(true);
+                } else {
+                    setHayNuevoComentario(false);
+                }
+            } else {
+                if (comentariosOptica.length > 0) {
+                    setComentariosOptica([]);
+                    prevComentarRef.current = [];
+                    console.log('No se han encontrado comentarios.');
+                }
+                setHayNuevoComentario(false);
+            }
+            if (hayNuevoComentario) {
+                //console.log('Comentarios recuperados: ', comentariosOptica);
+            }
+        } catch (error) {
+            console.error('Error fetching comentarios: ', error);
+        }
+    }
     useEffect(() => {
         fetchUserName();
         if (usuarioId) {
             fetchDatosCompartirReceta();
+            fetchComentarioOptica();
         }
         const intervalo = setInterval(() => {
             if (usuarioId) {
                 fetchDatosCompartirReceta();
+                fetchComentarioOptica();
             }
         }, 5000);
         return () => clearInterval(intervalo);
     }, [usuarioId]);
 
     return (
-        <View>
+        <ScrollView>
             <View>
                 <Text style={[styles.title, { textAlign: 'center', marginTop: 50, marginBottom: 20 }]}>Compartir Receta</Text>
             </View>
@@ -140,6 +202,16 @@ export default function CompartirReceta({ navigation }: Props) {
                     <Text style={styles.botonTextReceta}>{'Compartir Receta'}</Text>
                 </TouchableOpacity>
             </View>
-        </View>
+            <View>
+                <Text style={{ fontSize: 18, fontWeight: 'bold', marginTop: 20, marginLeft: 15 }}>Comentarios</Text>
+                {comentariosOptica.length > 0 ? (
+                    comentariosOptica.map((comentario, index) => (
+                        <Text key={index} style={styles.comentarios}>{comentario.nombreOptica}: {comentario.comentario}</Text>
+                    ))
+                ) : (
+                    <Text style={{ marginLeft: 15, marginTop: 5 }}>No hay comentarios existentes</Text>
+                )}
+            </View>
+        </ScrollView>
     )
 }

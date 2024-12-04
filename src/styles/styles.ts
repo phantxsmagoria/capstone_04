@@ -787,6 +787,11 @@ export default StyleSheet.create({
         borderWidth: 1, 
         borderColor: '#ccc', 
         borderRadius: 10,
+    }, 
+    // esto es para los comentarios 
+    comentarios: {
+        marginLeft: 15, 
+        marginTop: 5,
     }
     
 });
