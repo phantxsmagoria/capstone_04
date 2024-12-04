@@ -43,13 +43,10 @@ import DireccionCliente from './src/screens/DireccionCliente';
 import AgregarReseñaScreen from './src/screens/AgregarReseñaScreen'; 
 import ReseñasClienteScreen from './src/screens/ReseñasClienteScreen';
 import CompartirReceta from './src/screens/CompartirReceta'; 
-<<<<<<< HEAD
 import { auth } from './src/firebaseConfig'; 
-
-=======
 import CompartidoOptica from './src/screens/CompartidoOptica';
 import DetalleCompartido from './src/screens/DetalleCompartido';
->>>>>>> 3d2f73002bf13a99c4babe6c99e6aeaed648f573
+
 
 type RootStackParamList = {
   MainTabs: undefined;
