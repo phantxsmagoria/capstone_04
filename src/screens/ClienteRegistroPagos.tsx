@@ -51,15 +51,27 @@ export default function ClienteRegistroPagos({ navigation }: Props) {
       });
 
       if (purchasedProductIds.length > 0) {
-        console.log("Product IDs to fetch:", purchasedProductIds);
-        const productosSnapshot = await getDocs(query(collection(db, 'productos'), where('__name__', 'in', purchasedProductIds)));
+        // Eliminar duplicados
+        const uniqueProductIds = [...new Set(purchasedProductIds)];
+        console.log("Unique Product IDs to fetch:", uniqueProductIds);
+
         const productos: ProductoData[] = [];
-        productosSnapshot.forEach((doc) => {
-          productos.push({ id: doc.id, ...doc.data() } as ProductoData);
-        });
+        // Dividir en lotes si hay más de 10 IDs
+        const batches = [];
+        while (uniqueProductIds.length) {
+          batches.push(uniqueProductIds.splice(0, 10));
+        }
+
+        for (const batch of batches) {
+          const productosSnapshot = await getDocs(query(collection(db, 'productos'), where('__name__', 'in', batch)));
+          productosSnapshot.forEach((doc) => {
+            productos.push({ id: doc.id, ...doc.data() } as ProductoData);
+          });
+        }
+        
         setPurchasedProducts(productos);
+        console.log("Purchased products data:", productos);
       }
-      console.log("Purchased products data:", purchasedProducts);
     } catch (error) {
       console.error("Error fetching purchased products:", error);
     }
@@ -84,27 +96,22 @@ export default function ClienteRegistroPagos({ navigation }: Props) {
   );
 
   return (
-    
     <View>
-      
       <TouchableOpacity style={styles.nomProfile} onPress={() => navigation.navigate('Perfil')}>
         <MaterialIcons name="arrow-back-ios" size={25} color="#FA7929" />
         <Text style={styles.tituloMenusOptica}>Mis Pagos</Text>
       </TouchableOpacity>
-      
 
       {purchasedProducts.length === 0 ? (
         <View style={styles.imagenOpticaContainer}>
           <Image source={require('../assets/ClientePago.png')} style={{width: 300, height: 300}}/>
           <Text style={styles.textoOptica}>Sin pagos existentes</Text>
-          
         </View>
-        
       ) : (
         <FlatList
-        style={{
-          height: 850,
-        }}
+          style={{
+            height: 850,
+          }}
           data={purchasedProducts}
           renderItem={renderItem}
           keyExtractor={item => item.id}

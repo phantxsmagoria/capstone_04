@@ -78,7 +78,26 @@ export default function ProductoOptica({ navigation }: Props) {
     }
 
     try {
-      const userEmail = auth.currentUser?.email; if (!userEmail) { setErrorMessage('No se pudo obtener el correo electrónico del usuario.'); return; }
+      const userEmail = auth.currentUser?.email;
+      if (!userEmail) {
+        setErrorMessage('No se pudo obtener el correo electrónico del usuario.');
+        return;
+      }
+
+      const user = auth.currentUser;
+      if (!user) {
+        setErrorMessage('No se ha iniciado sesión.');
+        return;
+      }
+
+      const userQuery = query(collection(db, 'opticas'), where('uid', '==', user.uid));
+      const userSnapshot = await getDocs(userQuery);
+      if (userSnapshot.empty) {
+        setErrorMessage('No se pudo encontrar la información de la óptica.');
+        return;
+      }
+      const opticaData = userSnapshot.docs[0].data();
+
       const docRef = await addDoc(collection(db, 'productos'), {
         nombre,
         descripcion,
@@ -87,7 +106,9 @@ export default function ProductoOptica({ navigation }: Props) {
         categoria,
         quantity: parseInt(quantity),
         usuarioId: auth.currentUser?.uid,
-        opticaEmail: userEmail, // Agregar el correo electrónico de la óptica 
+        opticaEmail: userEmail,
+        nombreOptica: opticaData.nombreOptica,
+        rut: opticaData.rut, 
       });
       const newProduct = {
         id: docRef.id,
@@ -98,7 +119,9 @@ export default function ProductoOptica({ navigation }: Props) {
         categoria,
         quantity: parseInt(quantity),
         usuarioId: auth.currentUser?.uid,
-        opticaEmail: userEmail, // Agregar el correo electrónico de la óptica
+        opticaEmail: userEmail,
+        nombreOptica: opticaData.nombreOptica,
+        rut: opticaData.rut, 
       };
       setProducts([...products, newProduct]);
       setSuccessMessage('Producto añadido con éxito.');

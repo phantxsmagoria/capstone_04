@@ -109,37 +109,32 @@ const ReseñasClienteScreen: React.FC<Props> = ({ navigation }) => {
   return (
     <View style={{ flex: 1 }}>
       <FlatList
-      style={{
-        height: 850,
-      }}
+        style={{ height: 850 }}
         data={filteredReviews}
         ListHeaderComponent={
           <View style={{ padding: 20, marginTop: 20 }}>
             <TouchableOpacity style={styles.nomProfile} onPress={() => navigation.navigate('Perfil')}>
-                <MaterialIcons name="arrow-back-ios" size={25} color="#FA7929" />
+              <MaterialIcons name="arrow-back-ios" size={25} color="#FA7929" />
               <Text style={styles.tituloMenusOptica}>Mis Reseñas</Text>
             </TouchableOpacity>
 
             <Text style={styles.title}>Tus Reseñas</Text>
 
-            <View style={{
-              display: 'flex',
-              flexDirection: 'row',
-              gap: 10,
-              alignItems: 'center',
-              backgroundColor: '#FA7929',
-              padding: 10,
-              marginVertical: 10,
-              marginTop: 15,
-              borderRadius: 10,
-            }}>
-              
-            </View>
-            
+            <View
+              style={{
+                display: 'flex',
+                flexDirection: 'row',
+                gap: 10,
+                alignItems: 'center',
+                backgroundColor: '#FA7929',
+                padding: 10,
+                marginVertical: 10,
+                marginTop: 15,
+                borderRadius: 10,
+              }}
+            ></View>
           </View>
-          
         }
-        
         renderItem={renderReseña}
         keyExtractor={item => item.id}
         ListEmptyComponent={() => (
@@ -147,12 +142,9 @@ const ReseñasClienteScreen: React.FC<Props> = ({ navigation }) => {
             <Image source={require('../assets/ReseñaOptica.png')} style={styles.emptyImage} />
             <Text style={styles.emptyText}>No tienes reseñas creadas.</Text>
           </View>
-          
         )}
-        
       />
     </View>
-    
   );
 };
 

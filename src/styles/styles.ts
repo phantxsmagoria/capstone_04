@@ -45,7 +45,6 @@ export default StyleSheet.create({
         marginRight: 120,
         marginBottom: 80,
     },
-
     inputLine: {
         width: '85%',
         height: 30,
@@ -54,22 +53,7 @@ export default StyleSheet.create({
         marginBottom: 30,
         backgroundColor: 'transparent',
         fontSize: 12,
-        borderWidth: 0,      
-      },
-
-      inputLine2: {
-        width: '10%',
-        height: 30,
-        borderBottomColor: '#FA7929',
-        borderBottomWidth: 1,
-        marginBottom: 30,
-        backgroundColor: 'transparent',
-        fontSize: 12,
-        paddingTop: 7,
-        marginLeft:9,
-        borderWidth: 0,       
-      },
-
+    },
     separator: {
         marginBottom: 20,
     },
@@ -521,6 +505,7 @@ export default StyleSheet.create({
         flexDirection: 'row',
         alignItems:'center',
         width: '90%',
+        borderWidth: 1,
         borderColor: '#EEEFF0', 
         borderRadius: 5, 
         margin: 10, 
@@ -802,11 +787,20 @@ export default StyleSheet.create({
         borderWidth: 1, 
         borderColor: '#ccc', 
         borderRadius: 10,
-    }, 
-    // esto es para los comentarios 
-    comentarios: {
-        marginLeft: 15, 
-        marginTop: 5,
-    }
+    },
+
+    // Esto es para BoletaCliente
+    boletaContainer: { 
+        backgroundColor: '#f9f9f9', 
+        padding: 15, 
+        marginVertical: 8, 
+        marginHorizontal: 16, 
+        borderRadius: 10, 
+    },
+    boletaTitle: { 
+        fontSize: 18, 
+        fontWeight: 'bold', 
+        marginBottom: 5, 
+    },
     
 });

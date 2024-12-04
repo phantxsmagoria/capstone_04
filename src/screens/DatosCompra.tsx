@@ -32,6 +32,8 @@ type CartItem = {
   precio: number | null;
   imagenURL: string | null;
   quantity: number;
+  cantidadLlevada: number; // Cantidad que el usuario quiere llevar
+  Cantidad: number; // Cantidad restada de quantity
 };
 
 type SeleccionItem = {
@@ -72,15 +74,16 @@ const DatosCompra: React.FC<Props> = ({ navigation }) => {
 
   const calculateTotals = (items: CartItem[]) => {
     let totalPrecio = 0;
-
+  
     items.forEach(item => {
-      if (item.precio != null) {
-        totalPrecio += item.precio;
+      if (item.precio != null && item.cantidadLlevada != null) {
+        totalPrecio += item.precio * item.cantidadLlevada;
       }
     });
-
+  
     setTotalPrice(totalPrecio);
   };
+  
 
   const fetchLocalidadData = async () => {
     const comunaSnapshot = await getDocs(collection(db, 'comuna'));
@@ -145,7 +148,7 @@ const DatosCompra: React.FC<Props> = ({ navigation }) => {
         address,
         comuna: seleccionarComuna,
         ciudad: seleccionarCiudad,
-        cartItems: cartItems.map(item => ({ ...item, productoId: item.id })), // Incluimos productoId en los items del carrito
+        cartItems: cartItems.map(item => ({ ...item, productoId: item.id, cantidadLlevada: item.cantidadLlevada })), // Incluimos productoId en los items del carrito
         totalPrice,
       });
 

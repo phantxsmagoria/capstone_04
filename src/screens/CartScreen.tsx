@@ -13,7 +13,7 @@ type RootStackParamList = {
   Usuario: undefined;
   Home: undefined;
   Pago: undefined;
-  DatosCompra: undefined;
+  DatosCompra: undefined; // Cambiado a DatosCompra
 };
 
 type CartScreenNavigationProp = StackNavigationProp<RootStackParamList, 'Carrito'>;
@@ -27,11 +27,12 @@ type Props = {
 type CartItem = {
   id: string;
   nombre: string;
-  descripcion: string;
   precio: number | null;
   imagenURL: string | null;
-  quantity: number; // Cantidad que el usuario quiere llevar
+  quantity: number; // Cantidad de productos en stock
   maxQuantity: number; // Cantidad máxima disponible en stock
+  cantidadLlevada: number; // Cantidad que el usuario quiere llevar
+  Cantidad: number; // Cantidad restada de quantity
 };
 
 const CartScreen: React.FC<Props> = ({ navigation }) => {
@@ -44,7 +45,7 @@ const CartScreen: React.FC<Props> = ({ navigation }) => {
     const savedCart = await AsyncStorage.getItem(`cart_${uid}`);
     if (savedCart) {
       const parsedCart: CartItem[] = JSON.parse(savedCart);
-      
+
       // Verificar stock desde Firestore
       const updatedCart: CartItem[] = [];
       for (const item of parsedCart) {
@@ -52,7 +53,10 @@ const CartScreen: React.FC<Props> = ({ navigation }) => {
         const productSnap = await getDoc(productRef);
         if (productSnap.exists()) {
           const productData = productSnap.data();
-          updatedCart.push({ ...item, maxQuantity: productData.quantity, quantity: 1 });
+          const maxQuantity = productData.quantity; // Cantidad máxima disponible
+          const cantidadLlevada = item.cantidadLlevada || 1; // Inicializar con 1 si no está definido
+          const Cantidad = maxQuantity - cantidadLlevada;
+          updatedCart.push({ ...item, quantity: productData.quantity, maxQuantity, cantidadLlevada, Cantidad });
         } else {
           updatedCart.push(item);
         }
@@ -94,13 +98,15 @@ const CartScreen: React.FC<Props> = ({ navigation }) => {
   };
 
   const calculateTotalPrice = () => {
-    return cartItems.reduce((total, item) => total + ((item.precio || 0) * item.quantity), 0);
+    return cartItems.reduce((total, item) => total + ((item.precio || 0) * item.cantidadLlevada), 0);
   };
 
   const increaseQuantity = async (itemId: string) => {
     const updatedCart = cartItems.map((item) => {
-      if (item.id === itemId && item.quantity < item.maxQuantity) {
-        return { ...item, quantity: item.quantity + 1 };
+      if (item.id === itemId && item.cantidadLlevada < item.maxQuantity) {
+        const newCantidadLlevada = item.cantidadLlevada + 1;
+        const Cantidad = item.maxQuantity - newCantidadLlevada;
+        return { ...item, cantidadLlevada: newCantidadLlevada, Cantidad };
       }
       return item;
     });
@@ -110,8 +116,10 @@ const CartScreen: React.FC<Props> = ({ navigation }) => {
 
   const decreaseQuantity = async (itemId: string) => {
     const updatedCart = cartItems.map((item) => {
-      if (item.id === itemId && item.quantity > 1) {
-        return { ...item, quantity: item.quantity - 1 };
+      if (item.id === itemId && item.cantidadLlevada > 1) {
+        const newCantidadLlevada = item.cantidadLlevada - 1;
+        const Cantidad = item.maxQuantity - newCantidadLlevada;
+        return { ...item, cantidadLlevada: newCantidadLlevada, Cantidad };
       }
       return item;
     });
@@ -128,7 +136,7 @@ const CartScreen: React.FC<Props> = ({ navigation }) => {
     try {
       for (const item of cartItems) {
         const productRef = doc(db, 'productos', item.id);
-        await updateDoc(productRef, { quantity: item.maxQuantity - item.quantity });
+        await updateDoc(productRef, { quantity: item.Cantidad });
       }
       // Aquí puedes navegar a la pantalla de pago o mostrar un mensaje de confirmación
       navigation.navigate('DatosCompra');
@@ -160,11 +168,12 @@ const CartScreen: React.FC<Props> = ({ navigation }) => {
               <View style={{ flex: 1 }}>
                 <Text style={styles.productTitle}>{item.nombre}</Text>
                 <Text style={styles.productPrice}>${item.precio}</Text>
+                <Text style={styles.productDescription}>Cantidad llevada: {item.cantidadLlevada}</Text>
                 <View style={styles.quantityContainer}>
                   <TouchableOpacity onPress={() => decreaseQuantity(item.id)}>
                     <Icon name="minus-circle" size={20} color="#FA7929" />
                   </TouchableOpacity>
-                  <Text style={styles.quantityText}>{item.quantity}</Text>
+                  <Text style={styles.quantityText}>{item.cantidadLlevada}</Text>
                   <TouchableOpacity onPress={() => increaseQuantity(item.id)}>
                     <Icon name="plus-circle" size={20} color="#FA7929" />
                   </TouchableOpacity>

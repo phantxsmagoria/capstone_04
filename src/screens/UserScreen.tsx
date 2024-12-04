@@ -24,6 +24,9 @@ interface ProductoData {
   categoria: string;
   quantity: number;
 }
+interface CartItem extends ProductoData { 
+  cantidadLlevada: number; 
+}
 
 export default function UserScreen({ navigation }: Props) {
   const [sliderList, setSliderList] = useState<SliderData[]>([]);
@@ -94,7 +97,28 @@ export default function UserScreen({ navigation }: Props) {
       const uid = await AsyncStorage.getItem('userUID');
       const savedCart = await AsyncStorage.getItem(`cart_${uid}`);
       let cartItems = savedCart ? JSON.parse(savedCart) : [];
-      cartItems.push(product);
+  
+      // Verificar si el producto ya está en el carrito
+      const productIndex = cartItems.findIndex((item: CartItem) => item.id === product.id);
+      if (productIndex > -1) {
+        // Si el producto ya está en el carrito, verificar cantidad disponible
+        if (cartItems[productIndex].cantidadLlevada < product.quantity) {
+          // Incrementar cantidad llevada si hay stock disponible
+          cartItems[productIndex].cantidadLlevada += 1;
+        } else {
+          Alert.alert('Stock insuficiente', 'No hay más unidades disponibles de este producto.');
+          return;
+        }
+      } else {
+        // Si el producto no está en el carrito, agregarlo con cantidad llevada inicializada en 1
+        if (product.quantity > 0) {
+          cartItems.push({ ...product, cantidadLlevada: 1 });
+        } else {
+          Alert.alert('Stock insuficiente', 'No hay unidades disponibles de este producto.');
+          return;
+        }
+      }
+  
       await AsyncStorage.setItem(`cart_${uid}`, JSON.stringify(cartItems));
       setModalVisible(true);
     } catch (error) {
@@ -102,6 +126,8 @@ export default function UserScreen({ navigation }: Props) {
       Alert.alert('Error', 'Hubo un problema al agregar el producto al carrito');
     }
   };
+  
+  
 
   const filteredProducts = productoList.filter(product =>
     product.nombre.toLowerCase().includes(searchQuery.toLowerCase()) && product.quantity > 0
