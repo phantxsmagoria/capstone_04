@@ -18,6 +18,7 @@ type RootStackParamList = {
     precio: number;
     imagenURL: string;
     categoria: string;
+    quantity: number; // Añadimos 'quantity'
   };
 };
 
@@ -36,6 +37,7 @@ interface ProductoData {
   precio: number;
   imagenURL: string;
   categoria: string;
+  quantity: number; // Añadimos 'quantity'
 }
 
 export default function VerProducto({ navigation }: Props) {
@@ -63,6 +65,7 @@ export default function VerProducto({ navigation }: Props) {
             precio: data.precio,
             imagenURL: data.imagenURL, // Usamos la URL de Firebase Storage directamente
             categoria: data.categoria,
+            quantity: data.quantity // Añadimos 'quantity'
           };
           productos.push(producto);
         }
@@ -116,7 +119,8 @@ export default function VerProducto({ navigation }: Props) {
               style={styles2.productImage}
             />
             <Text style={styles2.productDescription}>{item.descripcion}</Text>
-            <Text style={styles2.productPrice}>${item.precio}</Text>
+            <Text style={styles2.productPrice}>Cantidad: {item.quantity}</Text>
+            <Text style={styles2.productPrice}>Precio: ${item.precio}</Text>
             <Button
               title="Editar"
               onPress={() => navigation.navigate('EditarProducto', {
@@ -126,6 +130,7 @@ export default function VerProducto({ navigation }: Props) {
                 precio: item.precio,
                 imagenURL: item.imagenURL,
                 categoria: item.categoria,
+                quantity: item.quantity // Asegurándonos de pasar 'quantity'
               })}
             />
             <Button
