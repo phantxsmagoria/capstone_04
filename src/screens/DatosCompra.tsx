@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, TextInput, TouchableOpacity, Alert, FlatList, ScrollView } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, Alert, FlatList, ScrollView, Image } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RouteProp } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -32,7 +32,7 @@ type CartItem = {
   precio: number | null;
   imagenURL: string | null;
   quantity: number;
-  cantidadLlevada: number; // Cantidad que el usuario quiere llevar
+  cantidadLlevada: number; // Cantidad que el usuario quiere llevar, lo tiene que mostrar
   Cantidad: number; // Cantidad restada de quantity
 };
 
@@ -192,34 +192,37 @@ const DatosCompra: React.FC<Props> = ({ navigation }) => {
 
 
   return (
-    <View style={styles.fondoView2}>
+    <View style={styles.contenedorDetalle}>
       <View>
-        <TouchableOpacity style={styles.nomProfile} onPress={() => navigation.navigate('Carrito')}>
+        <TouchableOpacity style={[styles.nomProfile, {margin: 0,}]} onPress={() => navigation.navigate('Carrito')}>
           <MaterialIcons name="arrow-back-ios" size={35} color="#FA7929" />
-          <Text style={styles.tituloMenusOptica}>Datos de Compra</Text>
+          <Text style={styles.tituloMenusOptica}>Datos de compra</Text>
         </TouchableOpacity>
-      </View>
+     
 
       <FlatList
         data={cartItems}
         keyExtractor={(item, index) => `${item.id}-${index}`}
         renderItem={({ item }) => (
-          <View style={[styles.cartItem, { marginLeft: 14 }]}>
-            <Text style={styles.productTitle}>{item.nombre}</Text>
-            <Text style={styles.productPrice}>${item.precio}</Text>
+          <View style={[styles.contenedorCompra, { marginLeft: 14 }]}>
+            <Text >{item.nombre} </Text>
+            <Text >${item.precio}</Text>
+            <Text >  x {item.cantidadLlevada}</Text>
+          
           </View>
         )}
       />
 
-      <ScrollView style={styles.fondoView}>
+       </View>
+     
+      <ScrollView style={styles.contenedorDetalle}>
+
         <Text style={{ fontSize: 16, fontWeight: 'bold', marginTop: 20, marginLeft: 20 }}>Total: ${totalPrice}</Text>
 
-        <View style={styles.textReceta}>
-          <View style={styles.contenedorIcon1}>
+        <View style={[styles.textReceta, {marginLeft: 8,}]}>
             <View style={styles.containerIcon}>
               <Text style={styles.numeroIcon}>1</Text>
             </View>
-          </View>
           <Text style={{ marginLeft: 2, fontSize: 18 }}>Información del Recibidor</Text>
         </View>
         <View>
@@ -242,7 +245,7 @@ const DatosCompra: React.FC<Props> = ({ navigation }) => {
           </View>
         </View>
 
-        <View style={styles.textReceta}>
+        <View style={[styles.textReceta, {marginLeft:2,}]}>
           <View style={styles.contenedorIcon1}>
             <View style={styles.containerIcon}>
               <Text style={styles.numeroIcon}>2</Text>
@@ -285,7 +288,7 @@ const DatosCompra: React.FC<Props> = ({ navigation }) => {
 
         <View style={styles.contenedorPagoCli1}>
           <TextInput
-            style={styles.itemPagoCli1}
+            style={[styles.itemPagoCli1, {marginTop:20,}]}
             placeholder='Nombre Titular'
             value={nombreTarjeta}
             onChangeText={setNombreTarjeta}
@@ -300,7 +303,7 @@ const DatosCompra: React.FC<Props> = ({ navigation }) => {
         </View>
 
         <View style={styles.contenedorPagoCli2}>
-          <TextInput style={styles.itemPagoCli2}
+          <TextInput style={[styles.itemPagoCli2, {marginTop:28,}]}
             placeholder='Día'
             value={diaTarjeta}
             maxLength={2}
@@ -316,7 +319,9 @@ const DatosCompra: React.FC<Props> = ({ navigation }) => {
             onBlur={handleMesBlur}
             keyboardType='numeric'
           />
+
           <View style={styles.contenedorCvv}>
+
             <TextInput style={styles.itemPagoCli2}
               placeholder='CVV'
               value={cvvTarjeta}
@@ -324,7 +329,8 @@ const DatosCompra: React.FC<Props> = ({ navigation }) => {
               onChangeText={setCvvTarjeta}
               keyboardType='numeric'
             />
-            <TouchableOpacity onPress={InfoAlerta} style={styles.infoPago}>
+
+            <TouchableOpacity onPress={InfoAlerta} style={[styles.infoPago, { marginLeft: 78, }]}>
               <Ionicons name="information-circle-outline" size={40} color="#FA7929" />
             </TouchableOpacity>
           </View>

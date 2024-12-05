@@ -249,7 +249,6 @@ export default StyleSheet.create({
         display: 'flex',
         flexDirection: 'row',
         alignItems: 'center',
-        gap: 10,
     },
 
     tituloMenusOptica: {
@@ -819,6 +818,21 @@ export default StyleSheet.create({
    },
    fotoComentarios: {
     alignItems: 'center'
-   }
+   },
+   contenedorCompra: {
+    flexDirection: 'row',
+    width: '90%',
+    alignContent: 'center',
+    justifyContent: 'center',
+    fontWeight: 'bold',
+   },
+
+   contenedorDetalle: {
+    backgroundColor: '#fff',
+    flex: 1,
+    marginTop:30,
+    marginBottom: 0,
+},
     
 });
+
