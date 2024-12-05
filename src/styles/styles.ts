@@ -835,7 +835,6 @@ export default StyleSheet.create({
    },
 
    contenedorDetalle: {
-    height: 900,
     backgroundColor: '#fff',
     flex: 1,
     marginTop:30,
