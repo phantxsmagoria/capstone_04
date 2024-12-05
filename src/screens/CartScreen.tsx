@@ -4,7 +4,7 @@ import { StackNavigationProp } from '@react-navigation/stack';
 import { RouteProp } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import { db } from '../firebaseConfig'; // Asegúrate de tener configurado firebaseConfig
+import { db } from '../firebaseConfig'; 
 import { doc, getDoc, updateDoc } from 'firebase/firestore';
 import styles from '../styles/styles';
 
@@ -13,7 +13,7 @@ type RootStackParamList = {
   Usuario: undefined;
   Home: undefined;
   Pago: undefined;
-  DatosCompra: undefined; // Cambiado a DatosCompra
+  DatosCompra: undefined; 
 };
 
 type CartScreenNavigationProp = StackNavigationProp<RootStackParamList, 'Carrito'>;
@@ -29,9 +29,9 @@ type CartItem = {
   nombre: string;
   precio: number | null;
   imagenURL: string | null;
-  quantity: number; // Cantidad de productos en stock
-  maxQuantity: number; // Cantidad máxima disponible en stock
-  cantidadLlevada: number; // Cantidad que el usuario quiere llevar
+  quantity: number; 
+  maxQuantity: number; 
+  cantidadLlevada: number; 
 };
 
 const CartScreen: React.FC<Props> = ({ navigation }) => {
@@ -45,15 +45,15 @@ const CartScreen: React.FC<Props> = ({ navigation }) => {
     if (savedCart) {
       const parsedCart: CartItem[] = JSON.parse(savedCart);
 
-      // Verificar stock desde Firestore
+      
       const updatedCart: CartItem[] = [];
       for (const item of parsedCart) {
         const productRef = doc(db, 'productos', item.id);
         const productSnap = await getDoc(productRef);
         if (productSnap.exists()) {
           const productData = productSnap.data();
-          const maxQuantity = productData.quantity; // Cantidad máxima disponible
-          const cantidadLlevada = item.cantidadLlevada || 1; // Inicializar con 1 si no está definido
+          const maxQuantity = productData.quantity; 
+          const cantidadLlevada = item.cantidadLlevada || 1; 
           updatedCart.push({ ...item, quantity: productData.quantity, maxQuantity, cantidadLlevada });
         } else {
           updatedCart.push(item);

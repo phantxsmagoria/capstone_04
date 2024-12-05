@@ -63,7 +63,7 @@ const LoginScreen: React.FC<Props> = ({ navigation }) => {
           if (!userQuerySnapshot.empty) {
             const userData = userQuerySnapshot.docs[0].data();
             console.log('User Data:', userData);
-            userData.isLoggedIn = true; // Establece isLoggedIn a true
+            userData.isLoggedIn = true; 
             await AsyncStorage.setItem('user', JSON.stringify(userData));
             if (userData.type === 'cliente') {
               navigation?.navigate('Usuario');
@@ -78,7 +78,7 @@ const LoginScreen: React.FC<Props> = ({ navigation }) => {
           if (!opticaQuerySnapshot.empty) {
             const opticaData = opticaQuerySnapshot.docs[0].data();
             console.log('Optica Data:', opticaData);
-            opticaData.isLoggedIn = true; // Establece isLoggedIn a true
+            opticaData.isLoggedIn = true;
             await AsyncStorage.setItem('user', JSON.stringify(opticaData));
             if (opticaData.type === 'optica') {
               navigation?.navigate('OpticaScreen');

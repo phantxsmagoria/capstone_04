@@ -810,7 +810,7 @@ export default StyleSheet.create({
         fontWeight: 'bold',
         marginBottom: 5,
     },
-    // esto es para los comentarios de Compartir Receta
+    // esto es para los comentarios de Publicar Receta
     comentarios: {
         margin: 5,
         marginLeft: 10,

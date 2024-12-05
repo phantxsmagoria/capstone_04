@@ -7,12 +7,12 @@ import { db, auth } from '../firebaseConfig';
 import styles from '../styles/styles';
 
 type RootStackParamList = {
-    Compartir: undefined;
+    Publicar: undefined;
     CompartidoOptica: undefined;
 };
 
-type CompartirNavigationProp = StackNavigationProp<RootStackParamList, 'Compartir'>;
-type CompartirRouteProp = RouteProp<RootStackParamList, 'Compartir'>;
+type CompartirNavigationProp = StackNavigationProp<RootStackParamList, 'Publicar'>;
+type CompartirRouteProp = RouteProp<RootStackParamList, 'Publicar'>;
 
 type Props = {
     navigation: CompartirNavigationProp;
@@ -172,13 +172,13 @@ export default function CompartirReceta({ navigation }: Props) {
     return (
         <ScrollView>
             <View>
-                <Text style={[styles.title, { textAlign: 'center', marginTop: 50, marginBottom: 20 }]}>Compartir Receta</Text>
+                <Text style={[styles.title, { textAlign: 'center', marginTop: 50, marginBottom: 20 }]}>Publicar Receta</Text>
             </View>
             <View>
-                <Text style={{ fontSize: 24, fontWeight: 'bold', marginTop: 20, margin: 10, textAlign: 'center' }}>¿Deseas compartir tu receta?</Text>
+                <Text style={{ fontSize: 24, fontWeight: 'bold', marginTop: 20, margin: 10, textAlign: 'center' }}>¿Deseas publicar tu receta?</Text>
             </View>
             <View>
-                <Text style={{ fontSize: 18, fontWeight: 'semibold', marginTop: 20, margin: 10, marginLeft: 15, marginRight: 15, textAlign: 'justify' }}>Si compartes tu receta podrás obtener descuentos y/o precios exclusivos por las Ópticas Asociadas.</Text>
+                <Text style={{ fontSize: 18, fontWeight: 'semibold', marginTop: 20, margin: 10, marginLeft: 15, marginRight: 15, textAlign: 'justify' }}>Si publicas tu receta podrás obtener descuentos y/o precios exclusivos por las Ópticas Asociadas.</Text>
             </View>
             <View style={styles.fotoComentarios}>
                 <Image source={require('../assets/ComentarioCliente.png')} style={{ width: 300, height: 300 }} />

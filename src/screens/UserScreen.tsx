@@ -98,19 +98,19 @@ export default function UserScreen({ navigation }: Props) {
       const savedCart = await AsyncStorage.getItem(`cart_${uid}`);
       let cartItems = savedCart ? JSON.parse(savedCart) : [];
   
-      // Verificar si el producto ya está en el carrito
+      // Esto es para verificar si el producto ya esta en el carrito
       const productIndex = cartItems.findIndex((item: CartItem) => item.id === product.id);
       if (productIndex > -1) {
-        // Si el producto ya está en el carrito, verificar cantidad disponible
+        // esto es para saber si el producto ya esta en el carrito, verificando la cantidad disponible
         if (cartItems[productIndex].cantidadLlevada < product.quantity) {
-          // Incrementar cantidad llevada si hay stock disponible
+          // esto es para aumentar la cantidad si es que uno vuelve a seleccionar el mismo producto, verificando su stock también
           cartItems[productIndex].cantidadLlevada += 1;
         } else {
           Alert.alert('Stock insuficiente', 'No hay más unidades disponibles de este producto.');
           return;
         }
       } else {
-        // Si el producto no está en el carrito, agregarlo con cantidad llevada inicializada en 1
+        // este es para en caso de si el producto esta sin stock no va a aumentar la cantidad
         if (product.quantity > 0) {
           cartItems.push({ ...product, cantidadLlevada: 1 });
         } else {

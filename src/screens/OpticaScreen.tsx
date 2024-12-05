@@ -8,7 +8,6 @@ import { db, auth } from '../firebaseConfig';
 import { collection, getDocs, query, where } from 'firebase/firestore';
 import { signOut } from 'firebase/auth';
 import FontAwesome5 from '@expo/vector-icons/FontAwesome5';
-import Ionicons from '@expo/vector-icons/Ionicons';
 import Feather from '@expo/vector-icons/Feather';
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 
@@ -45,21 +44,21 @@ export default function OpticaScreen({ navigation }: Props) {
     const user = auth.currentUser;
     if (user) {
       try {
-        console.log('Fetching data for user:', user.uid); // Añadir esta línea para depuración
+        console.log('Fetching data for user:', user.uid);
         const q = query(collection(db, 'opticas'), where('uid', '==', user.uid));
         const querySnapshot = await getDocs(q);
         if (!querySnapshot.empty) {
           const userData = querySnapshot.docs[0].data();
-          console.log('User data:', userData); // Añadir esta línea para depuración
+          console.log('User data:', userData);
           setNombreOptica(userData.nombreOptica);
         } else {
-          console.log('No data found for user:', user.uid); // Añadir esta línea para depuración
+          console.log('No data found for user:', user.uid);
         }
       } catch (error) {
         console.error("Error fetching user data", error);
       }
     } else {
-      console.log('No user is currently signed in.'); // Añadir esta línea para depuración
+      console.log('No user is currently signed in.');
     }
   };
 
@@ -75,9 +74,9 @@ export default function OpticaScreen({ navigation }: Props) {
 
   return (
     <View style={styles.fondoView}>
-      <View style={[styles.nomProfile, {marginTop: 30,}]}>
+      <View style={[styles.nomProfile, { marginTop: 30, }]}>
         <FontAwesome5 name="user-circle" size={33} color="black" />
-        <Text style={{ fontSize: 35 }}>{nombreOptica}</Text>
+        <Text style={{ fontSize: 35 }}> {nombreOptica}</Text>
       </View>
 
       <View style={styles.containerOptica}>
@@ -90,23 +89,23 @@ export default function OpticaScreen({ navigation }: Props) {
           <TouchableOpacity style={styles.itemProfile} onPress={() => navigation.navigate('OpticaReseña')}>
             <Feather name="edit" size={24} color="black" />
             <Text style={styles.textProfile}>Reseñas</Text>
-          </TouchableOpacity>     
+          </TouchableOpacity>
           <TouchableOpacity style={styles.itemProfile} onPress={() => navigation.navigate('VerProducto')}>
             <FontAwesome5 name="glasses" size={24} color="black" />
             <Text style={styles.textProfile}>Mi catálogo</Text>
           </TouchableOpacity>
           <TouchableOpacity style={styles.itemProfile} onPress={() => navigation.navigate('CompartidoOptica')}>
-            <Feather name="share" size={24} color="black" />
-            <Text style={styles.textProfile}>Compartidos</Text>
-          </TouchableOpacity>   
+            <MaterialCommunityIcons name="comment-text-multiple-outline" size={24} color="black" />
+            <Text style={styles.textProfile}>Comentar Receta</Text>
+          </TouchableOpacity>
           <TouchableOpacity style={styles.itemProfile} onPress={() => navigation.navigate('OpticaNotificarError')}>
             <Feather name="alert-circle" size={24} color="black" />
             <Text style={styles.textProfile}>Notificar un error</Text>
-          </TouchableOpacity>  
+          </TouchableOpacity>
         </View>
-        
+
         <View style={{ flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'center' }}>
-          
+
           <TouchableOpacity style={styles.itemProfile} onPress={() => navigation.navigate('OpticaConfiguracion')}>
             <Feather name="tool" size={24} color="black" />
             <Text style={styles.textProfile}>Configuración y soporte</Text>

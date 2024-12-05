@@ -79,7 +79,7 @@ type RootStackParamList = {
   OpticaNotificarError: undefined;
   ReseñasClienteScreen: undefined;
   AgregarReseñaScreen: { productId: string };
-  Compartir: undefined;
+  Publicar: undefined;
   CompartidoOptica: undefined;
   DetalleCompartido: { recetaId: string };
 };
@@ -118,7 +118,7 @@ function MainTabs() {
         }} 
       />
       <Tab.Screen 
-        name="Compartir" 
+        name="Publicar" 
         component={CompartirReceta} 
         options={{ 
           tabBarIcon: ({ color }) => (

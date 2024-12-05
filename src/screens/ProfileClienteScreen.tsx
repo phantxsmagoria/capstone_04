@@ -70,7 +70,7 @@ export default function ProfileClienteScreen({ navigation }: Props) {
     <View style={styles.fondoView}>
       <View style={[styles.nomProfile, {marginTop: 30,}]}>
         <FontAwesome5 name="user-circle" size={40} color="black" />
-        <Text style={{ fontSize: 35, }}>{userName}</Text>
+        <Text style={{ fontSize: 35, }}> {userName}</Text>
       </View>           
 
       <View style={styles.containerOptica}> 
