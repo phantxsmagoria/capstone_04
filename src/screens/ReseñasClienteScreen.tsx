@@ -82,7 +82,7 @@ const ReseñasClienteScreen: React.FC<Props> = ({ navigation }) => {
   );
 
   const renderReseña = ({ item }: { item: ReviewData }) => (
-    <View style={styles.reseñaContainer}>
+    <View style={styles.productoContainer}>
       <Image source={{ uri: item.productoImagenURL }} style={styles2.productImage} />
       <Text style={styles.reseñaTitle}>{item.productoNombre}</Text>
       <Text>{item.descripcion}</Text>
@@ -98,7 +98,7 @@ const ReseñasClienteScreen: React.FC<Props> = ({ navigation }) => {
       </View>
       <Text>{item.fecha}</Text>
       <TouchableOpacity
-        style={[styles.button, { alignContent: 'center', justifyContent: 'center', marginLeft: 70,}]}
+        style={[styles.button, { alignContent: 'center', justifyContent: 'center'}]}
         onPress={() => navigation.navigate('AgregarReseñaScreen', { productId: item.productoId })}
       >
         <Text style={styles.buttonText}>Editar Reseña</Text>

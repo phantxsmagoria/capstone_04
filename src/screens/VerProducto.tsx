@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, Image, FlatList, TouchableOpacity, Button, Alert } from 'react-native';
+import { View, Text, Image, FlatList, TouchableOpacity, Alert } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RouteProp } from '@react-navigation/native';
 import { collection, getDocs, query, where, doc, deleteDoc } from 'firebase/firestore';
@@ -121,8 +121,8 @@ export default function VerProducto({ navigation }: Props) {
             <Text style={styles2.productDescription}>{item.descripcion}</Text>
             <Text style={styles2.productPrice}>Cantidad: {item.quantity}</Text>
             <Text style={styles2.productPrice}>Precio: ${item.precio}</Text>
-            <Button
-              title="Editar"
+            <TouchableOpacity 
+              style={styles2.button}
               onPress={() => navigation.navigate('EditarProducto', {
                 id: item.id,
                 nombre: item.nombre,
@@ -132,12 +132,15 @@ export default function VerProducto({ navigation }: Props) {
                 categoria: item.categoria,
                 quantity: item.quantity // Asegurándonos de pasar 'quantity'
               })}
-            />
-            <Button
-              title="Eliminar"
+            >
+              <Text style={styles2.buttonText}>Editar</Text>
+            </TouchableOpacity>
+            <TouchableOpacity 
+              style={[styles2.button, styles2.deleteButton]}
               onPress={() => handleDelete(item.id)}
-              color="red"
-            />
+            >
+              <Text style={styles2.buttonText}>Eliminar</Text>
+            </TouchableOpacity>
           </View>
         )}
         keyExtractor={(item) => item.id}

@@ -6,6 +6,7 @@ import { collection, getDocs, query, where } from 'firebase/firestore';
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 import { db, auth } from '../firebaseConfig';
 import styles from '../styles/styles';
+import styles2 from '../styles/styles2';
 
 type RootStackParamList = {
   ClienteRegistroPagos: undefined;
@@ -24,6 +25,7 @@ interface ProductoData {
   precio: number;
   imagenURL: string;
   categoria: string;
+  cantidadComprada: number; // Añadimos 'cantidadComprada'
 }
 
 export default function ClienteRegistroPagos({ navigation }: Props) {
@@ -40,35 +42,47 @@ export default function ClienteRegistroPagos({ navigation }: Props) {
     try {
       const q = query(collection(db, 'boletacliente'), where('email', '==', user.email));
       const querySnapshot = await getDocs(q);
-      const purchasedProductIds: string[] = [];
+      const purchasedProductsMap: Record<string, number> = {};
+
       querySnapshot.forEach((doc) => {
         const data = doc.data();
         console.log("Data from boletacliente:", data);
         if (data.cartItems) {
-          const productoIds = data.cartItems.map((item: { productoId: string }) => item.productoId);
-          purchasedProductIds.push(...productoIds);
+          data.cartItems.forEach((item: { productoId: string, cantidadLlevada: number }) => {
+            if (purchasedProductsMap[item.productoId]) {
+              purchasedProductsMap[item.productoId] += item.cantidadLlevada;
+            } else {
+              purchasedProductsMap[item.productoId] = item.cantidadLlevada;
+            }
+          });
         }
       });
 
-      if (purchasedProductIds.length > 0) {
-        // Eliminar duplicados
-        const uniqueProductIds = [...new Set(purchasedProductIds)];
-        console.log("Unique Product IDs to fetch:", uniqueProductIds);
-
-        const productos: ProductoData[] = [];
+      const productIds = Object.keys(purchasedProductsMap);
+      if (productIds.length > 0) {
         // Dividir en lotes si hay más de 10 IDs
         const batches = [];
-        while (uniqueProductIds.length) {
-          batches.push(uniqueProductIds.splice(0, 10));
+        while (productIds.length) {
+          batches.push(productIds.splice(0, 10));
         }
 
+        const productos: ProductoData[] = [];
         for (const batch of batches) {
           const productosSnapshot = await getDocs(query(collection(db, 'productos'), where('__name__', 'in', batch)));
           productosSnapshot.forEach((doc) => {
-            productos.push({ id: doc.id, ...doc.data() } as ProductoData);
+            const data = doc.data();
+            productos.push({ 
+              id: doc.id, 
+              nombre: data.nombre,
+              descripcion: data.descripcion,
+              precio: data.precio,
+              imagenURL: data.imagenURL,
+              categoria: data.categoria,
+              cantidadComprada: purchasedProductsMap[doc.id] // Añadimos la cantidad comprada
+            } as ProductoData);
           });
         }
-        
+
         setPurchasedProducts(productos);
         console.log("Purchased products data:", productos);
       }
@@ -81,16 +95,17 @@ export default function ClienteRegistroPagos({ navigation }: Props) {
     <View style={styles.productoContainer}>
       <Image
         source={{ uri: item.imagenURL }}
-        style={styles.productImage}
+        style={styles2.productImage}
       />
       <Text style={styles.productTitle}>{item.nombre}</Text>
       <Text>{item.categoria}</Text>
       <Text style={styles.productPrice}>${item.precio}</Text>
+      <Text style={styles.productPrice}>Cantidad comprada: {item.cantidadComprada}</Text>
       <TouchableOpacity
-        style={styles.reviewButton}
+        style={styles.button}
         onPress={() => navigation.navigate('AgregarReseñaScreen', { productId: item.id })}
       >
-        <Text style={styles.reviewButtonText}>Agregar Reseña</Text>
+        <Text style={styles.buttonText}>Agregar Reseña</Text>
       </TouchableOpacity>
     </View>
   );

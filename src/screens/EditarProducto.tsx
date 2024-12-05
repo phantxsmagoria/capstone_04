@@ -176,19 +176,4 @@ const EditarProducto: React.FC<Props> = ({ navigation, route }) => {
     </View>
   );
 };
-
-const localStyles = StyleSheet.create({
-  backButton: {
-    padding: 10,
-    backgroundColor: '#007BFF',
-    borderRadius: 5,
-    marginBottom: 15,
-    alignSelf: 'flex-start',
-  },
-  backButtonText: {
-    color: 'white',
-    fontSize: 16,
-  },
-});
-
 export default EditarProducto;

@@ -396,6 +396,7 @@ export default StyleSheet.create({
     },
 
     productoContainer: {
+        alignItems: 'center',
         flex: 1, 
         padding: 10, 
         marginTop: 20,
@@ -650,8 +651,6 @@ export default StyleSheet.create({
         padding: 10, 
         borderBottomWidth: 1, 
         borderBottomColor: '#ccc', 
-        flex: 1,
-        backgroundColor: 'white',
     }, 
 
     reseñaTitle: { 
@@ -691,7 +690,9 @@ export default StyleSheet.create({
     },
 
     reviewButton: { 
-        backgroundColor: '#007BFF', 
+        color: '#fff',
+        fontSize: 16,
+        fontWeight: 'bold',
         padding: 10, 
         alignItems: 'center', 
         borderRadius: 5, 
@@ -699,7 +700,11 @@ export default StyleSheet.create({
     },
 
     reviewButtonText: { 
-        color: 'white', 
+        backgroundColor: '#FA7929',
+        padding: 15,
+        borderRadius: 10,
+        alignItems: 'center',
+        marginVertical: 10,
         fontSize: 16, 
     },
 
@@ -830,11 +835,13 @@ export default StyleSheet.create({
    },
 
    contenedorDetalle: {
+    height: 900,
     backgroundColor: '#fff',
     flex: 1,
     marginTop:30,
     marginBottom: 0,
 },
+
     
 });
 
