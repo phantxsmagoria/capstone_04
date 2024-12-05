@@ -7,7 +7,7 @@ export default StyleSheet.create({
         alignItems: 'center',
         backgroundColor: '#ffffff',
     },
-    
+
     title: {
         fontSize: 28,
         fontWeight: 'bold',
@@ -172,7 +172,7 @@ export default StyleSheet.create({
         marginRight: 265,
         marginBottom: 30,
     },
-    errorText: {  // Añadimos esto
+    errorText: {
         color: 'red',
         marginTop: 10,
         textAlign: 'center',
@@ -183,8 +183,8 @@ export default StyleSheet.create({
         fontWeight: 'bold',
         textAlign: 'center',
         marginVertical: 10,
-      },
-    
+    },
+
     cartItem: {
         flexDirection: 'row',
         alignItems: 'center',
@@ -192,28 +192,29 @@ export default StyleSheet.create({
         backgroundColor: '#f9f9f9',
         borderRadius: 10,
         marginBottom: 20,
-      },
+    },
 
     productImage: {
         width: 60,
         height: 60,
-        marginRight: 10 },
+        marginRight: 10
+    },
 
-    
+
     productTitle: {
         fontSize: 18,
         fontWeight: 'bold',
-      },
-    
+    },
+
     productDescription: {
         fontSize: 14,
         color: '#666',
-      },
+    },
 
     productSubtitle: {
         fontSize: 12,
         color: '#aaa',
-      },
+    },
 
     productPrice: {
         fontSize: 16,
@@ -230,72 +231,72 @@ export default StyleSheet.create({
     },
 
     card: {
-     padding: 15,
-     backgroundColor: '#f9f9f9',
-     borderRadius: 10,
-     marginBottom: 20,
-     alignItems: 'center',
+        padding: 15,
+        backgroundColor: '#f9f9f9',
+        borderRadius: 10,
+        marginBottom: 20,
+        alignItems: 'center',
     },
 
-     cardTitle: {
-      fontSize: 20,
-      fontWeight: 'bold',
-      marginBottom: 10,
+    cardTitle: {
+        fontSize: 20,
+        fontWeight: 'bold',
+        marginBottom: 10,
     },
-          
-    // Style Perfil de usuario
+
+    // Esto es de Perfil del Cliente
     nomProfile: {
-        padding: 20, 
+        padding: 20,
         display: 'flex',
         flexDirection: 'row',
         alignItems: 'center',
     },
 
     tituloMenusOptica: {
-        fontSize:25,
+        fontSize: 25,
         flex: 1,
     },
     tituloMenusOptica2: {
-        fontSize:25,
-        marginTop:10,
+        fontSize: 25,
+        marginTop: 10,
     },
 
-    filasMenu:{
-        flexDirection: 'row', 
-        flexWrap: 'wrap', 
-        justifyContent: 'center', 
+    filasMenu: {
+        flexDirection: 'row',
+        flexWrap: 'wrap',
+        justifyContent: 'center',
     },
 
-    itemProfile: { 
-        fontSize: 10, 
-        backgroundColor: '#fff', 
-        width: 65, 
-        height: 90, 
-        justifyContent: 'center', 
-        alignItems: 'center', 
+    itemProfile: {
+        fontSize: 10,
+        backgroundColor: '#fff',
+        width: 65,
+        height: 90,
+        justifyContent: 'center',
+        alignItems: 'center',
         marginTop: 0,
-        marginLeft:8,
-    }, 
-    
-    textProfile: { 
-        fontSize: 10, 
-        textAlign: 'center', 
-        marginTop: 5, 
+        marginLeft: 8,
+    },
+
+    textProfile: {
+        fontSize: 10,
+        textAlign: 'center',
+        marginTop: 5,
     },
     containerOptica: {
-        backgroundColor:'#fff',
-        alignItems:'flex-start',
+        backgroundColor: '#fff',
+        alignItems: 'flex-start',
 
     },
     fondoView: {
         backgroundColor: '#fff',
         flex: 1,
     },
-      
-    
-    // Style Formulario Receta
-    textReceta:{
-        padding: 5, 
+
+
+    // Esto es del Formulario Receta
+    textReceta: {
+        padding: 5,
         marginTop: 20,
         display: 'flex',
         flexDirection: 'row',
@@ -345,11 +346,11 @@ export default StyleSheet.create({
         textAlign: 'center',
         fontWeight: 'semibold',
         fontSize: 14,
-          
+
     },
 
-    botonReceta:{
-        backgroundColor:'#FA7929',
+    botonReceta: {
+        backgroundColor: '#FA7929',
         marginTop: 30,
         borderRadius: 10,
         width: '60%',
@@ -357,11 +358,11 @@ export default StyleSheet.create({
         alignItems: 'center',
         alignSelf: 'center',
     },
-    botonTextReceta:{
+    botonTextReceta: {
         color: '#f5f5f5',
         fontSize: 24,
         fontWeight: 'bold',
-        textAlign:'center',
+        textAlign: 'center',
         margin: 8,
 
     },
@@ -370,83 +371,84 @@ export default StyleSheet.create({
         justifyContent: 'center',
     },
 
-    input: { 
-    height: 40, 
-    borderColor: 'gray', 
-    borderWidth: 1, 
-    paddingLeft: 8, 
-    margin: 10, },
-
-    popup: { 
-    position: 'absolute', 
-    top: 50, 
-    padding: 10, 
-    backgroundColor: '#333', 
-    borderRadius: 5, 
-    zIndex: 1000, 
-    }, 
-
-    popupText:  { 
-    color: '#fff', 
+    input: {
+        height: 40,
+        borderColor: 'gray',
+        borderWidth: 1,
+        paddingLeft: 8,
+        margin: 10,
     },
-    // esto es de user screen
 
-    columnWrapper:{
+    popup: {
+        position: 'absolute',
+        top: 50,
+        padding: 10,
+        backgroundColor: '#333',
+        borderRadius: 5,
+        zIndex: 1000,
+    },
+
+    popupText: {
+        color: '#fff',
+    },
+
+    // esto es de user screen
+    columnWrapper: {
         justifyContent: 'space-between'
     },
 
     productoContainer: {
         alignItems: 'center',
-        flex: 1, 
-        padding: 10, 
+        flex: 1,
+        padding: 10,
         marginTop: 20,
-        margin: 5, 
-        borderRadius: 10, 
-        backgroundColor: '#f9f9f9', 
-        shadowColor: '#000', 
-        shadowOffset: { width: 0, height: 2 }, 
-        shadowOpacity: 0.25, 
-        shadowRadius: 3.5, 
+        margin: 5,
+        borderRadius: 10,
+        backgroundColor: '#f9f9f9',
+        shadowColor: '#000',
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.25,
+        shadowRadius: 3.5,
         elevation: 5,
     },
 
     singleColumnItem: {
-        flex: 0.5,        
+        flex: 0.5,
     },
 
     selectedItem: {
         backgroundColor: '#ddd', // Color de fondo para items seleccionados, o el hover, como le digas ustds ntp!!
-      },
+    },
 
     unselectedItem: {
         backgroundColor: '#fff', // Color de fondo para items no seleccionados!!!!
     },
 
-      // Ajuste imagen optica
+    // Esto es para ajustar la imagen de optica
     imagenOpticaContainer: {
-        width: '100%', 
+        width: '100%',
         marginTop: '50%',
-        justifyContent: 'center', 
-        alignItems: 'center', 
+        justifyContent: 'center',
+        alignItems: 'center',
     },
 
-    textoOptica:{
-        textAlign:'center', 
-        fontSize: 18, 
-        color: 'gray', 
-        fontWeight:'semibold'
+    textoOptica: {
+        textAlign: 'center',
+        fontSize: 18,
+        color: 'gray',
+        fontWeight: 'semibold'
     },
     // esto es para edit perfil
 
     imagenOpticaContainerEdit: {
-        width: '100%', 
+        width: '100%',
         marginTop: 20,
-        justifyContent:'center',
-        alignItems:'center',
+        justifyContent: 'center',
+        alignItems: 'center',
     },
 
     containerEdit: {
-        flex:1,
+        flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
         backgroundColor: '#ffffff',
@@ -460,9 +462,9 @@ export default StyleSheet.create({
     fondoView2: {
         backgroundColor: '#fff',
         flex: 1,
-        marginTop:30,
+        marginTop: 30,
     },
-    
+
     confi: {
         padding: 15,
         backgroundColor: '#f9f9f9',
@@ -489,42 +491,42 @@ export default StyleSheet.create({
 
     itemDireccionCli: {
         borderColor: '#EEEFF0',
-        borderWidth: 1, 
+        borderWidth: 1,
         backgroundColor: '#ffffff',
         width: '90%',
         height: 50,
         margin: 10,
         textAlign: 'justify',
         fontWeight: 'semibold',
-        fontSize: 14,   
-        paddingLeft: 10,       
+        fontSize: 14,
+        paddingLeft: 10,
     },
 
     // Esto es para la parte del Teléfono
     telefonoContainer: {
         flexDirection: 'row',
-        alignItems:'center',
+        alignItems: 'center',
         width: '90%',
         borderWidth: 1,
-        borderColor: '#EEEFF0', 
-        borderRadius: 5, 
-        margin: 10, 
+        borderColor: '#EEEFF0',
+        borderRadius: 5,
+        margin: 10,
         backgroundColor: '#ffffff',
     },
 
-    telefonoIdi:{
+    telefonoIdi: {
         padding: 15,
-        color:'#888',
-        backgroundColor:'#EEEFF0',
-        borderTopLeftRadius:5,
+        color: '#888',
+        backgroundColor: '#EEEFF0',
+        borderTopLeftRadius: 5,
         borderBottomLeftRadius: 5,
     },
-    telefono:{
-        flex:1,
-        height:50,
-        fontSize:14,
-        fontWeight:'semibold',
-        paddingLeft:10,
+    telefono: {
+        flex: 1,
+        height: 50,
+        fontSize: 14,
+        fontWeight: 'semibold',
+        paddingLeft: 10,
     },
 
     //Esto es para los "iconos" de los números
@@ -533,16 +535,16 @@ export default StyleSheet.create({
     },
 
     containerIcon: {
-        width: 35, 
-        height: 35, 
-        borderRadius: 25, 
-        backgroundColor: '#FA7929', 
-        justifyContent: 'center', 
-        alignItems: 'center', 
+        width: 35,
+        height: 35,
+        borderRadius: 25,
+        backgroundColor: '#FA7929',
+        justifyContent: 'center',
+        alignItems: 'center',
     },
     numeroIcon: {
-        color: 'white', 
-        fontSize: 20, 
+        color: 'white',
+        fontSize: 20,
         fontWeight: 'bold',
     },
 
@@ -554,7 +556,7 @@ export default StyleSheet.create({
     },
 
     // esto es para Pago Cliente
-    textPago:{
+    textPago: {
         padding: 5,
         marginTop: 20,
         marginLeft: 5,
@@ -562,7 +564,7 @@ export default StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'center',
-        
+
     },
 
     iconPago: {
@@ -570,16 +572,16 @@ export default StyleSheet.create({
         marginTop: 5,
     },
 
-    textPagoCli:{
-        paddingTop: 5, 
-        fontSize: 20, 
-        fontWeight: 'semibold', 
-        marginVertical: 10, 
+    textPagoCli: {
+        paddingTop: 5,
+        fontSize: 20,
+        fontWeight: 'semibold',
+        marginVertical: 10,
         paddingHorizontal: 15,
     },
 
     contenedorPagoCli1: {
-        backgroundColor:'#e9ecef',
+        backgroundColor: '#e9ecef',
         marginTop: 20,
         marginLeft: 20,
         alignItems: 'center',
@@ -587,15 +589,15 @@ export default StyleSheet.create({
         height: '16%',
         borderRadius: 10,
     },
-    itemPagoCli1: { 
+    itemPagoCli1: {
         backgroundColor: '#ffffff',
         width: '90%',
         height: 50,
         margin: 10,
         textAlign: 'justify',
         fontWeight: 'semibold',
-        fontSize: 14,   
-        paddingLeft: 10,       
+        fontSize: 14,
+        paddingLeft: 10,
     },
 
     contenedorPagoCli2: {
@@ -620,123 +622,123 @@ export default StyleSheet.create({
         fontWeight: 'semibold',
         fontSize: 14,
     },
-     
-    infoPago:{
-        marginLeft:35,
-        justifyContent:'center',
-    },
 
-    contenedorCvv:{
-        flexDirection:'row',
-        alignItems:'center',
-    },
-
-    fondoHome:{
-        flex: 1, 
-        resizeMode: 'cover', 
+    infoPago: {
+        marginLeft: 35,
         justifyContent: 'center',
     },
 
-    // ReseñaCliente
-    pickerContainer: { 
-        marginVertical: 20, 
+    contenedorCvv: {
+        flexDirection: 'row',
+        alignItems: 'center',
     },
 
-    label: { 
-        fontSize: 18, 
-        marginBottom: 10, 
+    fondoHome: {
+        flex: 1,
+        resizeMode: 'cover',
+        justifyContent: 'center',
     },
 
-    reseñaContainer: { 
-        padding: 10, 
-        borderBottomWidth: 1, 
-        borderBottomColor: '#ccc', 
-    }, 
-
-    reseñaTitle: { 
-        fontWeight: 'bold', 
-        fontSize: 16, 
-    }, 
-
-    emptyContainer: { 
-        justifyContent: 'center', 
-        alignItems: 'center', 
-        marginTop: 20, 
-    }, 
-
-    emptyImage: { 
-        width: 200, 
-        height: 200, 
-        resizeMode: 'contain', 
-    }, 
-
-    emptyText: { 
-        marginTop: 20, 
-        fontSize: 18, 
-        color: '#555', 
+    // Esto es de ReseñaCliente
+    pickerContainer: {
+        marginVertical: 20,
     },
 
-    editButton: { 
-        backgroundColor: '#ffcc00', 
-        padding: 10, 
-        alignItems: 'center', 
-        borderRadius: 5, 
-        marginTop: 10, 
+    label: {
+        fontSize: 18,
+        marginBottom: 10,
     },
 
-    editButtonText: { 
-        color: '#000', 
-        fontSize: 16, 
+    reseñaContainer: {
+        padding: 10,
+        borderBottomWidth: 1,
+        borderBottomColor: '#ccc',
     },
 
-    reviewButton: { 
+    reseñaTitle: {
+        fontWeight: 'bold',
+        fontSize: 16,
+    },
+
+    emptyContainer: {
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginTop: 20,
+    },
+
+    emptyImage: {
+        width: 200,
+        height: 200,
+        resizeMode: 'contain',
+    },
+
+    emptyText: {
+        marginTop: 20,
+        fontSize: 18,
+        color: '#555',
+    },
+
+    editButton: {
+        backgroundColor: '#ffcc00',
+        padding: 10,
+        alignItems: 'center',
+        borderRadius: 5,
+        marginTop: 10,
+    },
+
+    editButtonText: {
+        color: '#000',
+        fontSize: 16,
+    },
+
+    reviewButton: {
         color: '#fff',
         fontSize: 16,
         fontWeight: 'bold',
-        padding: 10, 
-        alignItems: 'center', 
-        borderRadius: 5, 
-        marginTop: 10, 
+        padding: 10,
+        alignItems: 'center',
+        borderRadius: 5,
+        marginTop: 10,
     },
 
-    reviewButtonText: { 
+    reviewButtonText: {
         backgroundColor: '#FA7929',
         padding: 15,
         borderRadius: 10,
         alignItems: 'center',
         marginVertical: 10,
-        fontSize: 16, 
+        fontSize: 16,
     },
 
-    productContainer: { 
-        alignItems: 'center', 
-        marginBottom: 20, 
+    productContainer: {
+        alignItems: 'center',
+        marginBottom: 20,
     },
 
-    starContainer: { 
-        flexDirection: 'row', 
-        justifyContent: 'center', 
-        marginBottom: 20, 
+    starContainer: {
+        flexDirection: 'row',
+        justifyContent: 'center',
+        marginBottom: 20,
     },
 
-    cancelButton: { 
+    cancelButton: {
         backgroundColor: '#d9534f',
         fontSize: 14,
-        fontWeight: 'bold', 
-        padding: 10, 
-        alignItems: 'center', 
-        borderRadius: 5, 
-        marginTop: 10, 
+        fontWeight: 'bold',
+        padding: 10,
+        alignItems: 'center',
+        borderRadius: 5,
+        marginTop: 10,
     },
 
-    cancelButtonText: { 
-        color: 'white', 
-        fontSize: 18, 
+    cancelButtonText: {
+        color: 'white',
+        fontSize: 18,
     },
 
-    ratingContainer: { 
-        flexDirection: 'row', 
-        marginBottom: 10, 
+    ratingContainer: {
+        flexDirection: 'row',
+        marginBottom: 10,
     },
 
     fondoAgregarProducto: {
@@ -747,20 +749,20 @@ export default StyleSheet.create({
         height: 0,
     },
 
-    //CartScreen
-    quantityContainer: { 
-        flexDirection: 'row', 
-        alignItems: 'center', 
-        marginTop: 10, 
-    }, 
-    quantityText: { 
-        marginHorizontal: 10, 
-        fontSize: 16, 
-        fontWeight: 'bold', 
+    // esto es de CartScreen
+    quantityContainer: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        marginTop: 10,
     },
-    stockText: { 
-        marginLeft: 10, 
-        color: 'gray', 
+    quantityText: {
+        marginHorizontal: 10,
+        fontSize: 16,
+        fontWeight: 'bold',
+    },
+    stockText: {
+        marginLeft: 10,
+        color: 'gray',
     },
     // esto es para datos compra los items
     SelectItem: {
@@ -768,79 +770,78 @@ export default StyleSheet.create({
     },
 
     // esto es para compartido optica
-    recetaItem: { 
-        padding: 10, 
-        marginVertical: 8, 
-        marginHorizontal: 16, 
-        borderWidth: 1, 
-        borderColor: '#ccc', 
-        borderRadius: 10, 
+    recetaItem: {
+        padding: 10,
+        marginVertical: 8,
+        marginHorizontal: 16,
+        borderWidth: 1,
+        borderColor: '#ccc',
+        borderRadius: 10,
     },
 
     // esto es para detalle compartido
     textoComentario: {
-        height: 40, 
-        borderColor: 'gray', 
-        borderWidth: 1, 
-        margin: 12, 
-        paddingLeft: 8, 
+        height: 40,
+        borderColor: 'gray',
+        borderWidth: 1,
+        margin: 12,
+        paddingLeft: 8,
         borderRadius: 4,
     },
-    comentario:{
-        padding: 10, 
-        marginVertical: 8, 
-        marginHorizontal: 16, 
-        borderWidth: 1, 
-        borderColor: '#ccc', 
+    comentario: {
+        padding: 10,
+        marginVertical: 8,
+        marginHorizontal: 16,
+        borderWidth: 1,
+        borderColor: '#ccc',
         borderRadius: 10,
     },
 
     // Esto es para BoletaCliente
-    boletaContainer: { 
-        backgroundColor: '#f9f9f9', 
-        padding: 15, 
-        marginVertical: 8, 
-        marginHorizontal: 16, 
-        borderRadius: 10, 
+    boletaContainer: {
+        backgroundColor: '#f9f9f9',
+        padding: 15,
+        marginVertical: 8,
+        marginHorizontal: 16,
+        borderRadius: 10,
     },
-    boletaTitle: { 
-        fontSize: 18, 
-        fontWeight: 'bold', 
-        marginBottom: 5, 
+    boletaTitle: {
+        fontSize: 18,
+        fontWeight: 'bold',
+        marginBottom: 5,
     },
     // esto es para los comentarios de Compartir Receta
     comentarios: {
         margin: 5,
         marginLeft: 10,
-        marginRight: 10, 
+        marginRight: 10,
         backgroundColor: '#ffffff',
         height: 'auto',
         borderRadius: 5,
         display: 'flex',
-        alignItems:'center',
-        justifyContent:'center',
+        alignItems: 'center',
+        justifyContent: 'center',
         textAlign: 'justify',
         paddingLeft: 10,
         paddingTop: 1,
-   },
-   fotoComentarios: {
-    alignItems: 'center'
-   },
-   contenedorCompra: {
-    flexDirection: 'row',
-    width: '90%',
-    alignContent: 'center',
-    justifyContent: 'center',
-    fontWeight: 'bold',
-   },
+    },
+    fotoComentarios: {
+        alignItems: 'center'
+    },
+    contenedorCompra: {
+        flexDirection: 'row',
+        width: '90%',
+        alignContent: 'center',
+        justifyContent: 'center',
+        fontWeight: 'bold',
+    },
 
-   contenedorDetalle: {
-    backgroundColor: '#fff',
-    flex: 1,
-    marginTop:30,
-    marginBottom: 0,
-},
+    contenedorDetalle: {
+        backgroundColor: '#fff',
+        flex: 1,
+        marginTop: 30,
+        marginBottom: 0,
+    },
 
-    
 });
 
