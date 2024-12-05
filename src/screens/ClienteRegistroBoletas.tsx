@@ -52,6 +52,13 @@ export default function ClienteRegistroBoletas({ navigation }: Props) {
   const [boletas, setBoletas] = useState<BoletaCliente[]>([]);
   const [loading, setLoading] = useState(true);
 
+  const [contador, setContador] = useState<number>(0);
+
+  useEffect(() => {
+    setContador(contador + 2 ); 
+    }, []);
+ 
+
   useEffect(() => {
     const fetchBoletas = async () => {
       try {
@@ -104,10 +111,10 @@ export default function ClienteRegistroBoletas({ navigation }: Props) {
   }
 
   return (
-    <View>
-      <TouchableOpacity style={styles.nomProfile} onPress={() => navigation.navigate('Perfil')}>
+    <View style={styles.fondoView}>
+      <TouchableOpacity style={[styles.nomProfile, {marginTop:30,}]} onPress={() => navigation.navigate('Perfil')}>
         <MaterialIcons name="arrow-back-ios" size={25} color="#FA7929" />
-        <Text style={styles.tituloMenusOptica}>Mis Boletas</Text>
+        <Text style={[styles.tituloMenusOptica]}>Mis Boletas</Text>
       </TouchableOpacity>
 
       {boletas.length === 0 ? (
@@ -137,7 +144,7 @@ export default function ClienteRegistroBoletas({ navigation }: Props) {
 
             return (
               <View style={styles.boletaContainer}>
-                <Text style={styles.boletaTitle}>Boleta ID: {item.id}</Text>
+                <Text style={styles.boletaTitle}>N° Boleta: {contador}</Text>
                 <Text>Nombre: {item.name}</Text>
                 <Text>Dirección: {item.address}</Text>
                 <Text>Comuna: {item.comuna}</Text>

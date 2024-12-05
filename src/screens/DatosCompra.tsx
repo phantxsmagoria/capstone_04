@@ -103,7 +103,7 @@ const DatosCompra: React.FC<Props> = ({ navigation }) => {
 
   const validarDatos = () => {
     if (name.trim() === '') {
-      Alert.alert('Error', 'Por favor ingresa tu nombre.');
+      Alert.alert('Por favor ingresa tu nombre.');
       return false;
     }
     if (address.trim() === '') {
@@ -219,7 +219,7 @@ const DatosCompra: React.FC<Props> = ({ navigation }) => {
 
         <Text style={{ fontSize: 16, fontWeight: 'bold', marginTop: 20, marginLeft: 20 }}>Total: ${totalPrice}</Text>
 
-        <View style={[styles.textReceta, {marginLeft: 8,}]}>
+        <View style={[styles.textReceta, {marginLeft: 46,}]}>
             <View style={styles.containerIcon}>
               <Text style={styles.numeroIcon}>1</Text>
             </View>

@@ -98,41 +98,25 @@ const ReseñasClienteScreen: React.FC<Props> = ({ navigation }) => {
       </View>
       <Text>{item.fecha}</Text>
       <TouchableOpacity
-        style={styles.editButton}
+        style={[styles.button, { alignContent: 'center', justifyContent: 'center', marginLeft: 70,}]}
         onPress={() => navigation.navigate('AgregarReseñaScreen', { productId: item.productoId })}
       >
-        <Text style={styles.editButtonText}>Editar Reseña</Text>
+        <Text style={styles.buttonText}>Editar Reseña</Text>
       </TouchableOpacity>
     </View>
   );
 
   return (
-    <View style={{ flex: 1 }}>
+    <View style={styles.fondoView}>
       <FlatList
         style={{ height: 850 }}
         data={filteredReviews}
         ListHeaderComponent={
-          <View style={{ padding: 20, marginTop: 20 }}>
+          <View style={{ marginTop: 30 }}>
             <TouchableOpacity style={styles.nomProfile} onPress={() => navigation.navigate('Perfil')}>
               <MaterialIcons name="arrow-back-ios" size={25} color="#FA7929" />
               <Text style={styles.tituloMenusOptica}>Mis Reseñas</Text>
-            </TouchableOpacity>
-
-            <Text style={styles.title}>Tus Reseñas</Text>
-
-            <View
-              style={{
-                display: 'flex',
-                flexDirection: 'row',
-                gap: 10,
-                alignItems: 'center',
-                backgroundColor: '#FA7929',
-                padding: 10,
-                marginVertical: 10,
-                marginTop: 15,
-                borderRadius: 10,
-              }}
-            ></View>
+            </TouchableOpacity>           
           </View>
         }
         renderItem={renderReseña}
