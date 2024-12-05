@@ -40,6 +40,7 @@ const ReseñasClienteScreen: React.FC<Props> = ({ navigation }) => {
   const [reviews, setReviews] = useState<ReviewData[]>([]);
   const [cargandoReseñas, setCargandoReseñas] = useState(true);
   const [searchQuery, setSearchQuery] = useState<string>('');
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchReseñas = async () => {
@@ -70,12 +71,20 @@ const ReseñasClienteScreen: React.FC<Props> = ({ navigation }) => {
       } catch (error) {
         console.error('Error fetching reviews: ', error);
       } finally {
-        setCargandoReseñas(false);
+        setLoading(false);
       }
     };
 
     fetchReseñas();
   }, []);
+
+  if (loading) {
+    return (
+      <View style={styles.imagenOpticaContainer}>
+        <Text style={styles.textoOptica}>Cargando Reseñas...</Text>
+      </View>
+    );
+  }
 
   const filteredReviews = reviews.filter(review =>
     review.productoNombre.toLowerCase().includes(searchQuery.toLowerCase())

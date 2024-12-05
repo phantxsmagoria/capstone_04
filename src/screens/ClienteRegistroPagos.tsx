@@ -30,6 +30,7 @@ interface ProductoData {
 
 export default function ClienteRegistroPagos({ navigation }: Props) {
   const [purchasedProducts, setPurchasedProducts] = useState<ProductoData[]>([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     fetchPurchasedProducts();
@@ -88,6 +89,9 @@ export default function ClienteRegistroPagos({ navigation }: Props) {
       }
     } catch (error) {
       console.error("Error fetching purchased products:", error);
+      
+    }finally {
+      setLoading(false);
     }
   };
 
@@ -109,6 +113,14 @@ export default function ClienteRegistroPagos({ navigation }: Props) {
       </TouchableOpacity>
     </View>
   );
+  
+  if (loading) {
+    return (
+      <View style={styles.imagenOpticaContainer}>
+        <Text style={styles.textoOptica}>Cargando Pagos...</Text>
+      </View>
+    );
+  }
 
   return (
     <View>
