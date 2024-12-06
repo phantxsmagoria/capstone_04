@@ -28,4 +28,4 @@ export default function OpticaEnviado({navigation}: Props) {
       </View>
     </View>
   )
-}
+};
