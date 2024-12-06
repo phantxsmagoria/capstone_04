@@ -39,6 +39,7 @@ type BoletaCliente = {
   comuna: string;
   ciudad: string;
   totalPrice: number;
+  boletaNumero:number;
   cartItems: CartItem[];
 };
 
@@ -75,6 +76,7 @@ export default function ClienteRegistroBoletas({ navigation }: Props) {
               comuna: data.comuna,
               ciudad: data.ciudad,
               totalPrice: data.totalPrice,
+              boletaNumero: data.boletaNumero,
               cartItems: data.cartItems.map((item: any) => ({
                 productoId: item.productoId,
                 nombre: item.nombre,
@@ -144,7 +146,7 @@ export default function ClienteRegistroBoletas({ navigation }: Props) {
 
             return (
               <View style={styles.boletaContainer}>
-                <Text style={styles.boletaTitle}>N° Boleta: {contador}</Text>
+                <Text style={styles.boletaTitle}>N° Boleta: {item.boletaNumero}</Text>
                 <Text>Nombre: {item.name}</Text>
                 <Text>Dirección: {item.address}</Text>
                 <Text>Comuna: {item.comuna}</Text>

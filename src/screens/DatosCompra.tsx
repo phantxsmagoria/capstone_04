@@ -3,8 +3,7 @@ import { View, Text, TextInput, TouchableOpacity, Alert, FlatList, ScrollView, I
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RouteProp } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { collection, addDoc, getDocs } from 'firebase/firestore';
-import { db, auth } from '../firebaseConfig';
+import { collection, addDoc, getDocs, query, orderBy, limit } from 'firebase/firestore';import { db, auth } from '../firebaseConfig';
 import styles from '../styles/styles';
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 import RNPinckerSelect from 'react-native-picker-select';
@@ -32,8 +31,8 @@ type CartItem = {
   precio: number | null;
   imagenURL: string | null;
   quantity: number;
-  cantidadLlevada: number; // Cantidad que el usuario quiere llevar, lo tiene que mostrar
-  Cantidad: number; // Cantidad restada de quantity
+  cantidadLlevada: number; 
+  Cantidad: number; 
 };
 
 type SeleccionItem = {
@@ -140,7 +139,19 @@ const DatosCompra: React.FC<Props> = ({ navigation }) => {
         Alert.alert('Error', 'No se ha iniciado sesión');
         return;
       }
-
+  
+      
+      const boletasCollectionRef = collection(db, 'boletacliente');
+      const boletasQuery = query(boletasCollectionRef, orderBy('boletaNumero', 'desc'), limit(1));
+      const boletasSnapshot = await getDocs(boletasQuery);
+      let boletaNumero = 1; 
+  
+      if (!boletasSnapshot.empty) {
+        const lastBoleta = boletasSnapshot.docs[0];
+        boletaNumero = lastBoleta.data().boletaNumero + 1; 
+      }
+  
+      
       await addDoc(collection(db, 'boletacliente'), {
         uid: user.uid,
         email: user.email,
@@ -148,17 +159,18 @@ const DatosCompra: React.FC<Props> = ({ navigation }) => {
         address,
         comuna: seleccionarComuna,
         ciudad: seleccionarCiudad,
-        cartItems: cartItems.map(item => ({ ...item, productoId: item.id, cantidadLlevada: item.cantidadLlevada })), // Incluimos productoId en los items del carrito
+        cartItems: cartItems.map(item => ({ ...item, productoId: item.id, cantidadLlevada: item.cantidadLlevada })), 
         totalPrice,
+        boletaNumero 
       });
-
+  
       Alert.alert('Guardado con Éxito', 'Su boleta ha sido creada con éxito.');
-      navigation.navigate('MainTabs'); // Navegamos a la pantalla de pestañas principales
+      navigation.navigate('MainTabs'); 
     } catch (error) {
-      Alert.alert('Error', 'Hubo un problema al crear su boleta.');
-      console.error('Error con su boleta: ', error);
+      console.error('Error al confirmar el pedido:', error);
     }
   };
+  
 
   const handleDiaBlur = () => {
     const num = parseInt(diaTarjeta, 10);
